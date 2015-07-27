@@ -32,7 +32,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             });
 
             _mockQuerySanitiser = new Mock<ILocationQuerySanitiser>();
-            _mockQuerySanitiser.Setup(s => s.Sanitise(It.IsAny<string>())).Returns<string>(q => q);
+            _mockQuerySanitiser.Setup(s => s.Sanitise(It.IsAny<string>())).Returns<string>(q => q.ToLower());
 
             _sut = new LocationService(_mockDataRetriever.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
         }
@@ -71,6 +71,18 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             _mockQuerySanitiser.Verify(s => s.Sanitise(It.Is<string>(q => q == "SO22 2XX")));
         }
+
+        [Fact]
+        public void Get_WithPostcode_MatchesRegardlessOfCase() {
+
+            var result = _sut.Get("SO11 1XX");
+
+            Assert.Equal(1, result.Count());
+            result = _sut.Get("so11 1xx");
+
+            Assert.Equal(1, result.Count());
+        }
+
 
         private readonly LocationService _sut;
         private readonly Mock<ILocationDataRetriever> _mockDataRetriever;

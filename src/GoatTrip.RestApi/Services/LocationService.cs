@@ -19,7 +19,7 @@
 
             var sanitisedQuery = _sanitiser.Sanitise(query);
 
-            var results = _dataRetriever.RetrieveAll().Where(l => l.Postcode.Contains(sanitisedQuery));
+            var results = _dataRetriever.RetrieveAll().Where(l => l.Postcode.ToLower().Contains(sanitisedQuery));
 
             return results;
         }
