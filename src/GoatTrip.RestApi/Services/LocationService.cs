@@ -1,7 +1,6 @@
 ﻿namespace GoatTrip.RestApi.Services {
     using System.Collections.Generic;
     using System.Linq;
-    using Controllers;
     using Models;
 
     public class LocationService

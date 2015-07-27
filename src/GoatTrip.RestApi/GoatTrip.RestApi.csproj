@@ -88,14 +88,19 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\LocationControllerModule.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BadRequestResult.cs" />
+    <Compile Include="App_Start\DependancyConfiguration.cs" />
+    <Compile Include="DummyDataRetriever.cs" />
+    <Compile Include="Models\CoordinateModel.cs" />
     <Compile Include="Services\ILocationDataRetriever.cs" />
-    <Compile Include="Controllers\ILocationQueryValidator.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />
+    <Compile Include="Services\ILocationQueryValidator.cs" />
     <Compile Include="Services\ILocationService.cs" />
-    <Compile Include="InvalidLocationQueryException.cs" />
     <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Services\InvalidLocationQueryException.cs" />
+    <Compile Include="Services\LocationQuerySanitiser.cs" />
     <Compile Include="Services\LocationQueryValidator.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Models\LocationModel.cs" />

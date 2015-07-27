@@ -1,4 +1,4 @@
-﻿namespace GoatTrip.RestApi {
+﻿namespace GoatTrip.RestApi.Services {
     using System;
     using System.Runtime.Serialization;
 

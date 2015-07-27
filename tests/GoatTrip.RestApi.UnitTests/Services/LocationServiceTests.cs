@@ -4,7 +4,6 @@ namespace GoatTrip.RestApi.UnitTests.Services {
     using System.Linq;
     using Models;
     using Moq;
-    using RestApi.Controllers;
     using RestApi.Services;
     using Xunit;
 

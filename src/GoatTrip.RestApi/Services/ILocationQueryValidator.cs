@@ -1,4 +1,4 @@
-﻿namespace GoatTrip.RestApi.Controllers {
+﻿namespace GoatTrip.RestApi.Services {
     public interface ILocationQueryValidator {
         bool IsValid(string query);
     }
