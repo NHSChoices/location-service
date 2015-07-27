@@ -1,28 +1,29 @@
 ﻿
 namespace GoatTrip.RestApi.Controllers {
     using System.Web.Http;
+    using Services;
 
     public class LocationController
         : ApiController {
 
+        public LocationController(ILocationQueryValidator queryValidator, ILocationService service) {
+            _queryValidator = queryValidator;
+            _service = service;
+        }
+
         public IHttpActionResult Get(string query) {
 
-            if (IsBadRequest(query)) {
-                return new BadRequestResult(Request);
+            if (!_queryValidator.IsValid(query)) {
+                return new BadRequestResult(Request, query);
             }
 
-            return Ok(new object());
+            var result = _service.Get(query);
+
+            return Ok(result);
         }
 
-        private bool IsBadRequest(string query) {
-
-            if (string.IsNullOrEmpty(query))
-                return true;
-
-            if (query.Length <= 0)
-                return true;
-
-            return false;
-        }
+        private readonly ILocationQueryValidator _queryValidator;
+        private readonly ILocationService _service;
     }
+
 }

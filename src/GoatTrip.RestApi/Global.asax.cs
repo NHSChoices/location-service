@@ -1,6 +1,5 @@
 ﻿
 namespace GoatTrip.RestApi {
-    
     using System.Web.Http;
 
     public class WebApiApplication : System.Web.HttpApplication {
@@ -9,6 +8,7 @@ namespace GoatTrip.RestApi {
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
+            DependancyConfiguration.Configure();
         }
     }
 }
