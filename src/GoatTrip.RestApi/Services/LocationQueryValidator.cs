@@ -1,5 +1,4 @@
 ﻿namespace GoatTrip.RestApi.Services {
-    using Controllers;
 
     public class LocationQueryValidator
         : ILocationQueryValidator {
