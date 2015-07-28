@@ -5,4 +5,4 @@ install:
   - nuget install xunit.runners -Version 2.0.0 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release LocationService.sln
-  - mono ./testrunner/xunit.runners.2.0.0/tools/xunit.console.clr4.exe ./tests/GoatTrip.RestApi.UnitTests/bin/Release/GoatTrip.RestApi.UnitTests.dll
+  - mono ./testrunner/xunit.runners.2.0.0/tools/xunit.console ./tests/GoatTrip.RestApi.UnitTests/bin/Release/GoatTrip.RestApi.UnitTests.dll
