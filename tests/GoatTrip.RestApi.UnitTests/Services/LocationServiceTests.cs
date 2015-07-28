@@ -52,16 +52,16 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void Get_WithExistingPostcode_ReturnsThatLocation() {
-            var result = _sut.Get("SO11 1XX");
+            var result = _sut.Get("SO11 1XX").ToList();
 
-            Assert.Equal(1, result.Count());
+            AssertIsValidResult(result, 1, "SO11 1XX");
         }
 
         [Fact]
         public void Get_WithMoreThanOneExistingPostcode_ReturnsAllMatchingLocations() {
-            var result = _sut.Get("SO22 2XX");
+            var result = _sut.Get("SO22 2XX").ToList();
 
-            Assert.Equal(3, result.Count());
+            AssertIsValidResult(result, 3, "SO22 2XX");
         }
 
         [Fact]
@@ -74,12 +74,22 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         [Fact]
         public void Get_WithPostcode_MatchesRegardlessOfCase() {
 
-            var result = _sut.Get("SO11 1XX");
+            var result = _sut.Get("SO11 1XX").ToList();
 
-            Assert.Equal(1, result.Count());
-            result = _sut.Get("so11 1xx");
+            AssertIsValidResult(result, 1, "SO11 1XX");
 
+            result = _sut.Get("so11 1xx").ToList();
+
+            AssertIsValidResult(result, 1, "SO11 1XX");
+        }
+
+        private static void AssertIsValidResult(List<LocationGroupModel> result, int count, string postcode) {
             Assert.Equal(1, result.Count());
+            Assert.Equal(count, result.First().Locations.Count());
+            if (count > 1)
+                Assert.True(result.First().Locations.All(l => l.Postcode == postcode));
+            else
+                Assert.Equal(postcode, result.First().Locations.First().Postcode);
         }
 
 

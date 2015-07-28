@@ -17,8 +17,18 @@
                     Postcode = "SO222XX"
                 },
                 new LocationModel {
-                    Postcode = "SO222XX"
+                    Postcode = "SO222XX",
+                    Coordinate = new CoordinateModel(123, 123)
+                },
+                new LocationModel {
+                    Postcode = "SO333XX",
+                    Locality = "Southampton"
+                },
+                new LocationModel {
+                    Postcode = "SO333XX",
+                    Locality = "Southampton"
                 }
+
             };
         }
     }

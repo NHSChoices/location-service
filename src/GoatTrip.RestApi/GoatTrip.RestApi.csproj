@@ -95,6 +95,7 @@
     <Compile Include="App_Start\DependancyConfig.cs" />
     <Compile Include="DummyDataRetriever.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
+    <Compile Include="Models\LocationGroupModel.cs" />
     <Compile Include="Services\ILocationDataRetriever.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />
     <Compile Include="Services\ILocationQueryValidator.cs" />
