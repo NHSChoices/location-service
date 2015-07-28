@@ -3,6 +3,6 @@
     using Models;
 
     public interface ILocationService {
-        IEnumerable<LocationModel> Get(string query);
+        IEnumerable<LocationGroupModel> Get(string query);
     }
 }
