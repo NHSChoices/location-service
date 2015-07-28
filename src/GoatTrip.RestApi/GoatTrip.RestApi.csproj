@@ -88,10 +88,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BrowserJsonFormatter.cs" />
     <Compile Include="App_Start\LocationControllerModule.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BadRequestResult.cs" />
-    <Compile Include="App_Start\DependancyConfiguration.cs" />
+    <Compile Include="App_Start\DependancyConfig.cs" />
     <Compile Include="DummyDataRetriever.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
     <Compile Include="Services\ILocationDataRetriever.cs" />

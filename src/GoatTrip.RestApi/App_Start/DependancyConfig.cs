@@ -4,7 +4,7 @@
     using Autofac;
     using Autofac.Integration.WebApi;
 
-    public static class DependancyConfiguration {
+    public static class DependancyConfig {
 
         public static void Configure() {
             var builder = new ContainerBuilder();
