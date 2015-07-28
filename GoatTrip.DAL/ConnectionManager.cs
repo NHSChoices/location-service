@@ -17,9 +17,9 @@ namespace GoatTrip.DAL
         private SQLiteConnection _diskDbConnection;
         private static SQLiteConnection imMemConnection = new SQLiteConnection("FullUri=file::memory:?cache=shared");
 
-        public ConnectionManager(string dbFileLocartion)
+        public ConnectionManager(string dbFileLocation)
         {
-            _dbFileLocation = dbFileLocartion;
+            _dbFileLocation = dbFileLocation;
             _connectionString = "data source=" + _dbFileLocation + "test.db?cache=shared; Version=3;";
            _diskDbConnection = new SQLiteConnection(_connectionString);
         }
