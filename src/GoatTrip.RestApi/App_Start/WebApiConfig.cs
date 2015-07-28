@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿
+namespace GoatTrip.RestApi {
+    using System.Net.Http.Headers;
+    using System.Web.Http;
 
-namespace GoatTrip.RestApi
-{
-    public static class WebApiConfig
-    {
-        public static void Register(HttpConfiguration config)
-        {
+    public static class WebApiConfig {
+
+        public static void Register(HttpConfiguration config) {
+
             // Web API configuration and services
 
             // Web API routes
@@ -16,9 +14,11 @@ namespace GoatTrip.RestApi
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "{controller}/{query}",
+                defaults: new { query = RouteParameter.Optional }
             );
+
+            config.Formatters.Add(new BrowserJsonFormatter(true));
         }
     }
 }
