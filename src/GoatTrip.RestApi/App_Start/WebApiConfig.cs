@@ -1,6 +1,6 @@
 ﻿
 namespace GoatTrip.RestApi {
-
+    using System.Net.Http.Headers;
     using System.Web.Http;
 
     public static class WebApiConfig {
@@ -17,6 +17,8 @@ namespace GoatTrip.RestApi {
                 routeTemplate: "{controller}/{query}",
                 defaults: new { query = RouteParameter.Optional }
             );
+
+            config.Formatters.Add(new BrowserJsonFormatter(true));
         }
     }
 }
