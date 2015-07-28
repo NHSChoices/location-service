@@ -1,6 +1,7 @@
 ﻿namespace GoatTrip.RestApi.Services {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using Models;
 
     public class LocationService
@@ -12,7 +13,7 @@
             _sanitiser = sanitiser;
         }
 
-        public IEnumerable<LocationModel> Get(string query) {
+        public IEnumerable<LocationGroupModel> Get(string query) {
 
             ValidateAndThrow(query);
 
@@ -20,7 +21,18 @@
 
             var results = _dataRetriever.RetrieveAll().Where(l => l.Postcode.ToLower().Contains(sanitisedQuery));
 
-            return results;
+            var groupedResult = Group(results);
+
+            return groupedResult;
+        }
+
+        private IEnumerable<LocationGroupModel> Group(IEnumerable<LocationModel> locations) {
+            return locations.GroupBy(l => l.Locality)
+                .Select(g => new LocationGroupModel {
+                    Description = g.Key, 
+                    Locations = g.ToList(), 
+                    Count = g.Count()
+                });
         }
 
         private void ValidateAndThrow(string query) {
