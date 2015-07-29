@@ -78,6 +78,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GoatTrip.DAL\GoatTrip.DAL.csproj">
+      <Project>{598E9A7D-1432-4AA4-A643-846E7BC06277}</Project>
+      <Name>GoatTrip.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\GoatTrip.RestApi\GoatTrip.RestApi.csproj">
       <Project>{AF82D362-E392-4B5A-9B09-C8AF97D53C0B}</Project>
       <Name>GoatTrip.RestApi</Name>

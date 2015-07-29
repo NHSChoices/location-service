@@ -11,7 +11,7 @@ namespace GoatTrip.RestApi.UnitTests
         public DependencyConfigTests() {
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new LocationControllerModule());
+            builder.RegisterModule(new LocationControllerModule(""));
 
             _container = builder.Build();
         }

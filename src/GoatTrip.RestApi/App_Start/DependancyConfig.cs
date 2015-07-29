@@ -15,7 +15,7 @@
 
             //builder.RegisterWebApiFilterProvider(config);
 
-            builder.RegisterModule(new LocationControllerModule());
+            builder.RegisterModule(new LocationControllerModule("app_data/test.db"));
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
