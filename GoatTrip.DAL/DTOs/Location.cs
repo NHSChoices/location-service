@@ -37,8 +37,10 @@ namespace GoatTrip.DAL.DTOs
                 this.BuildingName = readerDataObject["BUILDING_NAME"].ToString();
             if (readerDataObject["BLPU_ORGANISATION"] != DBNull.Value) 
                 this.OrganisationName = readerDataObject["BLPU_ORGANISATION"].ToString();
-            if (readerDataObject["STREET_DESCRIPTION"] != DBNull.Value) 
+            if (readerDataObject["STREET_DESCRIPTION"] != DBNull.Value)
                 this.StreetDescription = readerDataObject["STREET_DESCRIPTION"].ToString();
+            if (readerDataObject["PAO_START_NUMBER"] != DBNull.Value)
+                this.HouseNumber = readerDataObject["PAO_START_NUMBER"].ToString();
             if (readerDataObject["LOCALITY"] != DBNull.Value) 
                 this.Localiry = readerDataObject["LOCALITY"].ToString();
             if (readerDataObject["TOWN_NAME"] != DBNull.Value) 
