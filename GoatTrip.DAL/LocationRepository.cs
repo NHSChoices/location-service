@@ -21,15 +21,15 @@ namespace GoatTrip.DAL
 
         public IEnumerable<DTOs.Location> FindLocations(string postCode)
         {
-            string statement = "SELECT POSTCODE FROM test where POSTCODE like @postcode";
+            string statement = "SELECT * FROM test where POSTCODE like @postcode";
 
             List<DTOs.Location> locations = new List<Location>();
 
-            using (IDataReader reader = _connectionManager.GetReader(statement,new StatementParamaters(){{"@postcode", postCode + "%"}}))
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@postcode", postCode + "%" } }))
             {
                 while (reader.Read())
                 {
-                    locations.Add(new Location(reader));
+                    locations.Add(new Location(reader.DataReader));
                 }
             }
             return locations;

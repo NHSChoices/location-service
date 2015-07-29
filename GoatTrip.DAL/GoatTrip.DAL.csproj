@@ -67,7 +67,9 @@
     <Compile Include="DTOs\Location.cs" />
     <Compile Include="IConnectionManager.cs" />
     <Compile Include="ILocationRepository.cs" />
+    <Compile Include="IManagedDataReader.cs" />
     <Compile Include="LocationRepository.cs" />
+    <Compile Include="ManagedDataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
