@@ -9,7 +9,8 @@ namespace GoatTrip.DAL
 {
     public interface IConnectionManager
     {
-        IDbConnection GetOpenInMemoryDbConnection();
-        IDataReader GetReader(string statement, StatementParamaters paramsCollection);
+        IDbConnection OpenInMemoryDbConnection();
+
+        IManagedDataReader GetReader(string statement, StatementParamaters paramsCollection);
     }
 }
