@@ -32,9 +32,21 @@
 
         private IEnumerable<LocationModel> Map(IEnumerable<Location> locations) {
             return locations.Select(l => new LocationModel {
-                Postcode = l.PostCode,
+                OrganisationName = l.OrganisationName,
+                //BlpuOrganisation = l.,
+                BuildingName = l.BuildingName,
+                //PaoText= l.,
+                //SaoText= l.OrganisationName,
+                //Thoroughfare= l.,
+                //DependentThoroughfare= l.dep,
+                StreetDescription = l.StreetDescription,
                 Locality = l.Localiry,
-
+                TownName = l.TownName,
+                AdministrativeArea = l.AdministrativeArea,
+                PostTown = l.PostalTown,
+                Postcode = l.PostCode,
+                //PostcodeLocator= l.po,
+                Coordinate = new CoordinateModel((int) l.XCoordinate, (int) l.YCoordinate)
             });
         }
 

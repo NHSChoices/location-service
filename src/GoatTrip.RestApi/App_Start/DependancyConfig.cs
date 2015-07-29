@@ -15,7 +15,7 @@
 
             //builder.RegisterWebApiFilterProvider(config);
 
-            builder.RegisterModule(new LocationControllerModule("app_data/test.db"));
+            builder.RegisterModule(new LocationControllerModule("L:/Workspaces/GIT/Choices/location-service/src/GoatTrip.RestApi/bin/App_Data/"));
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
