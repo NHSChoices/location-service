@@ -15,45 +15,53 @@ namespace GoatTrip.DAL
         private string _dbFileLocation = @"C:\DASProjects\Development\LocationServiceTest\LocationCSVs\";
         private string _connectionString;
         private SQLiteConnection _diskDbConnection;
-        private static SQLiteConnection imMemConnection = new SQLiteConnection("FullUri=file::memory:?cache=shared");
-
+        private static SQLiteConnection inMemConnection = new SQLiteConnection("FullUri=file::memory:?cache=shared&PRAGMA journal_mode=WAL&");
         public ConnectionManager(string dbFileLocation)
         {
             _dbFileLocation = dbFileLocation;
-            _connectionString = "data source=" + _dbFileLocation + "test.db?cache=shared; Version=3;";
+            _connectionString = "data source=" + _dbFileLocation + "test.db; Version=3;";
            _diskDbConnection = new SQLiteConnection(_connectionString);
         }
 
-        public  IDbConnection GetOpenInMemoryDbConnection()
+        public IDbConnection OpenInMemoryDbConnection()
         {
-            if (imMemConnection.State != ConnectionState.Open)
+            var conn = GetSqLiteInMemoryDbConnection();
+            conn.Open();
+            return conn;
+        }
+
+        private SQLiteConnection GetSqLiteInMemoryDbConnection()
+        {
+            EnsureInMemConnectionInitilised();
+            return new SQLiteConnection(inMemConnection.ConnectionString);
+        }
+
+        private void EnsureInMemConnectionInitilised()
+        {
+            if (inMemConnection.State != ConnectionState.Open)
             {
                 _diskDbConnection.Open();
-                imMemConnection.Open();
+                inMemConnection.Open();
                 CopyToInMemory();
                 _diskDbConnection.Close();
             }
-            return new SQLiteConnection("FullUri=file::memory:?cache=shared");
         }
 
-        public IDataReader GetReader(string statement, StatementParamaters statementParamaters)
+        public IManagedDataReader GetReader(string statement, StatementParamaters statementParamaters)
         {
-            using (SQLiteCommand command = new SQLiteCommand(statement, new SQLiteConnection("FullUri=file::memory:?cache=shared")))
+            var connection = GetSqLiteInMemoryDbConnection();
+
+            SQLiteCommand command = new SQLiteCommand(statement, connection);
+            foreach (var parameter in statementParamaters)
             {
-                foreach (var parameter in statementParamaters)
-                {
-                    command.Parameters.AddWithValue(parameter.Key, parameter.Value);
-                }
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                   return reader; 
-                }
+                command.Parameters.AddWithValue(parameter.Key, parameter.Value);
             }
+            return new ManagedDataReader(command);
         }
 
         private void CopyToInMemory()
         {
-            _diskDbConnection.BackupDatabase(imMemConnection, "main", "main", -1, null, 0);
+            _diskDbConnection.BackupDatabase(inMemConnection, "main", "main", -1, null, 0);
         }
 
     }
