@@ -12,14 +12,14 @@ namespace GoatTrip.DAL
 {
     public class ConnectionManager: IConnectionManager
     {
-        private string _dbFileLocation = @"C:\DASProjects\Development\LocationServiceTest\LocationCSVs\";
+        private string _dbFileLocation = @"C:\DASProjects\Development\LocationServiceTest\LocationCSVs\locations.db";
         private string _connectionString;
         private SQLiteConnection _diskDbConnection;
-        private static SQLiteConnection inMemConnection = new SQLiteConnection("FullUri=file::memory:?cache=shared&PRAGMA journal_mode=WAL&");
+        private SQLiteConnection inMemConnection = new SQLiteConnection("FullUri=file::memory:?cache=shared&PRAGMA read_uncommitted = true;");
         public ConnectionManager(string dbFileLocation)
         {
             _dbFileLocation = dbFileLocation;
-            _connectionString = "data source=" + _dbFileLocation + "test.db; Version=3;";
+            _connectionString = "data source=" + _dbFileLocation + "; Version=3;";
            _diskDbConnection = new SQLiteConnection(_connectionString);
         }
 
@@ -27,6 +27,7 @@ namespace GoatTrip.DAL
         {
             var conn = GetSqLiteInMemoryDbConnection();
             conn.Open();
+           
             return conn;
         }
 
@@ -49,9 +50,8 @@ namespace GoatTrip.DAL
 
         public IManagedDataReader GetReader(string statement, StatementParamaters statementParamaters)
         {
-            var connection = GetSqLiteInMemoryDbConnection();
 
-            SQLiteCommand command = new SQLiteCommand(statement, connection);
+            SQLiteCommand command = new SQLiteCommand(statement, GetSqLiteInMemoryDbConnection());
             foreach (var parameter in statementParamaters)
             {
                 command.Parameters.AddWithValue(parameter.Key, parameter.Value);
