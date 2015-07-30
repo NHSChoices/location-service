@@ -1,4 +1,7 @@
 ﻿
+using GoatTrip.DAL;
+using Moq;
+
 namespace GoatTrip.RestApi.UnitTests
 {
     using Autofac;
@@ -11,6 +14,7 @@ namespace GoatTrip.RestApi.UnitTests
         public DependencyConfigTests() {
             var builder = new ContainerBuilder();
 
+            builder.Register(c => new Mock<ILocationRepository>().Object).As<ILocationRepository>(); ;
             builder.RegisterModule(new LocationControllerModule());
 
             _container = builder.Build();
