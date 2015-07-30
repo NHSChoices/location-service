@@ -11,7 +11,7 @@ namespace GoatTrip.RestApi.Controllers {
             _service = service;
         }
 
-        public IHttpActionResult Get(string query) {
+        public IHttpActionResult Get(string query="") {
 
             if (!_queryValidator.IsValid(query)) {
                 return new BadRequestResult(Request, query);

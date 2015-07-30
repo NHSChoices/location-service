@@ -1,11 +1,11 @@
 ﻿namespace GoatTrip.RestApi.Models {
     public class CoordinateModel {
-        public CoordinateModel(int x, int y) {
+        public CoordinateModel(float x, float y) {
             X = x;
             Y = y;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
     }
 }
