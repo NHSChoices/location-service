@@ -15,7 +15,7 @@
             _sanitiser = sanitiser;
         }
 
-        public IEnumerable<LocationGroupModel> Get(string query) {
+        public IEnumerable<LocationGroupModel> Get(string query = "") {
 
             ValidateAndThrow(query);
 
@@ -46,17 +46,29 @@
                 PostTown = l.PostalTown,
                 Postcode = l.PostCode,
                 //PostcodeLocator= l.po,
-                Coordinate = new CoordinateModel((int) l.XCoordinate, (int) l.YCoordinate)
+                Coordinate = new CoordinateModel(l.XCoordinate, l.YCoordinate)
             });
         }
 
         private IEnumerable<LocationGroupModel> Group(IEnumerable<LocationModel> locations) {
-            return locations.GroupBy(l => l.Locality)
+            return locations.GroupBy(l => l.Postcode)
                 .Select(g => new LocationGroupModel {
-                    Description = g.Key, 
+                    Description = BuildDescription(g), 
                     Locations = g.ToList(), 
                     Count = g.Count()
                 });
+        }
+
+        private static string BuildDescription(IGrouping<string, LocationModel> group) {
+            var locationModel = @group.First();
+            var result = locationModel.Postcode;
+            if (!string.IsNullOrEmpty(locationModel.BuildingName))
+                result += ", " + locationModel.BuildingName;
+            if (!string.IsNullOrEmpty(locationModel.StreetDescription))
+                result += ", " + locationModel.StreetDescription;
+            if (!string.IsNullOrEmpty(locationModel.Locality))
+                result += ", " + locationModel.Locality;
+            return result;
         }
 
         private void ValidateAndThrow(string query) {
