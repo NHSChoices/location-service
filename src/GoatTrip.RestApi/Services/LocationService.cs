@@ -35,7 +35,7 @@
                 OrganisationName = l.OrganisationName,
                 //BlpuOrganisation = l.,
                 BuildingName = l.BuildingName,
-                //PaoText= l.,
+                HouseNumber = l.HouseNumber,
                 //SaoText= l.OrganisationName,
                 //Thoroughfare= l.,
                 //DependentThoroughfare= l.dep,
