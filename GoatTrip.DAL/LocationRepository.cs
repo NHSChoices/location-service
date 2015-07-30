@@ -21,7 +21,7 @@ namespace GoatTrip.DAL
 
         public IEnumerable<DTOs.Location> FindLocations(string postCode)
         {
-            string statement = "SELECT * FROM test where POSTCODE like @postcode";
+            string statement = "SELECT * FROM locations where POSTCODE like @postcode";
 
             List<DTOs.Location> locations = new List<Location>();
 

@@ -29,6 +29,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "BUILDING_NAME")]).Returns("");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "BLPU_ORGANISATION")]).Returns("");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "STREET_DESCRIPTION")]).Returns("");
+            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "PAO_START_NUMBER")]).Returns("");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "LOCALITY")]).Returns("");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "TOWN_NAME")]).Returns("");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "POST_TOWN")]).Returns("");
