@@ -1,4 +1,8 @@
-﻿namespace GoatTrip.RestApi {
+﻿using System;
+using System.IO;
+using System.Web.Configuration;
+
+namespace GoatTrip.RestApi {
     using System.Reflection;
     using System.Web.Http;
     using Autofac;
@@ -14,8 +18,11 @@
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             //builder.RegisterWebApiFilterProvider(config);
+            var dbPath = WebConfigurationManager.AppSettings["sqLiteDb"].Replace(@"~\", "");
 
-            builder.RegisterModule(new LocationControllerModule("L:/Workspaces/GIT/Choices/location-service/src/GoatTrip.RestApi/bin/App_Data/"));
+
+            builder.RegisterModule(new ConnectionManagerModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dbPath)));
+            builder.RegisterModule(new LocationControllerModule());
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
