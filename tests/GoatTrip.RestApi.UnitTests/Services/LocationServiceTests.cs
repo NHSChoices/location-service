@@ -48,7 +48,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         }
 
         [Fact]
-        public void Get_WithInvliadQuery_ThrowsInvalidLocationQueryException() {
+        public void Get_WithInvalidQuery_ThrowsInvalidLocationQueryException() {
             _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(false);
 
             Assert.Throws<InvalidLocationQueryException>(() => _sut.Get(""));
@@ -56,6 +56,18 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void Get_WithExistingPostcode_ReturnsThatLocation() {
+            _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO11 1XX");
+
+            _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so11 1xx"))).Returns(new List<Location> {
+                new Location(_mockDataReader.Object)});
+
+            var result = _sut.Get("SO11 1XX").ToList();
+
+            AssertIsValidResult(result, 1, "SO11 1XX");
+        }
+
+        [Fact]
+        public void GetByAddress_WithExistingAddress_ReturnsThatLocation() {
             _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO11 1XX");
 
             _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so11 1xx"))).Returns(new List<Location> {
