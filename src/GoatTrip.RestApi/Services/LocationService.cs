@@ -28,6 +28,10 @@
             return groupedResult;
         }
 
+        public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
+            throw new System.NotImplementedException();
+        }
+
         private IEnumerable<LocationGroupModel> Group(IEnumerable<LocationModel> locations) {
             return locations.GroupBy(l => l.Postcode)
                 .Select(g => new LocationGroupModel {

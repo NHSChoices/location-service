@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\DependencyConfigTests.cs" />
-    <Compile Include="App_Start\WebApiConfigTests.cs" />
     <Compile Include="Controllers\BadRequestResultTests.cs" />
     <Compile Include="Controllers\LocationControllerTests.cs" />
     <Compile Include="Models\LocationModel.cs" />

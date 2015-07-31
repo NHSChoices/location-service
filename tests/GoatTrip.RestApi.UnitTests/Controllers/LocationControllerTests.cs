@@ -52,6 +52,15 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
             _mockLocationService.Verify(s => s.Get(It.Is<string>(q => q == "x")));
         }
 
+        [Fact]
+        public void GetByAddress_WithValidQuery_CallsService() {
+            _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>()))
+                .Returns(true);
+
+            _sut.GetByAddress("x");
+            _mockLocationService.Verify(s => s.GetByAddress(It.Is<string>(q => q == "x")));
+        }
+
         private readonly LocationController _sut;
         private readonly Mock<ILocationQueryValidator> _mockQueryValidator = new Mock<ILocationQueryValidator>();
         private readonly Mock<ILocationService> _mockLocationService = new Mock<ILocationService>();

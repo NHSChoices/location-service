@@ -12,11 +12,6 @@ namespace GoatTrip.RestApi {
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "{controller}/{query}",
-                defaults: new { query = RouteParameter.Optional }
-            );
 
             config.Formatters.Add(new BrowserJsonFormatter(true));
         }
