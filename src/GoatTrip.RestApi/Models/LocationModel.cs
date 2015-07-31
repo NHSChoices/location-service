@@ -31,5 +31,6 @@
         public string PostcodeLocator { get; set; }
 
         public CoordinateModel Coordinate { get; set; }
+        public string HouseNumber { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿
 namespace GoatTrip.RestApi.UnitTests.Controllers {
-
     using System.Net.Http;
     using System.Web.Http;
     using Moq;
@@ -57,4 +56,5 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         private readonly Mock<ILocationQueryValidator> _mockQueryValidator = new Mock<ILocationQueryValidator>();
         private readonly Mock<ILocationService> _mockLocationService = new Mock<ILocationService>();
     }
+
 }

@@ -9,6 +9,7 @@ namespace GoatTrip.RestApi {
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             DependancyConfig.Configure();
+
         }
     }
 }

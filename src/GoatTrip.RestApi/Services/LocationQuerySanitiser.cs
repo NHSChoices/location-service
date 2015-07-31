@@ -9,7 +9,7 @@ namespace GoatTrip.RestApi.Services {
         }
 
         private static string EnsureSingleSpace(string query) {
-            return Regex.Replace(query, @"\s+", "");
+            return Regex.Replace(query, @"\s+", " ");
         }
     }
 }
