@@ -35,5 +35,11 @@ namespace GoatTrip.DAL
             return locations;
         }
 
+
+
+        public IEnumerable<Location> FindLocationsbyAddress(string addressLookup)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
