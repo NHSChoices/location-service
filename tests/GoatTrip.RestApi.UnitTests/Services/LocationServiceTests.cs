@@ -5,9 +5,8 @@ namespace GoatTrip.RestApi.UnitTests.Services {
     using System.Linq;
     using DAL;
     using DAL.DTOs;
-    using Microsoft.SqlServer.Server;
-    using Models;
     using Moq;
+    using RestApi.Models;
     using RestApi.Services;
     using Xunit;
 

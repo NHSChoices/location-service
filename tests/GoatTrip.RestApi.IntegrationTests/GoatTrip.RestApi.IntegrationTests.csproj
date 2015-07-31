@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\LocationModelTests.cs" />
     <Compile Include="RouteInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingTests.cs" />
@@ -74,6 +75,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GoatTrip.DAL\GoatTrip.DAL.csproj">
+      <Project>{598E9A7D-1432-4AA4-A643-846E7BC06277}</Project>
+      <Name>GoatTrip.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\GoatTrip.RestApi\GoatTrip.RestApi.csproj">
       <Project>{af82d362-e392-4b5a-9b09-c8af97d53c0b}</Project>
       <Name>GoatTrip.RestApi</Name>
