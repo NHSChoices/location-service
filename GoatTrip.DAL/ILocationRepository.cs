@@ -9,5 +9,6 @@ namespace GoatTrip.DAL
     public interface ILocationRepository
     {
         IEnumerable<DTOs.Location> FindLocations(string postCode);
+        IEnumerable<DTOs.Location> FindLocationsbyAddress(string addressLookup);
     }
 }
