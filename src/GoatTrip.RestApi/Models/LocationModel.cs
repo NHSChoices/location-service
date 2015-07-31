@@ -2,6 +2,9 @@
     using DAL.DTOs;
 
     public class LocationModel {
+
+        public LocationModel() { }
+
         public LocationModel(Location location) {
             OrganisationName = location.OrganisationName;
             BuildingName = location.BuildingName;
@@ -12,6 +15,7 @@
             AdministrativeArea = location.AdministrativeArea;
             PostTown = location.PostalTown;
             Postcode = location.PostCode;
+            PostcodeLocator = location.PostcodeLocator;
             Coordinate = new CoordinateModel(location.XCoordinate, location.YCoordinate);
         }
 
@@ -32,7 +36,9 @@
 
         public string GroupDescription {
             get {
-                var result = Postcode;
+                var result = "";
+                if (!string.IsNullOrEmpty(Postcode))
+                    result += Postcode;
                 if (!string.IsNullOrEmpty(BuildingName))
                     result += ", " + BuildingName;
                 if (!string.IsNullOrEmpty(StreetDescription))

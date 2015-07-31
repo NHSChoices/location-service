@@ -86,7 +86,7 @@
     <Compile Include="App_Start\WebApiConfigTests.cs" />
     <Compile Include="Controllers\BadRequestResultTests.cs" />
     <Compile Include="Controllers\LocationControllerTests.cs" />
-    <Compile Include="Models\LocationModelTests.cs" />
+    <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Services\LocationQuerySanitiserTests.cs" />
     <Compile Include="Services\LocationQueryValidatorTests.cs" />
     <Compile Include="Services\LocationServiceTests.cs" />
