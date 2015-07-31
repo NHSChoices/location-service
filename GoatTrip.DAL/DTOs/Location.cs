@@ -14,7 +14,7 @@ namespace GoatTrip.DAL.DTOs
         public string PostCode { get; private set; }
         public string PostalTown { get; private set; }
         public string OrganisationName { get; private set; }
-       
+        public string PostcodeLocator { get; private set; }
         public string BuildingName { get; private set; }
         public string HouseNumber { get; private set; }
         public string TownName { get; private set; }
@@ -47,8 +47,10 @@ namespace GoatTrip.DAL.DTOs
                 this.TownName = readerDataObject["TOWN_NAME"].ToString();
             if (readerDataObject["POST_TOWN"] != DBNull.Value) 
                 this.PostalTown = readerDataObject["POST_TOWN"].ToString();
-            if (readerDataObject["POSTCODE"] != DBNull.Value) 
-                this.PostCode = readerDataObject["POSTCODE"].ToString();
+            if (readerDataObject["POSTCODE_LOCATOR"] != DBNull.Value)
+                this.PostCode = readerDataObject["POSTCODE_LOCATOR"].ToString();
+            if (readerDataObject["POSTCODE_LOCATOR"] != DBNull.Value)
+                this.PostcodeLocator = readerDataObject["POSTCODE_LOCATOR"].ToString().Replace(" ", "").ToLower();
             if (readerDataObject["X_COORDINATE"] != DBNull.Value) 
                 this.XCoordinate = float.Parse(readerDataObject["X_COORDINATE"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
             if (readerDataObject["Y_COORDINATE"] != DBNull.Value) 

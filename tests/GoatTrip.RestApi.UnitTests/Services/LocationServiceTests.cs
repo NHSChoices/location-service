@@ -10,8 +10,9 @@ namespace GoatTrip.RestApi.UnitTests.Services {
     using RestApi.Services;
     using Xunit;
 
-    public class LocationServiceTests {
-
+    public class LocationServiceTests
+    {
+        private const string POSTCODE_LOCATOR_FIELD = "POSTCODE_LOCATOR";
         public LocationServiceTests() {
 
             _mockQueryValidator = new Mock<ILocationQueryValidator>();
@@ -35,6 +36,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "POSTCODE")]).Returns("");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "X_COORDINATE")]).Returns("1.0");
             _mockDataReader.Setup(r => r[It.Is<string>(y => y == "Y_COORDINATE")]).Returns("2.0");
+            _mockDataReader.Setup(r => r[It.Is<string>(y => y == "POSTCODE_LOCATOR")]).Returns("");
 
         }
 
@@ -54,7 +56,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void Get_WithExistingPostcode_ReturnsThatLocation() {
-            _mockDataReader.Setup(r => r[It.Is<string>(p => p == "POSTCODE")]).Returns("SO11 1XX");
+            _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO11 1XX");
 
             _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so11 1xx"))).Returns(new List<Location> {
                 new Location(_mockDataReader.Object)});
@@ -66,7 +68,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void Get_WithMoreThanOneExistingPostcode_ReturnsAllMatchingLocations() {
-            _mockDataReader.Setup(r => r[It.Is<string>(p => p == "POSTCODE")]).Returns("SO22 2XX");
+            _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO22 2XX");
 
             _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx")))
                 .Returns(new List<Location> {
@@ -90,7 +92,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         [Fact]
         public void Get_WithPostcode_MatchesRegardlessOfCase() {
 
-            _mockDataReader.Setup(r => r[It.Is<string>(p => p == "POSTCODE")]).Returns("SO11 1XX");
+            _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO11 1XX");
 
             _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so11 1xx"))).Returns(new List<Location> {
                 new Location(_mockDataReader.Object)});
