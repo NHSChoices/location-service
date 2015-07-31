@@ -13,7 +13,7 @@
             _sanitiser = sanitiser;
         }
 
-        public IEnumerable<LocationGroupModel> Get(string query = "") {
+        public IEnumerable<LocationGroupModel> Get(string query) {
 
             ValidateAndThrow(query);
 
@@ -29,7 +29,15 @@
         }
 
         public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
-            throw new System.NotImplementedException();
+            ValidateAndThrow(addressQuery);
+
+            var results = _repository.FindLocationsbyAddress(addressQuery);
+
+            var locations = results.Select(l => new LocationModel(l));
+
+            var groupedResult = Group(locations);
+
+            return groupedResult;
         }
 
         private IEnumerable<LocationGroupModel> Group(IEnumerable<LocationModel> locations) {
