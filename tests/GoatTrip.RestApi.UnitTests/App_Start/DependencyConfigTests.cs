@@ -1,13 +1,12 @@
 ﻿
+using Autofac;
 using GoatTrip.DAL;
+using GoatTrip.RestApi.Controllers;
 using Moq;
+using Xunit;
 
 namespace GoatTrip.RestApi.UnitTests
 {
-    using Autofac;
-    using RestApi.Controllers;
-    using Xunit;
-
     public class DependencyConfigTests {
         private readonly IContainer _container;
 

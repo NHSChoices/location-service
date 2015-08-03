@@ -1,8 +1,8 @@
 ﻿
-namespace GoatTrip.RestApi.Controllers {
-    using System.Web.Http;
-    using Services;
+using System.Web.Http;
+using GoatTrip.RestApi.Services;
 
+namespace GoatTrip.RestApi.Controllers {
     [RoutePrefix("location")]
     public class LocationController
         : ApiController {

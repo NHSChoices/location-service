@@ -1,6 +1,6 @@
-﻿namespace GoatTrip.RestApi.Models {
-    using DAL.DTOs;
+﻿using GoatTrip.DAL.DTOs;
 
+namespace GoatTrip.RestApi.Models {
     public class LocationModel {
 
         public LocationModel() { }

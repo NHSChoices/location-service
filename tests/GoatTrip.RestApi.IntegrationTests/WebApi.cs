@@ -1,14 +1,14 @@
-﻿namespace GoatTrip.RestApi.IntegrationTests {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Web.Http;
-    using System.Web.Http.Controllers;
-    using System.Web.Http.Dispatcher;
-    using System.Web.Http.Hosting;
-    using System.Web.Http.Routing;
-    using Moq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Dispatcher;
+using System.Web.Http.Hosting;
+using System.Web.Http.Routing;
+using Moq;
 
+namespace GoatTrip.RestApi.IntegrationTests {
     public static class WebApi {
         public static RouteInfo RouteRequest(HttpConfiguration config, HttpRequestMessage request) {
             // create context

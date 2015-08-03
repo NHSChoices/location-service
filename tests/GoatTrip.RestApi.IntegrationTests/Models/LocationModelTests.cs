@@ -1,13 +1,13 @@
 ﻿
-namespace GoatTrip.RestApi.IntegrationTests.Models {
-    using System;
-    using System.Data;
-    using System.Linq;
-    using DAL.DTOs;
-    using Moq;
-    using RestApi.Models;
-    using Xunit;
+using System;
+using System.Data;
+using System.Linq;
+using GoatTrip.DAL.DTOs;
+using GoatTrip.RestApi.Models;
+using Moq;
+using Xunit;
 
+namespace GoatTrip.RestApi.IntegrationTests.Models {
     [Trait("Category", "integration")]
     public class LocationModelTests {
         private readonly Mock<IDataRecord> _mockDataReader;

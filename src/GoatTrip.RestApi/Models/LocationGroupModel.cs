@@ -1,6 +1,6 @@
-﻿namespace GoatTrip.RestApi.Models {
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace GoatTrip.RestApi.Models {
     public class LocationGroupModel {
 
         public string Description { get; set; }

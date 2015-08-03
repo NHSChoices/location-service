@@ -1,9 +1,9 @@
-namespace GoatTrip.RestApi {
-    using System;
-    using System.Net.Http.Formatting;
-    using System.Net.Http.Headers;
-    using Newtonsoft.Json;
+using System;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
+namespace GoatTrip.RestApi {
     public class BrowserJsonFormatter
         : JsonMediaTypeFormatter {
 

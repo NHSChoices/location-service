@@ -1,7 +1,7 @@
-namespace GoatTrip.RestApi.UnitTests.Services {
-    using RestApi.Services;
-    using Xunit;
+using GoatTrip.RestApi.Services;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Services {
     public class LocationQueryValidatorTests {
         [Fact]
         public void IsValid_WithLessThanOneCharacterQuery_ReturnsFalse() {
