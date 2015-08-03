@@ -1,8 +1,8 @@
-namespace GoatTrip.RestApi.UnitTests.Controllers {
-    using Moq;
-    using RestApi.Controllers;
-    using Xunit;
+using GoatTrip.RestApi.Controllers;
+using Moq;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Controllers {
     public class LocationControllerGetTests
         : LocationControllerBaseTests {
 

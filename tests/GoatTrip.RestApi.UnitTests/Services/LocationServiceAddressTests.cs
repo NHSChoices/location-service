@@ -1,11 +1,11 @@
-namespace GoatTrip.RestApi.UnitTests.Services {
-    using System.Collections.Generic;
-    using System.Linq;
-    using DAL.DTOs;
-    using Moq;
-    using RestApi.Services;
-    using Xunit;
+using System.Collections.Generic;
+using System.Linq;
+using GoatTrip.DAL.DTOs;
+using GoatTrip.RestApi.Services;
+using Moq;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Services {
     public class LocationServiceAddressTests
         : LocationServiceTestsBase {
 

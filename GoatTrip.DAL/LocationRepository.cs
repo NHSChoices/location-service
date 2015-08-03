@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
@@ -19,11 +12,11 @@ namespace GoatTrip.DAL
             _connectionManager = connectionManager;
         }
 
-        public IEnumerable<DTOs.Location> FindLocations(string postCode)
+        public IEnumerable<Location> FindLocations(string postCode)
         {
             string statement = "SELECT * FROM locations where POSTCODE_LOCATOR like @postcode";
 
-            List<DTOs.Location> locations = new List<Location>();
+            List<Location> locations = new List<Location>();
 
             using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@postcode", postCode + "%" } }))
             {
@@ -49,7 +42,7 @@ namespace GoatTrip.DAL
                                " or ADMINISTRATIVE_AREA like @address" +
                                " or POST_TOWN like @address";
 
-            List<DTOs.Location> locations = new List<Location>();
+            List<Location> locations = new List<Location>();
 
             using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@address", "%" + addressLookup + "%" } }))
             {

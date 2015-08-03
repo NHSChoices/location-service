@@ -1,11 +1,11 @@
 ﻿
-namespace GoatTrip.RestApi.IntegrationTests {
-    using System.Linq;
-    using System.Net.Http;
-    using System.Web.Http;
-    using Controllers;
-    using Xunit;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using GoatTrip.RestApi.Controllers;
+using Xunit;
 
+namespace GoatTrip.RestApi.IntegrationTests {
     [Trait("Category", "integration")]
     public class RoutingTests
     {

@@ -1,7 +1,7 @@
-namespace GoatTrip.RestApi.UnitTests.Services {
-    using RestApi.Services;
-    using Xunit;
+using GoatTrip.RestApi.Services;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Services {
     public class LocationQuerySanitiserTests {
 
         [Fact(Skip = "DB needs to be updated to exclude spaces, currently spaces aren't stripped in code.")]

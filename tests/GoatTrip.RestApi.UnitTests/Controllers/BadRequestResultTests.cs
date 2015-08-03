@@ -1,12 +1,12 @@
-﻿namespace GoatTrip.RestApi.UnitTests.Controllers {
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Web.Http;
-    using Moq;
-    using RestApi.Controllers;
-    using Xunit;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Web.Http;
+using GoatTrip.RestApi.Controllers;
+using Moq;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Controllers {
     public class BadRequestResultTests {
 
         [Fact]

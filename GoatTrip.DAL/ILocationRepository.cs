@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
 {
     public interface ILocationRepository
     {
-        IEnumerable<DTOs.Location> FindLocations(string postCode);
-        IEnumerable<DTOs.Location> FindLocationsbyAddress(string addressLookup);
+        IEnumerable<Location> FindLocations(string postCode);
+        IEnumerable<Location> FindLocationsbyAddress(string addressLookup);
     }
 }

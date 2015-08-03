@@ -1,9 +1,9 @@
-namespace GoatTrip.RestApi {
-    using Autofac;
-    using Controllers;
-    using DAL;
-    using Services;
+using Autofac;
+using GoatTrip.DAL;
+using GoatTrip.RestApi.Controllers;
+using GoatTrip.RestApi.Services;
 
+namespace GoatTrip.RestApi {
     public class LocationControllerModule
         : Module {
 

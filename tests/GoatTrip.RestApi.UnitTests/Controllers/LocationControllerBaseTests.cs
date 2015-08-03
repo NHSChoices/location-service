@@ -1,10 +1,10 @@
-namespace GoatTrip.RestApi.UnitTests.Controllers {
-    using System.Net.Http;
-    using System.Web.Http;
-    using Moq;
-    using RestApi.Controllers;
-    using RestApi.Services;
+using System.Net.Http;
+using System.Web.Http;
+using GoatTrip.RestApi.Controllers;
+using GoatTrip.RestApi.Services;
+using Moq;
 
+namespace GoatTrip.RestApi.UnitTests.Controllers {
     public abstract class LocationControllerBaseTests {
         protected LocationControllerBaseTests() {
             var httpRequestMessage = new HttpRequestMessage();

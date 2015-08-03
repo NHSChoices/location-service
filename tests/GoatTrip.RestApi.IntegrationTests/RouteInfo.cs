@@ -1,8 +1,7 @@
-﻿namespace GoatTrip.RestApi.IntegrationTests {
+﻿using System;
+using System.Web.Http.Routing;
 
-    using System;
-    using System.Web.Http.Routing;
-
+namespace GoatTrip.RestApi.IntegrationTests {
     public class RouteInfo {
         public Type Controller { get; set; }
 

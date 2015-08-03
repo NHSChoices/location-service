@@ -1,10 +1,10 @@
 ﻿
-namespace GoatTrip.DAL.UnitTests {
-    using System.Data;
-    using Moq;
-    using Xunit;
-    using FluentAssertions;
+using System.Data;
+using FluentAssertions;
+using Moq;
+using Xunit;
 
+namespace GoatTrip.DAL.UnitTests {
     public class LocationRepositoryTests {
 
         public LocationRepositoryTests() {

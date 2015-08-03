@@ -1,8 +1,9 @@
 ﻿
-namespace GoatTrip.RestApi {
-    using System.Web.Http;
+using System.Web;
+using System.Web.Http;
 
-    public class WebApiApplication : System.Web.HttpApplication {
+namespace GoatTrip.RestApi {
+    public class WebApiApplication : HttpApplication {
 
         protected void Application_Start() {
 

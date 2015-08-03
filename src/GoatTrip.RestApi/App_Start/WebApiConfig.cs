@@ -1,8 +1,7 @@
 ﻿
-namespace GoatTrip.RestApi {
-    using System.Net.Http.Headers;
-    using System.Web.Http;
+using System.Web.Http;
 
+namespace GoatTrip.RestApi {
     public static class WebApiConfig {
 
         public static void Register(HttpConfiguration config) {

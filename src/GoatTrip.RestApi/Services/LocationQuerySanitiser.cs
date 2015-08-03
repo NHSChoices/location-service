@@ -1,6 +1,6 @@
-namespace GoatTrip.RestApi.Services {
-    using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
+namespace GoatTrip.RestApi.Services {
     public class LocationQuerySanitiser
         : ILocationQuerySanitiser {
         public string Sanitise(string query) {

@@ -1,10 +1,9 @@
+using System.Linq;
+using GoatTrip.RestApi.Services;
+using Moq;
+using Xunit;
+
 namespace GoatTrip.RestApi.UnitTests.Services {
-    using System.Linq;
-    using Moq;
-    using RestApi.Services;
-    using Xunit;
-
-
     public class LocationServiceTests : LocationServiceTestsBase {
 
         [Fact]
