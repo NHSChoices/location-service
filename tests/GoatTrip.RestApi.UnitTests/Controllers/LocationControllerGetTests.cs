@@ -1,22 +1,10 @@
-﻿
 namespace GoatTrip.RestApi.UnitTests.Controllers {
-    using System.Net.Http;
-    using System.Web.Http;
     using Moq;
     using RestApi.Controllers;
-    using RestApi.Services;
     using Xunit;
 
-    public class LocationControllerTests {
-
-        public LocationControllerTests() {
-            var httpRequestMessage = new HttpRequestMessage();
-            httpRequestMessage.SetConfiguration(new HttpConfiguration());
-
-            _sut = new LocationController(_mockQueryValidator.Object, _mockLocationService.Object) {
-                Request = httpRequestMessage
-            };
-        }
+    public class LocationControllerGetTests
+        : LocationControllerBaseTests {
 
         [Fact]
         public void Get_Always_CallsIsValid() {
@@ -51,10 +39,5 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
             _sut.Get("x");
             _mockLocationService.Verify(s => s.Get(It.Is<string>(q => q == "x")));
         }
-
-        private readonly LocationController _sut;
-        private readonly Mock<ILocationQueryValidator> _mockQueryValidator = new Mock<ILocationQueryValidator>();
-        private readonly Mock<ILocationService> _mockLocationService = new Mock<ILocationService>();
     }
-
 }

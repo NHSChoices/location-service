@@ -31,7 +31,8 @@
 
             return new RouteInfo {
                 Controller = controllerDescriptor.ControllerType,
-                Action = actionMapping.ActionName
+                Action = actionMapping.ActionName,
+                RouteData = controllerContext.RouteData
             };
         }
 

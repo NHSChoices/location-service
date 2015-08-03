@@ -2,7 +2,7 @@
 
 ## Overview
 
-The location service enables developers to query [Ordnance Survey AddressBase Plus](https://www.ordnancesurvey.co.uk/business-and-government/products/addressbase-plus.html) data via a convenient and strucutered REST API. 
+The location service enables developers to query [Ordnance Survey AddressBase Plus](https://www.ordnancesurvey.co.uk/business-and-government/products/addressbase-plus.html) data via. a convenient and structured REST API. 
 
 ## Versioning
 

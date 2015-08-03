@@ -42,16 +42,16 @@ namespace GoatTrip.DAL
                                "ORGANISATION_NAME like @address" +
                                " or BUILDING_NAME like @address" +
                                " or PAO_START_NUMBER like @address" +
-                               " or PAO_START_SUFFIX like @address" +
+                               //" or PAO_START_SUFFIX like @address" +
                                " or STREET_DESCRIPTION like @address" +
                                " or LOCALITY like @address" +
                                " or TOWN_NAME like @address" +
                                " or ADMINISTRATIVE_AREA like @address" +
                                " or POST_TOWN like @address";
-
+            1
             List<DTOs.Location> locations = new List<Location>();
 
-            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@postcode", "%" + addressLookup + "%" } }))
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@address", "%" + addressLookup + "%" } }))
             {
                 while (reader.Read())
                 {

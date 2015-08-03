@@ -3,6 +3,7 @@ namespace GoatTrip.RestApi.Controllers {
     using System.Web.Http;
     using Services;
 
+    [RoutePrefix("location")]
     public class LocationController
         : ApiController {
 
@@ -11,7 +12,20 @@ namespace GoatTrip.RestApi.Controllers {
             _service = service;
         }
 
-        public IHttpActionResult Get(string query="") {
+        [Route("address/{query}")]
+        public IHttpActionResult GetByAddress(string query = "") {
+
+            if (!_queryValidator.IsValid(query)) {
+                return new BadRequestResult(Request, query);
+            }
+
+            var result = _service.GetByAddress(query);
+
+            return Ok(result);
+        }
+
+        [Route("{query?}")]
+        public IHttpActionResult Get(string query = "") {
 
             if (!_queryValidator.IsValid(query)) {
                 return new BadRequestResult(Request, query);
