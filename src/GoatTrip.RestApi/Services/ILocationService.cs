@@ -4,5 +4,6 @@
 
     public interface ILocationService {
         IEnumerable<LocationGroupModel> Get(string query);
+        IEnumerable<LocationGroupModel> GetByAddress(string addressQuery);
     }
 }
