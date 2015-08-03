@@ -13,13 +13,25 @@
             _sanitiser = sanitiser;
         }
 
-        public IEnumerable<LocationGroupModel> Get(string query = "") {
+        public IEnumerable<LocationGroupModel> Get(string query) {
 
             ValidateAndThrow(query);
 
             var sanitisedQuery = _sanitiser.Sanitise(query);
 
             var results = _repository.FindLocations(sanitisedQuery);
+
+            var locations = results.Select(l => new LocationModel(l));
+
+            var groupedResult = Group(locations);
+
+            return groupedResult;
+        }
+
+        public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
+            ValidateAndThrow(addressQuery);
+
+            var results = _repository.FindLocationsbyAddress(addressQuery);
 
             var locations = results.Select(l => new LocationModel(l));
 
