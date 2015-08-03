@@ -37,9 +37,28 @@ namespace GoatTrip.DAL
 
 
 
-        public IEnumerable<Location> FindLocationsbyAddress(string addressLookup)
-        {
-            throw new NotImplementedException();
+        public IEnumerable<Location> FindLocationsbyAddress(string addressLookup) {
+            string statement = "SELECT * FROM locations where " +
+                               "ORGANISATION_NAME like @address" +
+                               " or BUILDING_NAME like @address" +
+                               " or PAO_START_NUMBER like @address" +
+                               " or PAO_START_SUFFIX like @address" +
+                               " or STREET_DESCRIPTION like @address" +
+                               " or LOCALITY like @address" +
+                               " or TOWN_NAME like @address" +
+                               " or ADMINISTRATIVE_AREA like @address" +
+                               " or POST_TOWN like @address";
+
+            List<DTOs.Location> locations = new List<Location>();
+
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@postcode", "%" + addressLookup + "%" } }))
+            {
+                while (reader.Read())
+                {
+                    locations.Add(new Location(reader.DataReader));
+                }
+            }
+            return locations;
         }
     }
 }

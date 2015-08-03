@@ -25,18 +25,18 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _sut = new LocationService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
 
             _mockDataReader = new Mock<IDataRecord>();
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "ADMINISTRATIVE_AREA")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "BUILDING_NAME")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "BLPU_ORGANISATION")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "STREET_DESCRIPTION")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "PAO_START_NUMBER")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "LOCALITY")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "TOWN_NAME")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "POST_TOWN")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "POSTCODE")]).Returns("");
-            _mockDataReader.Setup(r => r[It.Is<string>(x => x == "X_COORDINATE")]).Returns("1.0");
-            _mockDataReader.Setup(r => r[It.Is<string>(y => y == "Y_COORDINATE")]).Returns("2.0");
-            _mockDataReader.Setup(r => r[It.Is<string>(y => y == "POSTCODE_LOCATOR")]).Returns("");
+            _mockDataReader.Setup(r => r["ADMINISTRATIVE_AREA"]).Returns("");
+            _mockDataReader.Setup(r => r["BUILDING_NAME"]).Returns("");
+            _mockDataReader.Setup(r => r["BLPU_ORGANISATION"]).Returns("");
+            _mockDataReader.Setup(r => r["STREET_DESCRIPTION"]).Returns("");
+            _mockDataReader.Setup(r => r["PAO_START_NUMBER"]).Returns("");
+            _mockDataReader.Setup(r => r["LOCALITY"]).Returns("");
+            _mockDataReader.Setup(r => r["TOWN_NAME"]).Returns("");
+            _mockDataReader.Setup(r => r["POST_TOWN"]).Returns("");
+            _mockDataReader.Setup(r => r["POSTCODE"]).Returns("");
+            _mockDataReader.Setup(r => r["X_COORDINATE"]).Returns("1.0");
+            _mockDataReader.Setup(r => r["Y_COORDINATE"]).Returns("2.0");
+            _mockDataReader.Setup(r => r["POSTCODE_LOCATOR"]).Returns("");
 
         }
 

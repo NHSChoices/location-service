@@ -5,21 +5,31 @@ namespace GoatTrip.RestApi.IntegrationTests {
     using Controllers;
     using Xunit;
 
+    [Trait("Category", "integration")]
     public class RoutingTests {
+
         [Fact]
-        [Trait("Category", "integration")]
-        public void AllRoutes_Always_RouteToCorrectControllerMethods() {
-            // arrange
+        public void LocationGet_Always_RoutesCorrectly() {
             var request = new HttpRequestMessage(HttpMethod.Get, "http://domain/location/");
             var config = new HttpConfiguration();
 
-            // act
             WebApiConfig.Register(config);
             var route = WebApi.RouteRequest(config, request);
 
-            // asserts
             Assert.Equal(typeof(LocationController), route.Controller);
             Assert.Equal("Get", route.Action);
+        }
+
+        [Fact]
+        public void LocationGetByAddress_Always_RoutesCorrectly() {
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://domain/location/address/someaddress");
+            var config = new HttpConfiguration();
+
+            WebApiConfig.Register(config);
+            var route = WebApi.RouteRequest(config, request);
+
+            Assert.Equal(typeof(LocationController), route.Controller);
+            Assert.Equal("GetByAddress", route.Action);
         }
     }
 }
