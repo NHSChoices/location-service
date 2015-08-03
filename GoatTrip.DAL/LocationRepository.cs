@@ -48,7 +48,7 @@ namespace GoatTrip.DAL
                                " or TOWN_NAME like @address" +
                                " or ADMINISTRATIVE_AREA like @address" +
                                " or POST_TOWN like @address";
-            1
+
             List<DTOs.Location> locations = new List<Location>();
 
             using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@address", "%" + addressLookup + "%" } }))
