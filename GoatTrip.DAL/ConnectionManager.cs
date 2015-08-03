@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -12,10 +13,18 @@ namespace GoatTrip.DAL
 {
     public class ConnectionManager: IConnectionManager
     {
+        private static SQLiteConnectionStringBuilder conStr = new SQLiteConnectionStringBuilder()
+        {
+            FullUri = "file::memory:?cache=shared", 
+            JournalMode = SQLiteJournalModeEnum.Wal,
+            Pooling = true,
+            Version = 3
+
+        };
         private string _dbFileLocation = @"C:\DASProjects\Development\LocationServiceTest\LocationCSVs\locations.db";
         private string _connectionString;
         private SQLiteConnection _diskDbConnection;
-        private SQLiteConnection inMemConnection = new SQLiteConnection("FullUri=file::memory:?cache=shared&PRAGMA read_uncommitted = true;");
+        private static SQLiteConnection inMemConnection = new SQLiteConnection(conStr.ToString());
         public ConnectionManager(string dbFileLocation)
         {
             _dbFileLocation = dbFileLocation;
@@ -50,8 +59,9 @@ namespace GoatTrip.DAL
 
         public IManagedDataReader GetReader(string statement, StatementParamaters statementParamaters)
         {
-
+            
             SQLiteCommand command = new SQLiteCommand(statement, GetSqLiteInMemoryDbConnection());
+       
             foreach (var parameter in statementParamaters)
             {
                 command.Parameters.AddWithValue(parameter.Key, parameter.Value);
