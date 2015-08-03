@@ -1,7 +1,7 @@
-﻿namespace GoatTrip.RestApi.Services {
-    using System;
-    using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
+namespace GoatTrip.RestApi.Services {
     [Serializable]
     public class InvalidLocationQueryException
         : Exception {

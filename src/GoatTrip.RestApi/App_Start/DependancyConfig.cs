@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Web.Configuration;
+using System.Web.Http;
+using Autofac;
+using Autofac.Integration.WebApi;
 
 namespace GoatTrip.RestApi {
-    using System.Reflection;
-    using System.Web.Http;
-    using Autofac;
-    using Autofac.Integration.WebApi;
-
     public static class DependancyConfig {
 
         public static void Configure() {

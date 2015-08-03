@@ -1,8 +1,8 @@
 ﻿
-namespace GoatTrip.RestApi.UnitTests.Models {
-    using RestApi.Models;
-    using Xunit;
+using GoatTrip.RestApi.Models;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Models {
     public class LocationModelTests {
 
         [Fact]

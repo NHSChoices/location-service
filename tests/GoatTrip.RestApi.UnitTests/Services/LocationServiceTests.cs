@@ -1,10 +1,11 @@
-namespace GoatTrip.RestApi.UnitTests.Services {
-    using System.Linq;
-    using Moq;
-    using RestApi.Services;
-    using Xunit;
+using System.Linq;
+using GoatTrip.RestApi.Services;
+using Moq;
+using Xunit;
 
+namespace GoatTrip.RestApi.UnitTests.Services {
     public class LocationServiceTests : LocationServiceTestsBase {
+
         [Fact]
         public void Get_Always_CallsIsValid() {
             _sut.Get("ANY");

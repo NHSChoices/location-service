@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GoatTrip.RestApi.FunctionalTets")]
+[assembly: AssemblyTitle("GoatTrip.DAL.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("GoatTrip.RestApi.FunctionalTets")]
+[assembly: AssemblyProduct("GoatTrip.DAL.UnitTests")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f43d21ec-8321-4f4b-a60b-7c84e551e2f6")]
+[assembly: Guid("41d233e5-437c-4302-9696-935fa5e11f56")]
 
 // Version information for an assembly consists of the following four values:
 //
