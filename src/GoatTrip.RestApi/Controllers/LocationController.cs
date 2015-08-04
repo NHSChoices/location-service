@@ -1,8 +1,8 @@
-﻿
-using System.Web.Http;
+﻿using System.Web.Http;
 using GoatTrip.RestApi.Services;
 
 namespace GoatTrip.RestApi.Controllers {
+    
     [RoutePrefix("location")]
     public class LocationController
         : ApiController {
@@ -13,6 +13,7 @@ namespace GoatTrip.RestApi.Controllers {
         }
 
         [Route("address/{query}")]
+        [Authentication.Authorize]
         public IHttpActionResult GetByAddress(string query = "") {
 
             if (!_queryValidator.IsValid(query)) {
@@ -25,6 +26,7 @@ namespace GoatTrip.RestApi.Controllers {
         }
 
         [Route("{query?}")]
+        [Authentication.Authorize]
         public IHttpActionResult Get(string query = "") {
 
             if (!_queryValidator.IsValid(query)) {

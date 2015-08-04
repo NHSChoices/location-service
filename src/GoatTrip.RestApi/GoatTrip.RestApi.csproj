@@ -121,6 +121,8 @@
     <Compile Include="App_Start\LocationControllerModule.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Authentication\CertificateAuthentication.cs" />
+    <Compile Include="Authentication\PageAuthorizationAttribute.cs" />
     <Compile Include="Controllers\BadRequestResult.cs" />
     <Compile Include="App_Start\DependancyConfig.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
