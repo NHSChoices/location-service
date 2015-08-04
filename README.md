@@ -8,7 +8,11 @@ The location service enables developers to query [Ordnance Survey AddressBase Pl
 As the system load data object > 2GB into memory the platform target must be x64
 IIS express need the following reg key adding to run x64 targets
 
-reg add HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\11.0\WebProjects /v Use64BitIISExpress /t REG_DWORD /d 1
+### For VS 2113
+reg add HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\12.0\WebProjects /v Use64BitIISExpress /t REG_DWORD /d 1
+N.B. Use Visual studio vesrion approprite to you install
+
+RESTART IIS
 
 
 ## Versioning
