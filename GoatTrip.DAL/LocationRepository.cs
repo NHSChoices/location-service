@@ -18,7 +18,7 @@ namespace GoatTrip.DAL
 
             List<Location> locations = new List<Location>();
 
-            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@postcode", postCode.ToUpper()}, { "@postcodematch", postCode.ToUpper() + "{" } }))
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@postcode", postCode}, { "@postcodematch", postCode+ "{" } }))
             {
                 while (reader.Read())
                 {
@@ -31,20 +31,14 @@ namespace GoatTrip.DAL
 
 
         public IEnumerable<Location> FindLocationsbyAddress(string addressLookup) {
-            string statement = "SELECT * FROM locations where " +
-                               "ORGANISATION_NAME like @address" +
-                               " or BUILDING_NAME like @address" +
-                               " or PAO_START_NUMBER like @address" +
-                               //" or PAO_START_SUFFIX like @address" +
-                               " or STREET_DESCRIPTION like @address" +
-                               " or LOCALITY like @address" +
-                               " or TOWN_NAME like @address" +
-                               " or ADMINISTRATIVE_AREA like @address" +
-                               " or POST_TOWN like @address";
+            string statement = "SELECT * FROM locations WHERE " +
+                               "locationId IN(" +
+                               "SELECT docid FROM locations_srch WHERE locations_srch MATCH @addressSearch" +
+                               " ORDER BY PAO_START_NUMBER, STREET_DESCRIPTION, TOWN_NAME LIMIT 100)";
 
             List<Location> locations = new List<Location>();
 
-            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@address", "%" + addressLookup + "%" } }))
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@addressSearch", "'" + addressLookup + "*'" } }))
             {
                 while (reader.Read())
                 {
