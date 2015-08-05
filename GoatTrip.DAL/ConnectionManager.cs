@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 
 namespace GoatTrip.DAL
 {
@@ -18,6 +19,9 @@ namespace GoatTrip.DAL
         private string _connectionString;
         private SQLiteConnection _diskDbConnection;
         private static SQLiteConnection inMemConnection = new SQLiteConnection(conStr.ToString());
+        private bool _memConnectionInitialised = false;
+        private bool _memConnectionInitialising = false;
+
         public ConnectionManager(string dbFileLocation)
         {
             _dbFileLocation = dbFileLocation;
@@ -36,17 +40,16 @@ namespace GoatTrip.DAL
         private SQLiteConnection GetSqLiteInMemoryDbConnection()
         {
             EnsureInMemConnectionInitilised();
-            return new SQLiteConnection(inMemConnection.ConnectionString);
+            if(_memConnectionInitialised)
+                return new SQLiteConnection(inMemConnection.ConnectionString);
+            return new SQLiteConnection(_diskDbConnection.ConnectionString);
         }
 
         private void EnsureInMemConnectionInitilised()
         {
-            if (inMemConnection.State != ConnectionState.Open)
+            if (inMemConnection.State != ConnectionState.Open && !_memConnectionInitialising)
             {
-                _diskDbConnection.Open();
-                inMemConnection.Open();
-                CopyToInMemory();
-                _diskDbConnection.Close();
+                CopyToInMemory();   
             }
         }
 
@@ -62,9 +65,15 @@ namespace GoatTrip.DAL
             return new ManagedDataReader(command);
         }
 
-        private void CopyToInMemory()
+        private async void CopyToInMemory()
         {
-            _diskDbConnection.BackupDatabase(inMemConnection, "main", "main", -1, null, 0);
+            _memConnectionInitialising = true;
+            _diskDbConnection.Open();
+            inMemConnection.Open();
+            await Task.Run(() => _diskDbConnection.BackupDatabase(inMemConnection, "main", "main", -1, null, 0));
+            _memConnectionInitialised = true;
+            _diskDbConnection.Close();
+            _memConnectionInitialising = false;
         }
 
     }
