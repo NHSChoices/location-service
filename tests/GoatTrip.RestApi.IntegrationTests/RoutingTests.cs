@@ -48,18 +48,6 @@ namespace GoatTrip.RestApi.IntegrationTests {
 
         }
 
-        [Fact]
-        public void InfoGet_Always_RoutesCorrectly() {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://domain/info");
-            var config = new HttpConfiguration();
-
-            WebApiConfig.Register(config);
-            var route = WebApi.RouteRequest(config, request);
-
-            Assert.Equal(typeof(InfoController), route.Controller);
-            Assert.Equal("Get", route.Action);
-
-        }
 
     }
 }
