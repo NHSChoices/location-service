@@ -31,7 +31,7 @@ namespace GoatTrip.RestApi {
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new ConnectionManager(_databasePath)).As<IConnectionManager>();
+            builder.Register(c => new ConnectionManager(_databasePath)).As<IConnectionManager>().SingleInstance();
             builder.Register(c => new LocationRepository(c.Resolve<IConnectionManager>())).As<ILocationRepository>();
         }
 
