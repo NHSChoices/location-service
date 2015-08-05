@@ -12,8 +12,8 @@
 
         [Route("")]
         [Authentication.Authorize]
-        public IHttpActionResult Get()
-        {
+        public IHttpActionResult Get() {
+
             var model = new InfoModel {
                 InMemoryDbInitialised = _connectionManager.InMemoryDbInitialised
             };
