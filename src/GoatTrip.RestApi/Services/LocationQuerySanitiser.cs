@@ -6,10 +6,10 @@ namespace GoatTrip.RestApi.Services {
         public string Sanitise(string query) {
             query = query.ToLower();
             query = query.Replace(",", " ");
-            return EnsureSingleSpace(query).Trim();
+            return EnsureNoSpaces(query).Trim();
         }
 
-        private static string EnsureSingleSpace(string query) {
+        private static string EnsureNoSpaces(string query) {
             return Regex.Replace(query, @"\s+", "");
         }
     }
