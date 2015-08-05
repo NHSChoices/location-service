@@ -29,6 +29,11 @@ namespace GoatTrip.DAL
            _diskDbConnection = new SQLiteConnection(_connectionString);
         }
 
+        public bool InMemoryDbInitialised
+        {
+            get { return _memConnectionInitialised; }
+        }
+
         public IDbConnection OpenInMemoryDbConnection()
         {
             var conn = GetSqLiteInMemoryDbConnection();
