@@ -7,5 +7,8 @@ namespace GoatTrip.DAL
         IDbConnection OpenInMemoryDbConnection();
 
         IManagedDataReader GetReader(string statement, StatementParamaters paramsCollection);
+
+        bool InMemoryDbInitialised { get; }
+
     }
 }

@@ -39,5 +39,4 @@ namespace GoatTrip.RestApi.Controllers {
         private readonly ILocationQueryValidator _queryValidator;
         private readonly ILocationService _service;
     }
-
 }
