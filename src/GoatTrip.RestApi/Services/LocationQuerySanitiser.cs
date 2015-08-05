@@ -1,16 +1,15 @@
 using System.Text.RegularExpressions;
 
 namespace GoatTrip.RestApi.Services {
-    public class LocationQuerySanitiser
+    public class PostcodeQuerySanitiser
         : ILocationQuerySanitiser {
         public string Sanitise(string query) {
             query = query.ToLower();
-            query = query.Replace(",", " ");
-            return EnsureSingleSpace(query).Trim();
+            return EnsureNoSpaces(query).Trim();
         }
 
-        private static string EnsureSingleSpace(string query) {
-            return Regex.Replace(query, @"\s+", " ");
+        private static string EnsureNoSpaces(string query) {
+            return Regex.Replace(query, @"\s+", "");
         }
     }
 }
