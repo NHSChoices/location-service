@@ -5,6 +5,7 @@ namespace GoatTrip.RestApi.Services {
         : ILocationQuerySanitiser {
         public string Sanitise(string query) {
             query = query.ToLower();
+            query = query.Replace(",", " ");
             return EnsureSingleSpace(query).Trim();
         }
 
