@@ -29,13 +29,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         [Fact]
         public void Sanitise_WithCommaInQuery_ReplacesCommaWithSpace() {
             var result = _sut.Sanitise("Some,address");
-            Assert.Equal("some address", result);
-        }
-
-        [Fact]
-        public void Sanitise_WithDoubleSpaceInQuery_ReplacesDoubleSpaceWithSingle() {
-            var result = _sut.Sanitise("Some  address");
-            Assert.Equal("some address", result);
+            Assert.Equal("someaddress", result);
         }
 
         readonly LocationQuerySanitiser _sut = new LocationQuerySanitiser();
