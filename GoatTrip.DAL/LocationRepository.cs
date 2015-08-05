@@ -34,7 +34,7 @@ namespace GoatTrip.DAL
             string statement = "SELECT * FROM locations WHERE " +
                                "locationId IN(" +
                                "SELECT docid FROM locations_srch WHERE locations_srch MATCH @addressSearch" +
-                               ")";
+                               " ORDER BY PAO_START_NUMBER, STREET_DESCRIPTION, TOWN_NAME LIMIT 100)";
 
             List<Location> locations = new List<Location>();
 
