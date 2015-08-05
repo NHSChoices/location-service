@@ -1,8 +1,9 @@
-using GoatTrip.RestApi.Services;
-using Xunit;
 
 namespace GoatTrip.RestApi.UnitTests.Services {
-    public class LocationQuerySanitiserTests {
+    using GoatTrip.RestApi.Services;
+    using Xunit;
+
+    public class PostcodeQuerySanitiserTests {
 
         [Fact]
         public void Sanitise_WithExtranuousSpacesInQuery_StripsSpaces() {
@@ -19,7 +20,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             Assert.Equal("so111xx", result);
 
         }
-
+            
         [Fact]
         public void Sanitise_WithUpperCaseQuery_ReturnsLowerCaseQuery() {
             var result = _sut.Sanitise("SO111XX");
@@ -27,12 +28,11 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         }
 
         [Fact]
-        public void Sanitise_WithCommaInQuery_ReplacesCommaWithSpace() {
-            var result = _sut.Sanitise("Some,address");
-            Assert.Equal("someaddress", result);
+        public void Sanitise_WithSpacesRoundQuery_TrimsQuery() {
+            var result = _sut.Sanitise("   SO111XX ");
+            Assert.Equal("so111xx", result);
         }
 
-        readonly LocationQuerySanitiser _sut = new LocationQuerySanitiser();
-
+        private readonly PostcodeQuerySanitiser _sut = new PostcodeQuerySanitiser();
     }
 }

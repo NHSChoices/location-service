@@ -1,11 +1,10 @@
 using System.Text.RegularExpressions;
 
 namespace GoatTrip.RestApi.Services {
-    public class LocationQuerySanitiser
+    public class PostcodeQuerySanitiser
         : ILocationQuerySanitiser {
         public string Sanitise(string query) {
             query = query.ToLower();
-            query = query.Replace(",", " ");
             return EnsureNoSpaces(query).Trim();
         }
 

@@ -1,14 +1,15 @@
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using GoatTrip.DAL;
-using GoatTrip.DAL.DTOs;
-using GoatTrip.RestApi.Models;
-using GoatTrip.RestApi.Services;
-using Moq;
-using Xunit;
 
 namespace GoatTrip.RestApi.UnitTests.Services {
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using DAL;
+    using DAL.DTOs;
+    using RestApi.Models;
+    using RestApi.Services;
+    using Moq;
+    using Xunit;
+
     public abstract class LocationServiceTestsBase
     {
         protected LocationServiceTestsBase() {
@@ -20,7 +21,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockQuerySanitiser = new Mock<ILocationQuerySanitiser>();
             _mockQuerySanitiser.Setup(s => s.Sanitise(It.IsAny<string>())).Returns<string>(q => q.ToLower());
 
-            _sut = new LocationService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
+            _sut = new LocationService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, _mockQuerySanitiser.Object);
 
             _mockDataReader = new Mock<IDataRecord>();
             _mockDataReader.Setup(r => r[It.IsAny<string>()]).Returns("");

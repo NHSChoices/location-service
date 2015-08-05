@@ -7,17 +7,17 @@ namespace GoatTrip.RestApi.Services {
     public class LocationService
         : ILocationService {
 
-        public LocationService(ILocationRepository repository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser sanitiser) {
+        public LocationService(ILocationRepository repository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationQuerySanitiser searchSanitiser) {
             _repository = repository;
             _queryValidator = queryValidator;
-            _sanitiser = sanitiser;
+            _postCodeSanitiser = postCodeSanitiser;
+            _searchSanitiser = searchSanitiser;
         }
 
         public IEnumerable<LocationGroupModel> Get(string query) {
-
             ValidateAndThrow(query);
 
-            var sanitisedQuery = _sanitiser.Sanitise(query);
+            var sanitisedQuery = _postCodeSanitiser.Sanitise(query);
 
             var results = _repository.FindLocations(sanitisedQuery);
 
@@ -31,7 +31,9 @@ namespace GoatTrip.RestApi.Services {
         public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
             ValidateAndThrow(addressQuery);
 
-            var results = _repository.FindLocationsbyAddress(addressQuery);
+            var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
+
+            var results = _repository.FindLocationsbyAddress(sanitisedQuery);
 
             var locations = results.Select(l => new LocationModel(l));
 
@@ -56,6 +58,7 @@ namespace GoatTrip.RestApi.Services {
 
         private readonly ILocationRepository _repository;
         private readonly ILocationQueryValidator _queryValidator;
-        private readonly ILocationQuerySanitiser _sanitiser;
+        private readonly ILocationQuerySanitiser _postCodeSanitiser;
+        private readonly ILocationQuerySanitiser _searchSanitiser;
     }
 }

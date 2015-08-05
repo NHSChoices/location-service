@@ -17,6 +17,13 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         }
 
         [Fact]
+        public void Get_Always_CallsSanitise() {
+            _sut.Get("SO22 2XX");
+
+            _mockQuerySanitiser.Verify(s => s.Sanitise(It.Is<string>(q => q == "SO22 2XX")));
+        }
+
+        [Fact]
         public void GetByAddress_WithInvalidAddress_ThrowsInvalidLocationQueryException() {
             _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(false);
 
@@ -28,7 +35,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             _sut.GetByAddress("Coronation street");
 
-            _mockLocationRepository.Verify(r => r.FindLocationsbyAddress(It.Is<string>(p => p == "Coronation street")));
+            _mockLocationRepository.Verify(r => r.FindLocationsbyAddress(It.Is<string>(p => p == "coronation street")));
         }
 
         [Fact]
@@ -36,7 +43,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO99 9XX");
 
-            _mockLocationRepository.Setup(r => r.FindLocationsbyAddress(It.Is<string>(s => s == "Coronation street")))
+            _mockLocationRepository.Setup(r => r.FindLocationsbyAddress(It.Is<string>(s => s == "coronation street")))
                 .Returns(() => new List<Location> {
                     new Location(_mockDataReader.Object)
                 });
