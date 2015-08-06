@@ -10,14 +10,13 @@ namespace GoatTrip.RestApi {
 
         protected override void Load(ContainerBuilder builder) {
 
-        
-
             builder.Register(c => new LocationQueryValidator()).As<ILocationQueryValidator>();
             builder.Register(c => new PostcodeQuerySanitiser()).As<ILocationQuerySanitiser>();
 
             builder.Register(c => new LocationService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationQueryValidator>(), new PostcodeQuerySanitiser(), new SearchQuerySanitiser())).As<ILocationService>();
 
             builder.Register(c => new LocationController(c.Resolve<ILocationQueryValidator>(), c.Resolve<ILocationService>()));
+            builder.Register(c => new InfoController(c.Resolve<IConnectionManager>()));
         }
 
     }

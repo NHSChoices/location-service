@@ -125,6 +125,7 @@
     <Compile Include="Authentication\PageAuthorizationAttribute.cs" />
     <Compile Include="Controllers\BadRequestResult.cs" />
     <Compile Include="App_Start\DependancyConfig.cs" />
+    <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
     <Compile Include="Models\LocationGroupModel.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />
