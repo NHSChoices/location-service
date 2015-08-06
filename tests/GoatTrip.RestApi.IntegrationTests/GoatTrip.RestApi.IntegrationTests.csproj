@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\LocationControllerTests.cs" />
     <Compile Include="Models\LocationModelTests.cs" />
     <Compile Include="RouteInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
