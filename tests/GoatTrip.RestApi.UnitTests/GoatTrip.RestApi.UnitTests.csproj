@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="App_Start\DependencyConfigTests.cs" />
     <Compile Include="Controllers\BadRequestResultTests.cs" />
+    <Compile Include="Controllers\InfoControllerTests.cs" />
     <Compile Include="Controllers\LocationControllerBaseTests.cs" />
     <Compile Include="Controllers\LocationControllerGetTests.cs" />
     <Compile Include="Controllers\LocationServiceGetByAddressTests.cs" />
