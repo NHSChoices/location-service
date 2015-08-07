@@ -13,6 +13,10 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
             _sut = new LocationController(_mockQueryValidator.Object, _mockLocationService.Object) {
                 Request = httpRequestMessage
             };
+
+            _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>()))
+                .Returns(true);
+
         }
 
         protected readonly LocationController _sut;

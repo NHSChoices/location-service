@@ -46,7 +46,6 @@ namespace GoatTrip.RestApi.Services {
             return locations.GroupBy(l => l.Postcode)
                 .Select(g => new LocationGroupModel {
                     Description = g.First().GroupDescription,
-                    Locations = g.ToList(), 
                     Count = g.Count()
                 });
         }
