@@ -12,9 +12,10 @@ namespace GoatTrip.RestApi.Controllers {
             _service = service;
         }
 
-        [Route("address/{query}")]
-        [Authentication.Authorize]
-        public IHttpActionResult GetByAddress(string query) {
+        [Route("search/{query?}")]
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult Search(string query = "") {
 
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
@@ -25,7 +26,7 @@ namespace GoatTrip.RestApi.Controllers {
         }
 
         [Route("{query?}")]
-        [Authentication.Authorize]
+        [Authorize]
         public IHttpActionResult Get(string query = "") {
 
             if (!_queryValidator.IsValid(query))

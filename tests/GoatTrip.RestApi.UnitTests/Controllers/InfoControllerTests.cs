@@ -32,4 +32,5 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         private Mock<IConnectionManager> _mockConnectionManager;
         private InfoController _sut;
     }
+
 }

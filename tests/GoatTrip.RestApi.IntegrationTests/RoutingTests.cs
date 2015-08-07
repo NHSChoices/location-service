@@ -35,15 +35,29 @@ namespace GoatTrip.RestApi.IntegrationTests {
         }
 
         [Fact]
-        public void LocationGetByAddress_WithQuery_RoutesCorrectly() {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://domain/location/address/mill way");
+        public void LocationSearch_WithQuery_RoutesCorrectly() {
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://domain/location/search/mill way");
             var config = new HttpConfiguration();
 
             WebApiConfig.Register(config);
             var route = WebApi.RouteRequest(config, request);
 
             Assert.Equal(typeof (LocationController), route.Controller);
-            Assert.Equal("GetByAddress", route.Action);
+            Assert.Equal("Search", route.Action);
+            Assert.Equal("mill way", route.RouteData.Values.First().Value);
+
+        }
+
+        [Fact]
+        public void LocationSearch_WithoutQuery_RoutesCorrectly() {
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://domain/location/search/mill way");
+            var config = new HttpConfiguration();
+
+            WebApiConfig.Register(config);
+            var route = WebApi.RouteRequest(config, request);
+
+            Assert.Equal(typeof(LocationController), route.Controller);
+            Assert.Equal("Search", route.Action);
             Assert.Equal("mill way", route.RouteData.Values.First().Value);
 
         }
