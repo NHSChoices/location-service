@@ -1,48 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace GoatTrip.DAL.DTOs
-{
+namespace GoatTrip.DAL.DTOs {
+
+    using System;
+    using System.Data;
+    using System.Linq;
+    using System.Collections.Generic;
+
     public class LocationGroup
     {
         public int LocationsCount { get; private set; }
         public string GroupDescription { get; private set; }
         public Dictionary<LocationDataField, string> GroupFields { get; private set; }
 
-        public LocationGroup(IDataRecord readerDataObject, LocationGroupByStringBuilder locationGroupByStringBuilder)
-        {
-            BuildFromReader(readerDataObject, locationGroupByStringBuilder);
+        public LocationGroup(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields) {
+            BuildFromReader(readerDataObject, groupByFields);
         }
 
-        private void BuildFromReader(IDataRecord readerDataObject, LocationGroupByStringBuilder locationGroupByStringBuilder)
-        {
-            this.GroupFields = GetGroupedFields(readerDataObject, locationGroupByStringBuilder);
-            if (readerDataObject["Number"] != DBNull.Value)
-                this.LocationsCount = Convert.ToInt32(readerDataObject["Number"].ToString());
+        private void BuildFromReader(IDataRecord readerDataObject,
+            IEnumerable<LocationQueryField> groupByFields) {
 
-            this.GroupDescription = CreateGroupDescription(readerDataObject, locationGroupByStringBuilder);
+            GroupFields = GetGroupedFields(readerDataObject, groupByFields);
+            if (readerDataObject["Number"] != DBNull.Value)
+                LocationsCount = Convert.ToInt32(readerDataObject["Number"].ToString());
+
+            GroupDescription = CreateGroupDescription(readerDataObject, groupByFields);
         }
 
         private string CreateGroupDescription(IDataRecord readerDataObject,
-            LocationGroupByStringBuilder locationGroupByStringBuilder)
-        {
-            return locationGroupByStringBuilder.GroupByFields
-                .Where(field => readerDataObject[field.Value] != DBNull.Value)
-                .Select(f => readerDataObject[f.Value].ToString())
+            IEnumerable<LocationQueryField> groupByFields) {
+
+            return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value)
+                .Select(f => readerDataObject[f.Name].ToString())
                 .Aggregate((i, j) => i + ", " + j);
         }
 
         private Dictionary<LocationDataField, string> GetGroupedFields(IDataRecord readerDataObject,
-           LocationGroupByStringBuilder locationGroupByStringBuilder)
-        {
+            IEnumerable<LocationQueryField> groupByFields) {
 
-            return locationGroupByStringBuilder.GroupByFields
-                .Where(field => readerDataObject[field.Value] != DBNull.Value)
-                .ToDictionary(f => f.Key, f => readerDataObject[f.Value].ToString()); 
+            return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value)
+                .ToDictionary(f => f.Key, f => readerDataObject[f.Name].ToString()); 
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using GoatTrip.DAL.DTOs;
+using System.Linq;
 
 namespace GoatTrip.DAL
 {
-    public class LocationRepository : ILocationRepository
+    public class LocationRepository
+        : ILocationRepository
     {
         private IConnectionManager _connectionManager;
 
@@ -48,15 +50,14 @@ namespace GoatTrip.DAL
             return locations;
         }
 
+        public IEnumerable<LocationGroup> FindLocations(string addressLookup, ILocationGroupingStrategy groupingStrategy) {
 
-        public IEnumerable<LocationGroup> FindLocationGroupsbyAddress(string addressLookup, LocationGroupByStringBuilder groupBy)
-        {
-            string statement = "SELECT " + groupBy.ToString() + ", COUNT(*) as Number  " +
-                    "FROM locations WHERE locationId IN(" +
-                    "select docid from locations_srch WHERE locations_srch " +
-                    "MATCH @addressSearch) " +
-                    "GROUP BY " + groupBy.ToString() + " " +
-                    "ORDER by Number desc LIMIT 100;";
+            string statement = "SELECT " + LocationQueryField.Concatenate(groupingStrategy.Fields) + ", COUNT(*) as Number  " +
+                               "FROM locations WHERE locationId IN(" +
+                               "select docid from locations_srch WHERE locations_srch " +
+                               "MATCH @addressSearch) " +
+                               "GROUP BY " + LocationQueryField.Concatenate(groupingStrategy.Fields) + " " +
+                               "ORDER by Number desc LIMIT 100;";
 
             List<LocationGroup> locations = new List<LocationGroup>();
 
@@ -64,10 +65,39 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new LocationGroup(reader.DataReader, groupBy));
+                    locations.Add(new LocationGroup(reader.DataReader, groupingStrategy.Fields));
                 }
             }
             return locations;
+
         }
+
+    }
+
+    public class LocationQueryField {
+
+        public string Name { get; private set; }
+
+        public LocationDataField Key { get; private set; }
+
+        private LocationQueryField(string name, LocationDataField key) {
+            Name = name;
+            Key = key;
+        }
+
+        public static LocationQueryField HouseNumber { get { return new LocationQueryField("PAO_START_NUMBER", LocationDataField.HouseNumber); } }
+
+        public static LocationQueryField Town { get { return new LocationQueryField("TOWN_NAME", LocationDataField.Town); } }
+
+        public static LocationQueryField Street { get { return new LocationQueryField("STREET_DESCRIPTION", LocationDataField.Street); } }
+
+        public static LocationQueryField AdministrativeArea { get { return new LocationQueryField("ADMINISTRATIVE_AREA", LocationDataField.AdministrativeArea); } }
+
+        public static LocationQueryField PostCode { get { return new LocationQueryField("POSTCODE", LocationDataField.PostCode); } }
+
+        public static string Concatenate(IEnumerable<LocationQueryField> fields) {
+            return fields.Select(f => f.Name).Aggregate((i, j) => i + ',' + j);
+        }
+
     }
 }

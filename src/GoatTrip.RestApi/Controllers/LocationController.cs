@@ -1,7 +1,8 @@
-﻿using System.Web.Http;
-using GoatTrip.RestApi.Services;
-
-namespace GoatTrip.RestApi.Controllers {
+﻿namespace GoatTrip.RestApi.Controllers {
+    using System.Collections.Generic;
+    using System.Web.Http;
+    using DAL;
+    using Services;
     
     [RoutePrefix("location")]
     public class LocationController
@@ -20,7 +21,7 @@ namespace GoatTrip.RestApi.Controllers {
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.GetLocationGroupsByAddress(query);
+            var result = _service.Get(query, new LocationsGroupedByAddressStrategy());
 
             return Ok(result);
         }
@@ -39,5 +40,18 @@ namespace GoatTrip.RestApi.Controllers {
 
         private readonly ILocationQueryValidator _queryValidator;
         private readonly ILocationService _service;
+    }
+
+    public class LocationsGroupedByAddressStrategy
+        : ILocationGroupingStrategy {
+        public LocationsGroupedByAddressStrategy() {
+            Fields = new List<LocationQueryField> {
+                LocationQueryField.Street,
+                LocationQueryField.Town,
+                LocationQueryField.PostCode,
+            };
+        }
+
+        public IEnumerable<LocationQueryField> Fields { get; }
     }
 }

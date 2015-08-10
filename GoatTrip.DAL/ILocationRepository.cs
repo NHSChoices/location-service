@@ -7,6 +7,6 @@ namespace GoatTrip.DAL
     {
         IEnumerable<Location> FindLocations(string postCode);
         IEnumerable<Location> FindLocationsbyAddress(string addressLookup);
-        IEnumerable<LocationGroup> FindLocationGroupsbyAddress(string addressLookup, LocationGroupByStringBuilder groupBy);
+        IEnumerable<LocationGroup> FindLocations(string addressLookup, ILocationGroupingStrategy groupingStrategy);
     }
 }

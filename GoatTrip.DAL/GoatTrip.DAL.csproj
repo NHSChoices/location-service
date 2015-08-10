@@ -48,14 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdhocLocationGroupingStrategy.cs" />
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="DTOs\Location.cs" />
     <Compile Include="DTOs\LocationGroup.cs" />
     <Compile Include="IConnectionManager.cs" />
+    <Compile Include="ILocationGroupingStrategy.cs" />
     <Compile Include="ILocationRepository.cs" />
     <Compile Include="IManagedDataReader.cs" />
     <Compile Include="LocationDataField.cs" />
-    <Compile Include="LocationGroupBy.cs" />
+    <Compile Include="LocationGroupingStrategyBuilder.cs" />
     <Compile Include="LocationRepository.cs" />
     <Compile Include="ManagedDataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
