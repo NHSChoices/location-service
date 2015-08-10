@@ -48,7 +48,7 @@ namespace GoatTrip.RestApi.Services {
             int locationsCount = 0;
             results.ToList().ForEach(g => locationsCount += g.LocationsCount);
 
-            if (results.Count() != 1 && locationsCount < 100)
+            if (results.Count() != 1 && locationsCount >= 100)
                 return results;
 
             var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(groupingStrategy)

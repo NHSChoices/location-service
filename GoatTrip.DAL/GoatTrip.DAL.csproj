@@ -58,6 +58,7 @@
     <Compile Include="IManagedDataReader.cs" />
     <Compile Include="LocationDataField.cs" />
     <Compile Include="LocationGroupingStrategyBuilder.cs" />
+    <Compile Include="LocationQueryField.cs" />
     <Compile Include="LocationRepository.cs" />
     <Compile Include="ManagedDataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
