@@ -54,9 +54,9 @@ namespace GoatTrip.DAL
             string statement = "SELECT " + groupBy.ToString() + ", COUNT(*) as Number  " +
                     "FROM locations WHERE locationId IN(" +
                     "select docid from locations_srch WHERE locations_srch " +
-                    "MATCH @addressSearch) LIMIT 100 " +
-                    "GROUP BY" + groupBy.ToString() + " " +
-                    "ORDER by Number desc;";
+                    "MATCH @addressSearch) " +
+                    "GROUP BY " + groupBy.ToString() + " " +
+                    "ORDER by Number desc LIMIT 100;";
 
             List<LocationGroup> locations = new List<LocationGroup>();
 

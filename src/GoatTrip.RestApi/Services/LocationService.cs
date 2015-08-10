@@ -42,6 +42,25 @@ namespace GoatTrip.RestApi.Services {
             return groupedResult;
         }
 
+        public IEnumerable<LocationGroupModel> GetLocationGroupsByAddress(string addressQuery)
+        {
+            ValidateAndThrow(addressQuery);
+
+            var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
+
+            var results = _repository.FindLocationGroupsbyAddress(sanitisedQuery
+                , new LocationGroupByStringBuilder(LocationDataField.Street)
+                     .ThenBy(LocationDataField.Town)
+                     .ThenBy(LocationDataField.PostCode));
+
+            var locationGroups = results.Select(lg => new LocationGroupModel()
+            {
+                Count = lg.LocationsCount, 
+                Description = lg.GroupDescription
+            });
+            return locationGroups;
+        }
+
         private IEnumerable<LocationGroupModel> Group(IEnumerable<LocationModel> locations) {
             return locations.GroupBy(l => l.Postcode)
                 .Select(g => new LocationGroupModel {

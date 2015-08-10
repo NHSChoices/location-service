@@ -14,13 +14,13 @@ namespace GoatTrip.RestApi.Controllers {
 
         [Route("search/{query?}")]
         [HttpGet]
-        [Authorize]
+
         public IHttpActionResult Search(string query = "") {
 
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.GetByAddress(query);
+            var result = _service.GetLocationGroupsByAddress(query);
 
             return Ok(result);
         }
