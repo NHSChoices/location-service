@@ -1,6 +1,8 @@
 ﻿using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.RestApi.Models {
+    using System.Runtime.Serialization;
+
     public class LocationModel {
 
         public LocationModel() { }
@@ -34,6 +36,7 @@ namespace GoatTrip.RestApi.Models {
         public CoordinateModel Coordinate { get; set; }
         public string HouseNumber { get; set; }
 
+        [IgnoreDataMember]
         public string GroupDescription {
             get {
                 var result = "";
