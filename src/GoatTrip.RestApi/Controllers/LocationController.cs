@@ -52,6 +52,6 @@
             };
         }
 
-        public IEnumerable<LocationQueryField> Fields { get; }
+        public IEnumerable<LocationQueryField> Fields { get; set; }
     }
 }

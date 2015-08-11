@@ -8,6 +8,6 @@ namespace GoatTrip.DAL
             Fields = fields;
         }
 
-        public IEnumerable<LocationQueryField> Fields { get; }
+        public IEnumerable<LocationQueryField> Fields { get; private set; }
         }
 }
