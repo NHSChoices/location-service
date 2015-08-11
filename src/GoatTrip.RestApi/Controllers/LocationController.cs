@@ -1,9 +1,9 @@
 ﻿namespace GoatTrip.RestApi.Controllers {
     using System.Collections.Generic;
-    using System.Web.Http;
+using System.Web.Http;
     using DAL;
     using Services;
-    
+
     [RoutePrefix("location")]
     public class LocationController
         : ApiController {
@@ -13,9 +13,9 @@
             _service = service;
         }
 
+        [Authentication.Authorize]
         [Route("search/{query?}")]
         [HttpGet]
-
         public IHttpActionResult Search(string query = "") {
 
             if (!_queryValidator.IsValid(query))
@@ -26,8 +26,8 @@
             return Ok(result);
         }
 
+        [Authentication.Authorize]
         [Route("{query?}")]
-        [Authorize]
         public IHttpActionResult Get(string query = "") {
 
             if (!_queryValidator.IsValid(query))
