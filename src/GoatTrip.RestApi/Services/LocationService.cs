@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using GoatTrip.DAL;
-using GoatTrip.RestApi.Models;
+﻿
+using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.RestApi.Services {
+    using System.Collections.Generic;
+    using System.Linq;
+    using DAL;
+    using Models;
+
     public class LocationService
         : ILocationService {
 
@@ -28,6 +31,31 @@ namespace GoatTrip.RestApi.Services {
             return groupedResult;
         }
 
+        public IEnumerable<LocationGroupModel> Get(string addressQuery, ILocationGroupingStrategy groupingStrategy) {
+            ValidateAndThrow(addressQuery);
+
+            var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
+
+            var results = _repository.FindLocations(sanitisedQuery, groupingStrategy);
+
+            var refinedResults = RequeryIfRequired(results, addressQuery, groupingStrategy);
+
+            return refinedResults.Select(lg => new LocationGroupModel(lg));
+        }
+
+        private IEnumerable<LocationGroup> RequeryIfRequired(IEnumerable<LocationGroup> results, string addressQuery, ILocationGroupingStrategy groupingStrategy) {
+
+            int locationsCount = 0;
+            results.ToList().ForEach(g => locationsCount += g.LocationsCount);
+
+            if (results.Count() != 1 && locationsCount >= 100)
+                return results;
+
+            var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(groupingStrategy)
+                .ThenBy(LocationQueryField.HouseNumber);
+            return _repository.FindLocations(addressQuery, groupingStrategyBuilder.Build());
+        }
+
         public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
             ValidateAndThrow(addressQuery);
 
@@ -44,7 +72,7 @@ namespace GoatTrip.RestApi.Services {
 
         private IEnumerable<LocationGroupModel> Group(IEnumerable<LocationModel> locations) {
             return locations.GroupBy(l => l.Postcode)
-                .Select(g => new LocationGroupModel {
+                .Select(g => new LocationGroupModel() {
                     Description = g.First().GroupDescription,
                     Count = g.Count()
                 });

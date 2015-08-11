@@ -1,4 +1,7 @@
 ﻿
+using GoatTrip.DAL;
+using GoatTrip.RestApi.Services;
+
 namespace GoatTrip.RestApi.UnitTests.Controllers {
     using RestApi.Controllers;
     using Moq;
@@ -34,7 +37,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         public void Search_WithValidQuery_CallsService() {
 
             _sut.Search("x");
-            _mockLocationService.Verify(s => s.GetByAddress(It.Is<string>(q => q == "x")));
+            _mockLocationService.Verify(s => s.Get(It.Is<string>(q => q == "x"), It.IsAny<ILocationGroupingStrategy>()));
         }
 
     }
