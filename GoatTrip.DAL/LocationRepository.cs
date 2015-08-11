@@ -47,5 +47,27 @@ namespace GoatTrip.DAL
             }
             return locations;
         }
+
+
+        public IEnumerable<LocationGroup> FindLocationGroupsbyAddress(string addressLookup, LocationGroupByStringBuilder groupBy)
+        {
+            string statement = "SELECT " + groupBy.ToString() + ", COUNT(*) as Number  " +
+                    "FROM locations WHERE locationId IN(" +
+                    "select docid from locations_srch WHERE locations_srch " +
+                    "MATCH @addressSearch) LIMIT 100 " +
+                    "GROUP BY" + groupBy.ToString() + " " +
+                    "ORDER by Number desc;";
+
+            List<LocationGroup> locations = new List<LocationGroup>();
+
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters() { { "@addressSearch", "'" + addressLookup + "*'" } }))
+            {
+                while (reader.Read())
+                {
+                    locations.Add(new LocationGroup(reader.DataReader, groupBy));
+                }
+            }
+            return locations;
+        }
     }
 }

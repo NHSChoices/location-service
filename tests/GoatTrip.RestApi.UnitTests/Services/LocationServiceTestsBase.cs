@@ -32,11 +32,8 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         protected static void AssertIsValidResult(List<LocationGroupModel> result, int count, string postcode) {
             Assert.Equal(1, result.Count());
-            Assert.Equal(count, result.First().Locations.Count());
-            if (count > 1)
-                Assert.True(result.First().Locations.All(l => l.Postcode == postcode));
-            else
-                Assert.Equal(postcode, result.First().Locations.First().Postcode);
+            Assert.Equal(count, result.First().Count);
+            Assert.True(result.Any(l => l.Description.Contains(postcode)));
         }
 
         protected void CreateMockResults(string postcode, int count = 1) {

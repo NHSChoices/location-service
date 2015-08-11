@@ -87,7 +87,7 @@
     <Compile Include="Controllers\InfoControllerTests.cs" />
     <Compile Include="Controllers\LocationControllerBaseTests.cs" />
     <Compile Include="Controllers\LocationControllerGetTests.cs" />
-    <Compile Include="Controllers\LocationServiceGetByAddressTests.cs" />
+    <Compile Include="Controllers\LocationControllerSearchTests.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Services\LocationQuerySanitiserTests.cs" />
     <Compile Include="Services\LocationQueryValidatorTests.cs" />
