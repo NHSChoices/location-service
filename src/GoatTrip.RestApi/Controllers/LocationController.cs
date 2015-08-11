@@ -12,7 +12,6 @@ namespace GoatTrip.RestApi.Controllers {
             _service = service;
         }
 
-        [Authentication.Authorize]
         [Route("search/{query?}")]
         [HttpGet]
         public IHttpActionResult Search(string query = "") {
@@ -25,7 +24,6 @@ namespace GoatTrip.RestApi.Controllers {
             return Ok(result);
         }
 
-        [Authentication.Authorize]
         [Route("{query?}")]
         public IHttpActionResult Get(string query = "") {
 
