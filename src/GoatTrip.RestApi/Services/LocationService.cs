@@ -51,8 +51,8 @@ namespace GoatTrip.RestApi.Services {
             if (results.Count() != 1 && locationsCount >= 100)
                 return results;
 
-            var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(groupingStrategy)
-                .ThenBy(LocationQueryField.HouseNumber);
+            var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
+                .ThenBy(groupingStrategy);
             return _repository.FindLocations(addressQuery, groupingStrategyBuilder.Build());
         }
 
