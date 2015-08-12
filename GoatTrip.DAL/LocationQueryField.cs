@@ -15,13 +15,10 @@ namespace GoatTrip.DAL
         }
 
         public static LocationQueryField HouseNumber { get { return new LocationQueryField("PAO_START_NUMBER", LocationDataField.HouseNumber); } }
-
+        public static LocationQueryField HouseSuffix { get { return new LocationQueryField("PAO_START_SUFFIX", LocationDataField.HouseSuffix); } }
         public static LocationQueryField Town { get { return new LocationQueryField("TOWN_NAME", LocationDataField.Town); } }
-
         public static LocationQueryField Street { get { return new LocationQueryField("STREET_DESCRIPTION", LocationDataField.Street); } }
-
         public static LocationQueryField AdministrativeArea { get { return new LocationQueryField("ADMINISTRATIVE_AREA", LocationDataField.AdministrativeArea); } }
-
         public static LocationQueryField PostCode { get { return new LocationQueryField("POSTCODE", LocationDataField.PostCode); } }
 
         public static string Concatenate(IEnumerable<LocationQueryField> fields) {

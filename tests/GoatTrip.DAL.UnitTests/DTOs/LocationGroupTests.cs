@@ -41,6 +41,19 @@ namespace GoatTrip.DAL.DTOs.Tests
             Assert.Equal("22, Test Road, TestTown",result.GroupDescription);
         }
 
+          [Fact()]
+        public void LocationGroup_With_Reader_AND_Suffix_Returns_Description_Test()
+        {
+            _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_START_SUFFIX")]).Returns("A");
+            var queryFields = new List<LocationQueryField> { LocationQueryField.HouseNumber, LocationQueryField.HouseSuffix, LocationQueryField.Street, LocationQueryField.Town };
+            var result = new LocationGroup(_mockDataRecord.Object, queryFields);
+            Assert.Equal("22A, Test Road, TestTown",result.GroupDescription);
+        }
+
+
+
+                   
+
         [Fact()]
         public void LocationGroup_With_Reader_Returns_GroupFields_Test()
         {

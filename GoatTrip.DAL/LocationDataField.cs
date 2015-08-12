@@ -12,6 +12,7 @@ namespace GoatTrip.DAL
         Street,
         PostCode,
         HouseNumber,
+        HouseSuffix,
         AdministrativeArea
     }
 }
