@@ -17,6 +17,12 @@ namespace GoatTrip.DAL {
             return this;
         }
 
+        public LocationGroupingStrategyBuilder ThenBy(ILocationGroupingStrategy groupingStrategy)
+        {
+            _fields.AddRange(groupingStrategy.Fields);
+            return this;
+        }
+
         public ILocationGroupingStrategy Build() {
             return new AdhocLocationGroupingStrategy(_fields);
         }
