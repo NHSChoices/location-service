@@ -30,10 +30,17 @@ namespace GoatTrip.DAL.DTOs {
         private string CreateGroupDescription(IDataRecord readerDataObject,
             IEnumerable<LocationQueryField> groupByFields)
         {
-
-            return GenerateHouseDescription(readerDataObject, groupByFields)
-                            + ", " + GenerateAddressDescriptionWithoutHouseDetail(readerDataObject, groupByFields);
+            return AddDeliminatorToGroupDescrioption(GenerateHouseDescription(readerDataObject, groupByFields))
+                             + GenerateAddressDescriptionWithoutHouseDetail(readerDataObject, groupByFields);
         }
+
+        private string AddDeliminatorToGroupDescrioption(string description)
+        {
+            if (description.Length > 0)
+                return description + ", ";
+            return description;
+        }
+
 
         private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
@@ -42,7 +49,7 @@ namespace GoatTrip.DAL.DTOs {
                                                 (field.Key != LocationDataField.HouseNumber &&
                                                  field.Key != LocationDataField.HouseSuffix))
                 .Select(f => readerDataObject[f.Name].ToString())
-                .Aggregate((i, j) => i + ", " + j);
+                .Aggregate((i, j) => AddDeliminatorToGroupDescrioption(i) + j);
         }
 
         private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
