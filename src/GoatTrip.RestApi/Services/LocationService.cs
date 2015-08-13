@@ -52,6 +52,7 @@ namespace GoatTrip.RestApi.Services {
                 return results;
 
             var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
+                .ThenBy(LocationQueryField.HouseSuffix)
                 .ThenBy(groupingStrategy);
             return _repository.FindLocations(addressQuery, groupingStrategyBuilder.Build());
         }

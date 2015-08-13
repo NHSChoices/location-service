@@ -28,11 +28,37 @@ namespace GoatTrip.DAL.DTOs {
         }
 
         private string CreateGroupDescription(IDataRecord readerDataObject,
-            IEnumerable<LocationQueryField> groupByFields) {
+            IEnumerable<LocationQueryField> groupByFields)
+        {
+            return AddDeliminatorToGroupDescrioption(GenerateHouseDescription(readerDataObject, groupByFields))
+                             + GenerateAddressDescriptionWithoutHouseDetail(readerDataObject, groupByFields);
+        }
 
-            return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value)
+        private string AddDeliminatorToGroupDescrioption(string description)
+        {
+            if (description.Length > 0)
+                return description + ", ";
+            return description;
+        }
+
+
+        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
+        {
+            return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value
+                                                &&
+                                                (field.Key != LocationDataField.HouseNumber &&
+                                                 field.Key != LocationDataField.HouseSuffix))
                 .Select(f => readerDataObject[f.Name].ToString())
-                .Aggregate((i, j) => i + ", " + j);
+                .Aggregate((i, j) => AddDeliminatorToGroupDescrioption(i) + j);
+        }
+
+        private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
+        {
+            return String.Join("", groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value
+                                                                &&
+                                                                (field.Key == LocationDataField.HouseNumber ||
+                                                                 field.Key == LocationDataField.HouseSuffix))
+                .Select(f => readerDataObject[f.Name].ToString()));
         }
 
         private Dictionary<LocationDataField, string> GetGroupedFields(IDataRecord readerDataObject,
