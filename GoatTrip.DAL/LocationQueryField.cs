@@ -25,5 +25,10 @@ namespace GoatTrip.DAL
             return fields.Select(f => f.Name).Aggregate((i, j) => i + ',' + j);
         }
 
+        public static string Concatenate(IEnumerable<LocationQueryField> fields, string aliasPrefix)
+        {
+            return fields.Select(f => aliasPrefix +"." +f.Name).Aggregate((i, j) => i + ',' + j);
+        }
+
     }
 }

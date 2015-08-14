@@ -51,12 +51,9 @@ namespace GoatTrip.DAL
 
         public IEnumerable<LocationGroup> FindLocations(string addressLookup, ILocationGroupingStrategy groupingStrategy) {
 
-            string statement = "SELECT " + LocationQueryField.Concatenate(groupingStrategy.Fields) + ", COUNT(*) as Number  " +
-                               "FROM locations WHERE locationId IN(" +
-                               "select docid from locations_srch WHERE locations_srch " +
-                               "MATCH @addressSearch) " +
-                               "GROUP BY " + LocationQueryField.Concatenate(groupingStrategy.Fields) + " " +
-                               "ORDER by Number desc LIMIT 100;";
+            var tokenizer = new fTSQueryTokenizer(addressLookup);
+
+            var statement = new FtsQueryGenerator(groupingStrategy, tokenizer).Generate();
 
             List<LocationGroup> locations = new List<LocationGroup>();
 
