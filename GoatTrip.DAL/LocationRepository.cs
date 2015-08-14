@@ -3,7 +3,8 @@ using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
 {
-    public class LocationRepository : ILocationRepository
+    public class LocationRepository
+        : ILocationRepository
     {
         private IConnectionManager _connectionManager;
 
@@ -48,15 +49,14 @@ namespace GoatTrip.DAL
             return locations;
         }
 
+        public IEnumerable<LocationGroup> FindLocations(string addressLookup, ILocationGroupingStrategy groupingStrategy) {
 
-        public IEnumerable<LocationGroup> FindLocationGroupsbyAddress(string addressLookup, LocationGroupByStringBuilder groupBy)
-        {
-            string statement = "SELECT " + groupBy.ToString() + ", COUNT(*) as Number  " +
-                    "FROM locations WHERE locationId IN(" +
-                    "select docid from locations_srch WHERE locations_srch " +
-                    "MATCH @addressSearch) LIMIT 100 " +
-                    "GROUP BY" + groupBy.ToString() + " " +
-                    "ORDER by Number desc;";
+            string statement = "SELECT " + LocationQueryField.Concatenate(groupingStrategy.Fields) + ", COUNT(*) as Number  " +
+                               "FROM locations WHERE locationId IN(" +
+                               "select docid from locations_srch WHERE locations_srch " +
+                               "MATCH @addressSearch) " +
+                               "GROUP BY " + LocationQueryField.Concatenate(groupingStrategy.Fields) + " " +
+                               "ORDER by Number desc LIMIT 100;";
 
             List<LocationGroup> locations = new List<LocationGroup>();
 
@@ -64,10 +64,12 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new LocationGroup(reader.DataReader, groupBy));
+                    locations.Add(new LocationGroup(reader.DataReader, groupingStrategy.Fields));
                 }
             }
             return locations;
+
         }
+
     }
 }

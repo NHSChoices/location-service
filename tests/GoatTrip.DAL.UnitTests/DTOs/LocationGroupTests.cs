@@ -13,41 +13,61 @@ namespace GoatTrip.DAL.DTOs.Tests
     public class LocationGroupTests
     {
         private Mock<IDataRecord> _mockDataRecord;
-        private LocationGroupByStringBuilder _locationGroupByStringBuilder;
+        private IEnumerable<LocationQueryField> _queryFields;
 
-        public LocationGroupTests()
-        {
-            _locationGroupByStringBuilder =  new LocationGroupByStringBuilder(LocationDataField.HouseNumber)
-                            .ThenBy(LocationDataField.Street)
-                            .ThenBy(LocationDataField.Town);
+        public LocationGroupTests() {
+            _queryFields =  new List<LocationQueryField> { LocationQueryField.HouseNumber, LocationQueryField.Street, LocationQueryField.Town };
 
             _mockDataRecord = new Mock<IDataRecord>();
             _mockDataRecord.Setup(r => r[It.IsAny<string>()]).Returns("");
             _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_START_NUMBER")]).Returns("22");
+            _mockDataRecord.Setup(r => r[It.Is<string>(b => b == "PAO_START_SUFFIX")]).Returns("");
             _mockDataRecord.Setup(r => r[It.Is<string>(y => y == "STREET_DESCRIPTION")]).Returns("Test Road");
             _mockDataRecord.Setup(r => r[It.Is<string>(z => z == "TOWN_NAME")]).Returns("TestTown");
+            _mockDataRecord.Setup(r => r[It.Is<string>(z => z == "POSTCODE")]).Returns("TS17 TTT");
             _mockDataRecord.Setup(r => r[It.Is<string>(z => z == "Number")]).Returns(32);
         }
 
         [Fact()]
         public void LocationGroup_With_Reader_Returns_Count_Test()
         {
-            var result = new LocationGroup(_mockDataRecord.Object, _locationGroupByStringBuilder);
+            var result = new LocationGroup(_mockDataRecord.Object, _queryFields);
             Assert.Equal(32,result.LocationsCount);
            
         }
 
         [Fact()]
+        public void LocationGroup_With_No_HouseNumber_Returns_Description_Test()
+        {
+            var queryFields = new List<LocationQueryField> { LocationQueryField.Street, LocationQueryField.Town, LocationQueryField.PostCode };
+            var result = new LocationGroup(_mockDataRecord.Object, queryFields);
+            Assert.Equal("Test Road, TestTown, TS17 TTT", result.GroupDescription);
+        }
+
+        [Fact()]
         public void LocationGroup_With_Reader_Returns_Description_Test()
         {
-            var result = new LocationGroup(_mockDataRecord.Object, _locationGroupByStringBuilder);
-            Assert.Equal("22, Test Road, TestTown",result.GroupDescription);
+            var result = new LocationGroup(_mockDataRecord.Object, _queryFields);
+            Assert.Equal("22, Test Road, TestTown", result.GroupDescription);
         }
+
+          [Fact()]
+        public void LocationGroup_With_Reader_AND_Suffix_Returns_Description_Test()
+        {
+            _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_START_SUFFIX")]).Returns("A");
+            var queryFields = new List<LocationQueryField> { LocationQueryField.HouseNumber, LocationQueryField.HouseSuffix, LocationQueryField.Street, LocationQueryField.Town };
+            var result = new LocationGroup(_mockDataRecord.Object, queryFields);
+            Assert.Equal("22A, Test Road, TestTown",result.GroupDescription);
+        }
+
+
+
+                   
 
         [Fact()]
         public void LocationGroup_With_Reader_Returns_GroupFields_Test()
         {
-            var result = new LocationGroup(_mockDataRecord.Object, _locationGroupByStringBuilder);
+            var result = new LocationGroup(_mockDataRecord.Object, _queryFields);
             Assert.Equal(3,result.GroupFields.Count());
             Assert.Equal("22",result.GroupFields[LocationDataField.HouseNumber]);
             Assert.Equal("Test Road",result.GroupFields[LocationDataField.Street]);
