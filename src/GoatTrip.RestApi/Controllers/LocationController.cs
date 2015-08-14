@@ -24,13 +24,24 @@ namespace GoatTrip.RestApi.Controllers {
             return Ok(result);
         }
 
-        [Route("{query?}")]
-        public IHttpActionResult Get(string query = "") {
+        [Route("postcode/{query?}")]
+        public IHttpActionResult GetByPostcode(string query = "") {
 
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.Get(query);
+            var result = _service.GetByPostcode(query);
+
+            return Ok(result);
+        }
+
+        [Route("{id}")]
+        public IHttpActionResult Get(string id) {
+
+            if (!_queryValidator.IsValid(id))
+                return new BadRequestResult(Request, id);
+
+            var result = _service.Get(id);
 
             return Ok(result);
         }

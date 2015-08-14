@@ -7,33 +7,33 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         : LocationControllerBaseTests {
 
         [Fact]
-        public void Get_Always_CallsIsValid() {
-            _sut.Get("");
+        public void GetByPostcode_Always_CallsIsValid() {
+            _sut.GetByPostcode("");
 
             _mockQueryValidator.Verify(v => v.IsValid(It.IsAny<string>()));
         }
 
         [Fact]
-        public void Get_WithInvalidQuery_ReturnsBadRequest() {
+        public void GetByPostcode_WithInvalidQuery_ReturnsBadRequest() {
             _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>()))
                 .Returns(false);
 
-            var result = _sut.Get("");
+            var result = _sut.GetByPostcode("");
             Assert.IsAssignableFrom<BadRequestResult>(result);
         }
 
         [Fact]
-        public void Get_WithValidQuery_DoesntReturnBadRequest() {
+        public void GetByPostcode_WithValidQuery_DoesntReturnBadRequest() {
 
-            var result = _sut.Get("x");
+            var result = _sut.GetByPostcode("x");
             Assert.False(result is BadRequestResult);
         }
 
         [Fact]
-        public void Get_WithValidQuery_CallsService() {
+        public void GetByPostcode_WithValidQuery_CallsService() {
 
-            _sut.Get("x");
-            _mockLocationService.Verify(s => s.Get(It.Is<string>(q => q == "x")));
+            _sut.GetByPostcode("x");
+            _mockLocationService.Verify(s => s.GetByPostcode(It.Is<string>(q => q == "x")));
         }
     }
 }

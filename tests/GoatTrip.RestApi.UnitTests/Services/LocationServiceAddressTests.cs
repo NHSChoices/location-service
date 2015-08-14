@@ -10,7 +10,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         : LocationServiceTestsBase {
 
         [Fact]
-        public void Get_Always_CallsIsValid() {
+        public void GetByAddress_Always_CallsIsValid() {
             _sut.GetByAddress("ANY");
 
             _mockQueryValidator.Verify(v => v.IsValid(It.Is<string>(q => q == "ANY")));
@@ -18,7 +18,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void Get_Always_CallsSanitise() {
-            _sut.Get("SO22 2XX");
+            _sut.GetByAddress("SO22 2XX");
 
             _mockQuerySanitiser.Verify(s => s.Sanitise(It.Is<string>(q => q == "SO22 2XX")));
         }

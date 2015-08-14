@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GoatTrip.DAL;
 using GoatTrip.RestApi.Models;
@@ -15,17 +16,7 @@ namespace GoatTrip.RestApi.Services {
         }
 
         public IEnumerable<LocationGroupModel> Get(string query) {
-            ValidateAndThrow(query);
-
-            var sanitisedQuery = _postCodeSanitiser.Sanitise(query);
-
-            var results = _repository.FindLocations(sanitisedQuery);
-
-            var locations = results.Select(l => new LocationModel(l));
-
-            var groupedResult = Group(locations);
-
-            return groupedResult;
+            throw new NotImplementedException();
         }
 
         public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
@@ -34,6 +25,20 @@ namespace GoatTrip.RestApi.Services {
             var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
 
             var results = _repository.FindLocationsbyAddress(sanitisedQuery);
+
+            var locations = results.Select(l => new LocationModel(l));
+
+            var groupedResult = Group(locations);
+
+            return groupedResult;
+        }
+
+        public IEnumerable<LocationGroupModel> GetByPostcode(string postcodeQuery) {
+            ValidateAndThrow(postcodeQuery);
+
+            var sanitisedQuery = _postCodeSanitiser.Sanitise(postcodeQuery);
+
+            var results = _repository.FindLocations(sanitisedQuery);
 
             var locations = results.Select(l => new LocationModel(l));
 
