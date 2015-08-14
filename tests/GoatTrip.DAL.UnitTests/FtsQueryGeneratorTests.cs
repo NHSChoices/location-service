@@ -38,7 +38,7 @@ namespace GoatTrip.DAL.Tests
                 "WHERE locations_srch MATCH 'SingleToken*' GROUP BY locations.TOWN_NAME,locations.POSTCODE " +
                 "ORDER by Number desc LIMIT 100;";
 
-            Assert.Equal(expected, queryGenerator.GeneratefTSSearchQuery());
+            Assert.Equal(expected, queryGenerator.Generate());
         }
 
         [Fact()]
@@ -58,7 +58,7 @@ namespace GoatTrip.DAL.Tests
                 "OR matchResults.POSTCODE like '%Test%' " +
                 "LIMIT 100;";
 
-            Assert.Equal(expected, queryGenerator.GeneratefTSSearchQuery());
+            Assert.Equal(expected, queryGenerator.Generate());
         }
     }
 }

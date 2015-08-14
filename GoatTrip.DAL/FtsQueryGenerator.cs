@@ -13,7 +13,7 @@ namespace GoatTrip.DAL
             _ftsTokenizer = fTsQueryTokenizer;
         }
 
-        public string GeneratefTSSearchQuery()
+        public string Generate()
         {
             var query = "SELECT " + LocationQueryField.Concatenate(_locationGroupingStrategy.Fields, ALIAS_PREFIX) + ", COUNT(*) as Number from locations " +
                         "JOIN locations_srch ON locations.locationId = locations_srch.docid " +

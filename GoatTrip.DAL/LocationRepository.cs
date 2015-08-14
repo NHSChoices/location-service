@@ -53,7 +53,7 @@ namespace GoatTrip.DAL
 
             var tokenizer = new fTSQueryTokenizer(addressLookup);
 
-            var statement = new FtsQueryGenerator(groupingStrategy, tokenizer).GeneratefTSSearchQuery();
+            var statement = new FtsQueryGenerator(groupingStrategy, tokenizer).Generate();
 
             List<LocationGroup> locations = new List<LocationGroup>();
 
