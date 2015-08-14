@@ -12,18 +12,21 @@ namespace GoatTrip.DAL
             FullUri = "file::memory:?cache=shared", 
             JournalMode = SQLiteJournalModeEnum.Wal,
             Pooling = true,
+            
             Version = 3
 
         };
+        
         private string _dbFileLocation = @"C:\DASProjects\Development\LocationServiceTest\LocationCSVs\locations.db";
         private string _connectionString;
         private SQLiteConnection _diskDbConnection;
-        private static SQLiteConnection inMemConnection = new SQLiteConnection(conStr.ToString());
+        private static SQLiteConnection inMemConnection = new SQLiteConnection(conStr.ToString() + ";Max Pool Size=100;");
         private bool _memConnectionInitialised = false;
         private bool _memConnectionInitialising = false;
 
         public ConnectionManager(string dbFileLocation)
         {
+
             _dbFileLocation = dbFileLocation;
             _connectionString = "data source=" + _dbFileLocation + "; Version=3;";
            _diskDbConnection = new SQLiteConnection(_connectionString);
