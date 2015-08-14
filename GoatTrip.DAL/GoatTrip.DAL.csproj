@@ -53,7 +53,10 @@
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="DTOs\Location.cs" />
     <Compile Include="DTOs\LocationGroup.cs" />
+    <Compile Include="FtsQueryGenerator.cs" />
+    <Compile Include="fTSQueryTokenizer.cs" />
     <Compile Include="IConnectionManager.cs" />
+    <Compile Include="IfTSQueryTokenizer.cs" />
     <Compile Include="ILocationGroupingStrategy.cs" />
     <Compile Include="ILocationRepository.cs" />
     <Compile Include="IManagedDataReader.cs" />
