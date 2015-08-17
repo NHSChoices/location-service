@@ -23,17 +23,19 @@ namespace GoatTrip.RestApi {
 
     public class ConnectionManagerModule : Module
     {
-        public ConnectionManagerModule(string databasePath)
+        public ConnectionManagerModule(string databasePath, bool useDiskConnectionOnly)
         {
             _databasePath = databasePath;
+            _discConnectionOnly = useDiskConnectionOnly;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new ConnectionManager(_databasePath)).As<IConnectionManager>().SingleInstance();
+            builder.Register(c => new ConnectionManager(_databasePath, _discConnectionOnly)).As<IConnectionManager>().SingleInstance();
             builder.Register(c => new LocationRepository(c.Resolve<IConnectionManager>())).As<ILocationRepository>();
         }
 
         private readonly string _databasePath;
+        private readonly bool _discConnectionOnly;
     }
 }
