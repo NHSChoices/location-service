@@ -10,7 +10,7 @@ namespace GoatTrip.DAL
         private static SQLiteConnectionStringBuilder conStr = new SQLiteConnectionStringBuilder()
         {
             FullUri = "file::memory:?cache=shared", 
-            JournalMode = SQLiteJournalModeEnum.Wal,
+            JournalMode = SQLiteJournalModeEnum.Off,
             Pooling = true,
             
             Version = 3
@@ -28,7 +28,7 @@ namespace GoatTrip.DAL
         {
 
             _dbFileLocation = dbFileLocation;
-            _connectionString = "data source=" + _dbFileLocation + "; Version=3;";
+            _connectionString = "data source=" + _dbFileLocation + "; Version=3; Pooling=True; Max Pool Size=100;";
            _diskDbConnection = new SQLiteConnection(_connectionString);
         }
 
