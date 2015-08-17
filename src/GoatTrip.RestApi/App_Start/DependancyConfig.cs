@@ -18,9 +18,13 @@ namespace GoatTrip.RestApi {
 
             //builder.RegisterWebApiFilterProvider(config);
             var dbPath = WebConfigurationManager.AppSettings["sqLiteDb"].Replace(@"~\", "");
+            bool useDiskConnOnlyValue;
+            if (!bool.TryParse(WebConfigurationManager.AppSettings["useDiskConnOnly"], out useDiskConnOnlyValue))
+            {
+                throw new InvalidOperationException("Invalid useDiskCOnnOnly in web.config");
+            }
 
-
-            builder.RegisterModule(new ConnectionManagerModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dbPath)));
+            builder.RegisterModule(new ConnectionManagerModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dbPath), useDiskConnOnlyValue));
             builder.RegisterModule(new LocationControllerModule());
 
             var container = builder.Build();
