@@ -177,6 +177,7 @@
     <Compile Include="App_Start\LocationControllerModule.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Authentication\AuthenticationModule.cs" />
     <Compile Include="Authentication\CertificateAuthentication.cs" />
     <Compile Include="Authentication\PageAuthorizationAttribute.cs" />
     <Compile Include="Controllers\BadRequestResult.cs" />
