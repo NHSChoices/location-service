@@ -4,7 +4,9 @@ using System.Web.Http;
 namespace GoatTrip.RestApi {
     public static class WebApiConfig {
 
-        public static void Register(HttpConfiguration config) {
+        public static void Register(HttpConfiguration config)
+        {
+            config.EnableCors();
 
             // Web API configuration and services
 
