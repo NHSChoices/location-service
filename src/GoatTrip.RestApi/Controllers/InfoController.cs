@@ -1,8 +1,11 @@
-﻿namespace GoatTrip.RestApi.Controllers {
+﻿using System.Web.Http.Cors;
+
+namespace GoatTrip.RestApi.Controllers {
     using System.Web.Http;
     using DAL;
 
     [RoutePrefix("info")]
+    [EnableCors(origins:"*", headers:"*",methods:"*")]
     public class InfoController
         : ApiController {
 
