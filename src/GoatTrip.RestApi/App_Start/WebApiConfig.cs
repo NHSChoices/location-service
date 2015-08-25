@@ -3,9 +3,7 @@
 namespace GoatTrip.RestApi {
     public static class WebApiConfig {
 
-        public static void Register(HttpConfiguration config)
-        {
-            config.EnableCors();
+        public static void Register(HttpConfiguration config) {
 
             // Web API configuration and services
 
