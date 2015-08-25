@@ -1,13 +1,10 @@
-﻿using System.Web.Http.Cors;
-
-namespace GoatTrip.RestApi.Controllers {
+﻿namespace GoatTrip.RestApi.Controllers {
     using System.Collections.Generic;
 using System.Web.Http;
     using DAL;
     using Services;
 
     [RoutePrefix("location")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LocationController
         : ApiController {
 
