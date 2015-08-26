@@ -27,7 +27,7 @@ namespace GoatTrip.RestApi {
 
             var lucenceIndeDirectory = WebConfigurationManager.AppSettings["lucenceIndeDirectory"].Replace(@"~\", "");
 
-            builder.RegisterModule(new LuceneIndexModule(lucenceIndeDirectory));
+            builder.RegisterModule(new LuceneIndexModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, lucenceIndeDirectory)));
 
             builder.RegisterModule(new ConnectionManagerModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dbPath), useDiskConnOnlyValue));
             builder.RegisterModule(new LocationControllerModule());
