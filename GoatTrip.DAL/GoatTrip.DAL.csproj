@@ -68,6 +68,9 @@
     <Compile Include="FtsQueryGenerator.cs" />
     <Compile Include="fTSQueryTokenizer.cs" />
     <Compile Include="ILocationQueryFields.cs" />
+    <Compile Include="LocationGroupBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="LocationQueryFields.cs" />
     <Compile Include="LuceneQueryFields.cs" />
     <Compile Include="Lucene\GroupCollector.cs" />
@@ -80,7 +83,6 @@
     <Compile Include="ILocationRepository.cs" />
     <Compile Include="IManagedDataReader.cs" />
     <Compile Include="LocationDataField.cs" />
-    <Compile Include="LocationGroupBuilder.cs" />
     <Compile Include="LocationGroupingStrategyBuilder.cs" />
     <Compile Include="LocationGroupRepository.cs" />
     <Compile Include="Lucene\IGroupCollector.cs" />
