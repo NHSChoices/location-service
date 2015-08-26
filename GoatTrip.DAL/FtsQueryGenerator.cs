@@ -15,10 +15,10 @@ namespace GoatTrip.DAL
 
         public string Generate()
         {
-            var query = "SELECT " + LocationQueryField.Concatenate(_locationGroupingStrategy.Fields, ALIAS_PREFIX) + ", COUNT(*) as Number from locations " +
+            var query = "SELECT " + SqLiteQueryField.Concatenate(_locationGroupingStrategy.Fields, ALIAS_PREFIX) + ", COUNT(*) as Number from locations " +
                         "JOIN locations_srch ON locations.locationId = locations_srch.docid " +
                         "WHERE locations_srch MATCH '"+ _ftsTokenizer.GetMatchQuery() +"' " +
-                        "GROUP BY " + LocationQueryField.Concatenate(_locationGroupingStrategy.Fields, ALIAS_PREFIX) + " ORDER by Number desc ";
+                        "GROUP BY " + SqLiteQueryField.Concatenate(_locationGroupingStrategy.Fields, ALIAS_PREFIX) + " ORDER by Number desc ";
 
             if (_ftsTokenizer.Tokens.Length > 1)
             {

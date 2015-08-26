@@ -8,11 +8,11 @@ namespace GoatTrip.DAL {
             _fields.AddRange(groupingStrategy.Fields);
         }
 
-        public LocationGroupingStrategyBuilder(LocationQueryField field) {
+        public LocationGroupingStrategyBuilder(SqLiteQueryField field) {
             _fields.Add(field);
         }
 
-        public LocationGroupingStrategyBuilder ThenBy(LocationQueryField field) {
+        public LocationGroupingStrategyBuilder ThenBy(SqLiteQueryField field) {
             _fields.Add(field);
             return this;
         }
@@ -27,6 +27,6 @@ namespace GoatTrip.DAL {
             return new AdhocLocationGroupingStrategy(_fields);
         }
 
-        private readonly List<LocationQueryField> _fields = new List<LocationQueryField>();
+        private readonly List<SqLiteQueryField> _fields = new List<SqLiteQueryField>();
     }
 }

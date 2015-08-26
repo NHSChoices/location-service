@@ -7,10 +7,12 @@ namespace GoatTrip.DAL
         : ILocationRepository
     {
         private IConnectionManager _connectionManager;
+        private ILocationGroupBuilder _locationGroupBuilder;
 
-        public LocationRepository(IConnectionManager connectionManager)
+        public LocationRepository(IConnectionManager connectionManager, ILocationGroupBuilder locationGroupBuilder)
         {
             _connectionManager = connectionManager;
+            _locationGroupBuilder = locationGroupBuilder;
         }
 
         public IEnumerable<Location> FindLocations(string postCode)
@@ -61,7 +63,7 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new LocationGroup(reader.DataReader, groupingStrategy.Fields));
+                    locations.Add(_locationGroupBuilder.Build(reader.DataReader, groupingStrategy.Fields));
                 }
             }
             return locations;

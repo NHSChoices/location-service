@@ -6,6 +6,6 @@ namespace GoatTrip.DAL {
 
     public interface ILocationGroupingStrategy {
 
-        IEnumerable<LocationQueryField> Fields { get; }
+        IEnumerable<SqLiteQueryField> Fields { get; }
     }
 }
