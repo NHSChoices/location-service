@@ -10,15 +10,20 @@
 </head>
 <body>
 <div id="addressEntry">
+    <p>Subscription Key for Azure</p>
+    <input id="subscriptionKey" type="text" data-bind="value: subscriptionKey"/>
+    <hr/>
+    <p>Search for address</p>
     <input id="tbAddressSearch" type="text" data-bind="textInput: inputValue"/>
-
+</div>
+<div id="addressOptions">
     <ul data-bind="foreach: addresses, visible: addresses().length > 0">
         <li>
             <span data-bind="text: description"></span>
         </li>
     </ul>
 </div>
-<div id="selectedAddress">
+<div id="addressSelected">
     
 </div>
 </body>
@@ -27,7 +32,6 @@
 
 <script type="text/javascript">
     var baseUrl = "http://locationservicesstaging.azure-api.net";
-    var subscriptionKey = "1ea992718a84486689023b191e7f862e";
     var contentType = "application/json; charset=utf-8";
 
     function Address(data) {
@@ -38,12 +42,13 @@
 
     var AddressViewModel = function () {
         var self = this;
+        self.subscriptionKey = ko.observable("");
         self.inputValue = ko.observable("ct1");
         self.selectedValue = ko.observable("");
         self.addresses = ko.observableArray([]);
 
         self.inputValue.subscribe(function (changedValue) {
-            GetAddresses(changedValue, self.addresses);
+            GetAddresses(changedValue, self.addresses, self.subscriptionKey());
         });
     }
 
@@ -56,7 +61,7 @@
         });
     }
 
-    function GetAddresses(searchCriteria, listToUpdate) {
+    function GetAddresses(searchCriteria, listToUpdate, subscriptionKey) {
         if (searchCriteria === "" || searchCriteria === null) {
             return;
         }
