@@ -17,7 +17,7 @@ namespace GoatTrip.DAL.Lucene
 
         protected override void Load(ContainerBuilder builder)
         {
-            FSDirectory directory = FSDirectory.Open(_lucenceIndexDirectory);
+            Directory directory = new RAMDirectory(FSDirectory.Open(_lucenceIndexDirectory));
             builder.Register(c => new GroupedIndexSearcher(directory)).As<IGroupIndexSearcher>().SingleInstance();
 
             builder.Register(
