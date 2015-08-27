@@ -13,15 +13,16 @@ namespace GoatTrip.DAL.Tests
         private  Mock<IfTSQueryTokenizer> _mockTokenizer;
 
         private Mock<ILocationGroupingStrategy>  _mockGroupingStrategy;
+        private ILocationQueryFields _locationQueryFields;
 
         public FtsQueryGeneratorTests()
         {
             _mockTokenizer = new Mock<IfTSQueryTokenizer>();
-           
+            _locationQueryFields = new SqlIteLocationQueryFields();
 
             _mockGroupingStrategy = new Mock<ILocationGroupingStrategy>();
             _mockGroupingStrategy.Setup(g => g.Fields)
-                .Returns(new List<LocationQueryField>() {LocationQueryField.Town, LocationQueryField.PostCode});
+                .Returns(new List<LocationQueryField>() { _locationQueryFields.Town, _locationQueryFields.PostCode });
 
         }
 

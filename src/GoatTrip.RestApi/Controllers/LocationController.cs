@@ -8,9 +8,10 @@ using System.Web.Http;
     public class LocationController
         : ApiController {
 
-        public LocationController(ILocationQueryValidator queryValidator, ILocationService service) {
+        public LocationController(ILocationQueryValidator queryValidator, ILocationService service, ILocationQueryFields locationQueryFields) {
             _queryValidator = queryValidator;
             _service = service;
+            _locationQueryFields = locationQueryFields;
         }
 
         [Route("search/{query?}")]
@@ -20,7 +21,7 @@ using System.Web.Http;
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.Get(query, new LocationsGroupedByAddressStrategy());
+            var result = _service.Get(query, new LocationsGroupedByAddressStrategy(_locationQueryFields));
 
             return Ok(result);
         }
@@ -38,15 +39,16 @@ using System.Web.Http;
 
         private readonly ILocationQueryValidator _queryValidator;
         private readonly ILocationService _service;
-    }
+        private readonly ILocationQueryFields _locationQueryFields;
+        }
 
     public class LocationsGroupedByAddressStrategy
         : ILocationGroupingStrategy {
-        public LocationsGroupedByAddressStrategy() {
+        public LocationsGroupedByAddressStrategy(ILocationQueryFields locationQueryFields) {
             Fields = new List<LocationQueryField> {
-                LocationQueryField.Street,
-                LocationQueryField.Town,
-                LocationQueryField.PostCode,
+                locationQueryFields.Street,
+                locationQueryFields.Town,
+                locationQueryFields.PostCode,
             };
         }
 

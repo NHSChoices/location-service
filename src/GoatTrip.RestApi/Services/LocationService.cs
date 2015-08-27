@@ -10,11 +10,13 @@ namespace GoatTrip.RestApi.Services {
     public class LocationService
         : ILocationService {
 
-        public LocationService(ILocationRepository repository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationQuerySanitiser searchSanitiser) {
+        public LocationService(ILocationRepository repository, ILocationGroupRepository groupRepository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationQuerySanitiser searchSanitiser, ILocationQueryFields locationQueryFields) {
             _repository = repository;
             _queryValidator = queryValidator;
             _postCodeSanitiser = postCodeSanitiser;
             _searchSanitiser = searchSanitiser;
+            _locationQueryFields = locationQueryFields;
+            _groupRepository = groupRepository;
         }
 
         public IEnumerable<LocationGroupModel> Get(string query) {
@@ -36,7 +38,7 @@ namespace GoatTrip.RestApi.Services {
 
             var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
 
-            var results = _repository.FindLocations(sanitisedQuery, groupingStrategy);
+            var results = _groupRepository.FindGroupedLocations(sanitisedQuery, groupingStrategy);
 
             var refinedResults = RequeryIfRequired(results, addressQuery, groupingStrategy);
 
@@ -51,10 +53,10 @@ namespace GoatTrip.RestApi.Services {
             if (results.Count() != 1 && locationsCount >= 100)
                 return results;
 
-            var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
-                .ThenBy(LocationQueryField.HouseSuffix)
+            var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
+                .ThenBy(_locationQueryFields.HouseSuffix)
                 .ThenBy(groupingStrategy);
-            return _repository.FindLocations(addressQuery, groupingStrategyBuilder.Build());
+            return _groupRepository.FindGroupedLocations(addressQuery, groupingStrategyBuilder.Build());
         }
 
         public IEnumerable<LocationGroupModel> GetByAddress(string addressQuery) {
@@ -88,5 +90,7 @@ namespace GoatTrip.RestApi.Services {
         private readonly ILocationQueryValidator _queryValidator;
         private readonly ILocationQuerySanitiser _postCodeSanitiser;
         private readonly ILocationQuerySanitiser _searchSanitiser;
-    }
+        private readonly ILocationQueryFields _locationQueryFields;
+        private readonly ILocationGroupRepository _groupRepository;
+        }
 }

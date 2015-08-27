@@ -209,6 +209,10 @@
     <Content Include="newrelic\Extensions\extension.xsd">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Index-test\segments.gen" />
+    <Content Include="App_Data\Index-test\segments_2" />
+    <Content Include="App_Data\Index-test\_0.cfs" />
+    <Content Include="App_Data\Index-test\_0.cfx" />
     <None Include="newrelic\newrelic.xsd">
       <SubType>Designer</SubType>
     </None>

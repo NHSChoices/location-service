@@ -7,10 +7,16 @@ namespace GoatTrip.DAL.Tests
 
     public class LocationGroupingStrategyBuilderTests
     {
+        private ILocationQueryFields _locationQueryFields;
+        public LocationGroupingStrategyBuilderTests()
+        {
+            _locationQueryFields = new SqlIteLocationQueryFields();
+        }
+
         [Fact()]
         public void LocationGroupBy_Single_Fields_Test()
         {
-            var result = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
+            var result = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
                 .Build();
 
             Assert.NotNull(result.Fields);
@@ -21,8 +27,8 @@ namespace GoatTrip.DAL.Tests
         [Fact()]
         public void LocationGroupBy_AndBy_Fields_Test()
         {
-            var result = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
-                            .ThenBy(LocationQueryField.Street)
+            var result = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
+                            .ThenBy(_locationQueryFields.Street)
                             .Build();
 
             Assert.NotNull(result.Fields);
@@ -34,9 +40,9 @@ namespace GoatTrip.DAL.Tests
         [Fact()]
         public void LocationGroupBy_Returns_Grouped_Fields()
         {
-            var result = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
-                .ThenBy(LocationQueryField.Street)
-                .ThenBy(LocationQueryField.Town)
+            var result = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
+                .ThenBy(_locationQueryFields.Street)
+                .ThenBy(_locationQueryFields.Town)
                 .Build();
 
             Assert.NotNull(result.Fields);
@@ -49,16 +55,16 @@ namespace GoatTrip.DAL.Tests
         [Fact()]
         public void LocationGroupBy_Returns_Grouped_Fields_Correct_Order()
         {
-            var result = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
-                .ThenBy(LocationQueryField.Street)
-                .ThenBy(LocationQueryField.Town)
+            var result = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
+                .ThenBy(_locationQueryFields.Street)
+                .ThenBy(_locationQueryFields.Town)
                 .Build();
 
             Assert.NotNull(result.Fields);
             Assert.Equal(result.Fields.Count(), 3);
-            Assert.Equal(LocationQueryField.HouseNumber.Key, result.Fields.ElementAt(0).Key);
-            Assert.Equal(LocationQueryField.Street.Key, result.Fields.ElementAt(1).Key);
-            Assert.Equal(LocationQueryField.Town.Key, result.Fields.ElementAt(2).Key);
+            Assert.Equal(_locationQueryFields.HouseNumber.Key, result.Fields.ElementAt(0).Key);
+            Assert.Equal(_locationQueryFields.Street.Key, result.Fields.ElementAt(1).Key);
+            Assert.Equal(_locationQueryFields.Town.Key, result.Fields.ElementAt(2).Key);
         }
 
     
