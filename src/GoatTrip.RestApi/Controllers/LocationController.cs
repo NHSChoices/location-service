@@ -1,8 +1,8 @@
-﻿using System.Web.Http;
-using GoatTrip.RestApi.Services;
+﻿namespace GoatTrip.RestApi.Controllers {
+    using System.Web.Http;
+    using DAL;
+    using Services;
 
-namespace GoatTrip.RestApi.Controllers {
-    
     [RoutePrefix("location")]
     public class LocationController
         : ApiController {
@@ -19,7 +19,7 @@ namespace GoatTrip.RestApi.Controllers {
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.GetByAddress(query);
+            var result = _service.Search(query, new LocationsGroupedByAddressStrategy());
 
             return Ok(result);
         }
@@ -30,7 +30,7 @@ namespace GoatTrip.RestApi.Controllers {
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.GetByPostcode(query);
+            var result = _service.SearchByPostcode(query);
 
             return Ok(result);
         }
@@ -41,9 +41,13 @@ namespace GoatTrip.RestApi.Controllers {
             if (!_queryValidator.IsValid(id))
                 return new BadRequestResult(Request, id);
 
-            var result = _service.Get(id);
-
-            return Ok(result);
+            try {
+                var result = _service.Get(id);
+                return Ok(result);
+            }
+            catch (LocationNotFoundException) {
+                return NotFound();
+            }
         }
 
         private readonly ILocationQueryValidator _queryValidator;

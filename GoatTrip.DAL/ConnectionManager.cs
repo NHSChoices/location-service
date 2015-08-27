@@ -10,22 +10,26 @@ namespace GoatTrip.DAL
         private static SQLiteConnectionStringBuilder conStr = new SQLiteConnectionStringBuilder()
         {
             FullUri = "file::memory:?cache=shared", 
-            JournalMode = SQLiteJournalModeEnum.Wal,
+            JournalMode = SQLiteJournalModeEnum.Off,
             Pooling = true,
+            
             Version = 3
 
         };
+        
         private string _dbFileLocation = @"C:\DASProjects\Development\LocationServiceTest\LocationCSVs\locations.db";
         private string _connectionString;
         private SQLiteConnection _diskDbConnection;
-        private static SQLiteConnection inMemConnection = new SQLiteConnection(conStr.ToString());
+        private static SQLiteConnection inMemConnection = new SQLiteConnection(conStr.ToString() + ";Max Pool Size=100;");
         private bool _memConnectionInitialised = false;
         private bool _memConnectionInitialising = false;
+        private bool _dbDiscConnectectionOnly = false;
 
-        public ConnectionManager(string dbFileLocation)
+        public ConnectionManager(string dbFileLocation, bool useDiscConnectionOnly)
         {
+            _dbDiscConnectectionOnly = useDiscConnectionOnly;
             _dbFileLocation = dbFileLocation;
-            _connectionString = "data source=" + _dbFileLocation + "; Version=3;";
+            _connectionString = "data source=" + _dbFileLocation + "; Version=3; Pooling=True; Max Pool Size=100;";
            _diskDbConnection = new SQLiteConnection(_connectionString);
         }
 
@@ -44,7 +48,8 @@ namespace GoatTrip.DAL
 
         private SQLiteConnection GetSqLiteInMemoryDbConnection()
         {
-            EnsureInMemConnectionInitilised();
+
+            if(!_dbDiscConnectectionOnly) EnsureInMemConnectionInitilised();
             if(_memConnectionInitialised)
                 return new SQLiteConnection(inMemConnection.ConnectionString);
             return new SQLiteConnection(_diskDbConnection.ConnectionString);

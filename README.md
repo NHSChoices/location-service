@@ -11,7 +11,7 @@ IIS express need the following reg key adding to run x64 targets
 #### For VS 2013
 `reg add HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\12.0\WebProjects /v Use64BitIISExpress /t REG_DWORD /d 1`
 <br />
-N.B. Use Visual studio vesrion approprite to you install
+N.B. Use the Visual studio version appropriate to your installed version
 
 RESTART IIS
 

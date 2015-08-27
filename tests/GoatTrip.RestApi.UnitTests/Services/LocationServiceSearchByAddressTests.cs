@@ -1,45 +1,47 @@
-using System.Collections.Generic;
-using System.Linq;
-using GoatTrip.DAL.DTOs;
-using GoatTrip.RestApi.Services;
-using Moq;
-using Xunit;
+
 
 namespace GoatTrip.RestApi.UnitTests.Services {
-    public class LocationServiceAddressTests
+    using System.Collections.Generic;
+    using System.Linq;
+    using GoatTrip.DAL.DTOs;
+    using GoatTrip.RestApi.Services;
+    using Moq;
+    using Xunit;
+
+    public class LocationServiceSearchByAddressTests
         : LocationServiceTestsBase {
 
         [Fact]
-        public void GetByAddress_Always_CallsIsValid() {
-            _sut.GetByAddress("ANY");
+        public void SearchByAddress_Always_CallsIsValid() {
+            _sut.SearchByAddress("ANY");
 
             _mockQueryValidator.Verify(v => v.IsValid(It.Is<string>(q => q == "ANY")));
         }
 
         [Fact]
-        public void Get_Always_CallsSanitise() {
-            _sut.GetByAddress("SO22 2XX");
+        public void SearchByAddress_Always_CallsSanitise() {
+            _sut.SearchByAddress("SO22 2XX");
 
             _mockQuerySanitiser.Verify(s => s.Sanitise(It.Is<string>(q => q == "SO22 2XX")));
         }
 
         [Fact]
-        public void GetByAddress_WithInvalidAddress_ThrowsInvalidLocationQueryException() {
+        public void SearchByAddress_WithInvalidAddress_ThrowsInvalidLocationQueryException() {
             _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(false);
 
-            Assert.Throws<InvalidLocationQueryException>(() => _sut.GetByAddress(""));
+            Assert.Throws<InvalidLocationQueryException>(() => _sut.SearchByAddress(""));
         }
 
         [Fact]
-        public void GetByAddress_Always_CallsFindLocationsByAddress() {
+        public void SearchByAddress_Always_CallsFindLocationsByAddress() {
 
-            _sut.GetByAddress("Coronation street");
+            _sut.SearchByAddress("Coronation street");
 
             _mockLocationRepository.Verify(r => r.FindLocationsbyAddress(It.Is<string>(p => p == "coronation street")));
         }
 
         [Fact]
-        public void GetByAddress_WithExistingAddress_ReturnsThatLocation() {
+        public void SearchByAddress_WithExistingAddress_ReturnsThatLocation() {
 
             _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO99 9XX");
 
@@ -48,7 +50,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
                     new Location(_mockDataReader.Object)
                 });
 
-            var result = _sut.GetByAddress("Coronation street").ToList();
+            var result = _sut.SearchByAddress("Coronation street").ToList();
 
             AssertIsValidResult(result, 1, "SO99 9XX");
 

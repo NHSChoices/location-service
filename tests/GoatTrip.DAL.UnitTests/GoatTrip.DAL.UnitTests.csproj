@@ -56,11 +56,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\LocationGroupTests.cs" />
+    <Compile Include="FtsQueryGeneratorTests.cs" />
+    <Compile Include="fTSQueryTokenizerTests.cs" />
     <Compile Include="LocationGroupByTests.cs" />
     <Compile Include="LocationRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
 {
-    public class LocationRepository : ILocationRepository
+    using System.Runtime.Serialization;
+
+    public class LocationRepository
+        : ILocationRepository
     {
         private IConnectionManager _connectionManager;
 
@@ -48,15 +52,11 @@ namespace GoatTrip.DAL
             return locations;
         }
 
+        public IEnumerable<LocationGroup> FindLocations(string addressLookup, ILocationGroupingStrategy groupingStrategy) {
 
-        public IEnumerable<LocationGroup> FindLocationGroupsbyAddress(string addressLookup, LocationGroupByStringBuilder groupBy)
-        {
-            string statement = "SELECT " + groupBy.ToString() + ", COUNT(*) as Number  " +
-                    "FROM locations WHERE locationId IN(" +
-                    "select docid from locations_srch WHERE locations_srch " +
-                    "MATCH @addressSearch) LIMIT 100 " +
-                    "GROUP BY" + groupBy.ToString() + " " +
-                    "ORDER by Number desc;";
+            var tokenizer = new fTSQueryTokenizer(addressLookup);
+
+            var statement = new FtsQueryGenerator(groupingStrategy, tokenizer).Generate();
 
             List<LocationGroup> locations = new List<LocationGroup>();
 
@@ -64,10 +64,35 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new LocationGroup(reader.DataReader, groupBy));
+                    locations.Add(new LocationGroup(reader.DataReader, groupingStrategy.Fields));
                 }
             }
             return locations;
+
+        }
+
+        public Location Get(string id) {
+            var statement = "SELECT * FROM locations WHERE locationId = @locationId";
+
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters { { "@locationId", id } })) {
+                while (reader.Read()) {
+                    return new Location(reader.DataReader);
+                }
+            }
+
+            throw new LocationNotFoundException(id);
+        }
+    }
+
+    [Serializable]
+    public class LocationNotFoundException : Exception {
+
+        public LocationNotFoundException(string id)
+            : base(string.Format("Location with id '{0}' could not be found.", id)) { }
+
+        protected LocationNotFoundException(SerializationInfo info,
+                                            StreamingContext context)
+            : base(info, context) {
         }
     }
 }

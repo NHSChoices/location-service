@@ -1,39 +1,56 @@
-using GoatTrip.RestApi.Controllers;
-using Moq;
-using Xunit;
 
 namespace GoatTrip.RestApi.UnitTests.Controllers {
+    using System.Web.Http.Results;
+    using DAL;
+    using Moq;
+    using RestApi.Models;
+    using Xunit;
+    using BadRequestResult = RestApi.Controllers.BadRequestResult;
+
     public class LocationControllerGetTests
         : LocationControllerBaseTests {
 
         [Fact]
-        public void GetByPostcode_Always_CallsIsValid() {
-            _sut.GetByPostcode("");
+        public void Get_Always_CallsIsValid() {
+            _sut.Get("something");
 
-            _mockQueryValidator.Verify(v => v.IsValid(It.IsAny<string>()));
+            _mockQueryValidator.Verify(v => v.IsValid("something"));
         }
 
         [Fact]
-        public void GetByPostcode_WithInvalidQuery_ReturnsBadRequest() {
-            _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>()))
+        public void Get_WithInvalidId_ReturnsBadResponse() {
+            _mockQueryValidator.Setup(v => v.IsValid(""))
                 .Returns(false);
 
-            var result = _sut.GetByPostcode("");
+            var result = _sut.Get("");
             Assert.IsAssignableFrom<BadRequestResult>(result);
         }
 
         [Fact]
-        public void GetByPostcode_WithValidQuery_DoesntReturnBadRequest() {
+        public void Get_WithValidId_CallsService() {
+            _sut.Get("anything");
 
-            var result = _sut.GetByPostcode("x");
-            Assert.False(result is BadRequestResult);
+            _mockLocationService.Verify(s => s.Get("anything"), Times.Once);
         }
 
         [Fact]
-        public void GetByPostcode_WithValidQuery_CallsService() {
+        public void Get_WithReturnedResults_ReturnsThatResult() {
+            var location = new LocationModel {
+                Postcode = "somewhere"
+            };
+            _mockLocationService.Setup(s => s.Get("anything")).Returns(location);
 
-            _sut.GetByPostcode("x");
-            _mockLocationService.Verify(s => s.GetByPostcode(It.Is<string>(q => q == "x")));
+            _sut.Get("anything");
+
+            Assert.Equal("somewhere", location.Postcode);
+        }
+
+        [Fact]
+        public void Get_WithNonExistantId_Returns404() {
+            _mockLocationService.Setup(s => s.Get("missing")).Throws(new LocationNotFoundException("missing"));
+
+            var result = _sut.Get("missing");
+            Assert.IsAssignableFrom<NotFoundResult>(result);
         }
     }
 }
