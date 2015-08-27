@@ -1,5 +1,4 @@
-﻿
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace GoatTrip.RestApi {
 //    using log4net;

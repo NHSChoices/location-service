@@ -12,7 +12,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         public LocationServiceSearchTests() {
             _mockGroupStrat = new Mock<ILocationGroupingStrategy>();
-            _mockGroupStrat.Setup(g => g.Fields).Returns(new List<LocationQueryField> { LocationQueryField.Street });
+            _mockGroupStrat.Setup(g => g.Fields).Returns(new List<LocationQueryField> { _locationQueryFields.Street });
         }
 
         [Fact]
@@ -34,12 +34,12 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r.GetName(1)).Returns(POSTCODE_LOCATOR_FIELD);
             _mockDataReader.Setup(r => r["Number"]).Returns(LocationService.GROUPING_THRESHOLD - 1);
 
-            _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
-                .Returns(new List<LocationGroup> { new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields) });
+            _mockLocationGroupRepository.Setup(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
+                .Returns(new List<LocationGroup> { _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields) });
 
             _sut.Search("SO22 2XX", _mockGroupStrat.Object);
 
-            _mockLocationRepository.Verify(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
+            _mockLocationGroupRepository.Verify(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -51,12 +51,12 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r.GetName(1)).Returns(POSTCODE_LOCATOR_FIELD);
             _mockDataReader.Setup(r => r["Number"]).Returns(LocationService.GROUPING_THRESHOLD + 1);
 
-            _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
-                .Returns(new List<LocationGroup> { new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields) });
+            _mockLocationGroupRepository.Setup(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
+                .Returns(new List<LocationGroup> { _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields) });
 
             _sut.Search("SO22 2XX", _mockGroupStrat.Object);
 
-            _mockLocationRepository.Verify(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
+            _mockLocationGroupRepository.Verify(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -68,16 +68,16 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r.GetName(1)).Returns(POSTCODE_LOCATOR_FIELD);
             _mockDataReader.Setup(r => r["Number"]).Returns(10);
 
-            _mockLocationRepository.Setup(
-                r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
+            _mockLocationGroupRepository.Setup(
+                r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
                 .Returns(new List<LocationGroup> {
-                    new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields),
-                    new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields)
+                    _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields),
+                    _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields)
                 });
 
             _sut.Search("SO22 2XX", _mockGroupStrat.Object);
 
-            _mockLocationRepository.Verify(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
+            _mockLocationGroupRepository.Verify(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -89,16 +89,16 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r.GetName(1)).Returns(POSTCODE_LOCATOR_FIELD);
             _mockDataReader.Setup(r => r["Number"]).Returns(10);
 
-            _mockLocationRepository.Setup(
-                r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
+            _mockLocationGroupRepository.Setup(
+                r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
                 .Returns(new List<LocationGroup> {
-                    new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields),
-                    new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields)
+                    _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields),
+                    _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields)
                 });
 
             _sut.Search("SO22 2XX", _mockGroupStrat.Object);
 
-            _mockLocationRepository.Verify(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
+            _mockLocationGroupRepository.Verify(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -114,13 +114,13 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockLocationRepository.Setup(
                 r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
                 .Returns(new List<LocationGroup> {
-                    new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields),
-                    new LocationGroup(_mockDataReader.Object, _mockGroupStrat.Object.Fields)
+                    _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields),
+                    _builder.Build(_mockDataReader.Object, _mockGroupStrat.Object.Fields)
                 });
 
             _sut.Search("SO22 2XX", _mockGroupStrat.Object);
 
-            _mockLocationRepository.Verify(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Once);
+            _mockLocationGroupRepository.Verify(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Once);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             _sut.Search("SO22 2XX", _mockGroupStrat.Object);
 
-            _mockLocationRepository.Verify(r => r.FindLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Once);
+            _mockLocationGroupRepository.Verify(r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()), Times.Once);
         }
 
         private readonly Mock<ILocationGroupingStrategy> _mockGroupStrat;

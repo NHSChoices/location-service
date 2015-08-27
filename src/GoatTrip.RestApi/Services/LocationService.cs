@@ -12,11 +12,13 @@ namespace GoatTrip.RestApi.Services {
 
         public const int GROUPING_THRESHOLD = 100; //if the total number of returned locations is lower than this figure the results will be de-grouped by requerying the dataset.
 
-        public LocationService(ILocationRepository repository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationQuerySanitiser searchSanitiser, ILocationIdEncoder encoder) {
+        public LocationService(ILocationRepository repository, ILocationGroupRepository groupRepository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationQuerySanitiser searchSanitiser, ILocationIdEncoder encoder, ILocationQueryFields locationQueryFields) {
             _repository = repository;
             _queryValidator = queryValidator;
             _postCodeSanitiser = postCodeSanitiser;
             _searchSanitiser = searchSanitiser;
+            _locationQueryFields = locationQueryFields;
+            _groupRepository = groupRepository;
             _encoder = encoder;
         }
 
@@ -41,7 +43,7 @@ namespace GoatTrip.RestApi.Services {
             ValidateAndThrow(addressQuery);
             var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
 
-            var results = _repository.FindLocations(sanitisedQuery, groupingStrategy);
+            var results = _groupRepository.FindGroupedLocations(sanitisedQuery, groupingStrategy);
 
             var refinedResults = RequeryIfRequired(results.ToList(), sanitisedQuery, groupingStrategy);
             return refinedResults.Select(lg => new LocationGroupModel(lg.GroupDescription, lg.LocationsCount, BuildNextUri(lg)));
@@ -73,11 +75,11 @@ namespace GoatTrip.RestApi.Services {
                 return results;
 
             if (results.HasSingleGroup() || locationsSum < GROUPING_THRESHOLD) {
-                var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(LocationQueryField.HouseNumber)
-                    .ThenBy(LocationQueryField.HouseSuffix)
+                var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
+                    .ThenBy(_locationQueryFields.HouseSuffix)
                     .ThenBy(groupingStrategy);
 
-                return _repository.FindLocations(addressQuery, groupingStrategyBuilder.Build());
+                return _groupRepository.FindGroupedLocations(addressQuery, groupingStrategyBuilder.Build());
             }
 
             return results;
@@ -99,6 +101,8 @@ namespace GoatTrip.RestApi.Services {
         private readonly ILocationQuerySanitiser _postCodeSanitiser;
         private readonly ILocationQuerySanitiser _searchSanitiser;
         private readonly ILocationIdEncoder _encoder;
+        private readonly ILocationQueryFields _locationQueryFields;
+        private readonly ILocationGroupRepository _groupRepository;
     }
 
     public static class IEnumerableOfLocationGroupExtensions {

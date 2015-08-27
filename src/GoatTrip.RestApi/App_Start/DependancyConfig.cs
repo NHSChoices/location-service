@@ -5,6 +5,7 @@ using System.Web.Configuration;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using GoatTrip.DAL.Lucene;
 
 namespace GoatTrip.RestApi {
     public static class DependancyConfig {
@@ -23,6 +24,10 @@ namespace GoatTrip.RestApi {
             {
                 throw new InvalidOperationException("Invalid useDiskCOnnOnly in web.config");
             }
+
+            var lucenceIndeDirectory = WebConfigurationManager.AppSettings["lucenceIndeDirectory"].Replace(@"~\", "");
+
+            builder.RegisterModule(new LuceneIndexModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, lucenceIndeDirectory)));
 
             builder.RegisterModule(new ConnectionManagerModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dbPath), useDiskConnOnlyValue));
             builder.RegisterModule(new LocationControllerModule());

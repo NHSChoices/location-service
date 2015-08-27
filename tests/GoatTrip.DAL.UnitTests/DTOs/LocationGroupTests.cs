@@ -10,13 +10,18 @@ using Moq;
 using Xunit;
 namespace GoatTrip.DAL.DTOs.Tests
 {
-    public class LocationGroupTests
+    public class LocationGroupBuilderTests
     {
         private Mock<IDataRecord> _mockDataRecord;
         private IEnumerable<LocationQueryField> _queryFields;
+        private LocationGroupBuilder _builder;
+        private ILocationQueryFields _locationQueryFields;
 
-        public LocationGroupTests() {
-            _queryFields =  new List<LocationQueryField> { LocationQueryField.HouseNumber, LocationQueryField.Street, LocationQueryField.Town };
+        public LocationGroupBuilderTests()
+        {
+            _builder = new LocationGroupBuilder();
+            _locationQueryFields = new SqlIteLocationQueryFields();
+            _queryFields = new List<LocationQueryField> { _locationQueryFields.HouseNumber, _locationQueryFields.Street, _locationQueryFields.Town };
 
             _mockDataRecord = new Mock<IDataRecord>();
             _mockDataRecord.Setup(r => r[It.IsAny<string>()]).Returns("");
@@ -35,7 +40,7 @@ namespace GoatTrip.DAL.DTOs.Tests
             _mockDataRecord.Setup(r => r["Number"]).Returns(32);
             _mockDataRecord.Setup(r => r.GetName(0)).Returns("Number");
 
-            var result = new LocationGroup(_mockDataRecord.Object, _queryFields);
+            var result = _builder.Build(_mockDataRecord.Object, _queryFields);
             Assert.Equal(32,result.LocationsCount);
            
         }
@@ -43,15 +48,15 @@ namespace GoatTrip.DAL.DTOs.Tests
         [Fact()]
         public void LocationGroup_With_No_HouseNumber_Returns_Description_Test()
         {
-            var queryFields = new List<LocationQueryField> { LocationQueryField.Street, LocationQueryField.Town, LocationQueryField.PostCode };
-            var result = new LocationGroup(_mockDataRecord.Object, queryFields);
+            var queryFields = new List<LocationQueryField> { _locationQueryFields.Street, _locationQueryFields.Town, _locationQueryFields.PostCode };
+            var result = _builder.Build(_mockDataRecord.Object, queryFields);
             Assert.Equal("Test Road, TestTown, TS17 TTT", result.GroupDescription);
         }
 
         [Fact()]
         public void LocationGroup_With_Reader_Returns_Description_Test()
         {
-            var result = new LocationGroup(_mockDataRecord.Object, _queryFields);
+            var result = _builder.Build(_mockDataRecord.Object, _queryFields);
             Assert.Equal("22, Test Road, TestTown", result.GroupDescription);
         }
 
@@ -59,8 +64,8 @@ namespace GoatTrip.DAL.DTOs.Tests
         public void LocationGroup_With_Reader_AND_Suffix_Returns_Description_Test()
         {
             _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_START_SUFFIX")]).Returns("A");
-            var queryFields = new List<LocationQueryField> { LocationQueryField.HouseNumber, LocationQueryField.HouseSuffix, LocationQueryField.Street, LocationQueryField.Town };
-            var result = new LocationGroup(_mockDataRecord.Object, queryFields);
+            var queryFields = new List<LocationQueryField> { _locationQueryFields.HouseNumber, _locationQueryFields.HouseSuffix, _locationQueryFields.Street, _locationQueryFields.Town };
+            var result = _builder.Build(_mockDataRecord.Object, queryFields);
             Assert.Equal("22A, Test Road, TestTown",result.GroupDescription);
         }
 
@@ -71,7 +76,7 @@ namespace GoatTrip.DAL.DTOs.Tests
         [Fact()]
         public void LocationGroup_With_Reader_Returns_GroupFields_Test()
         {
-            var result = new LocationGroup(_mockDataRecord.Object, _queryFields);
+            var result = _builder.Build(_mockDataRecord.Object, _queryFields);
             Assert.Equal(3,result.GroupFields.Count());
             Assert.Equal("22",result.GroupFields[LocationDataField.HouseNumber]);
             Assert.Equal("Test Road",result.GroupFields[LocationDataField.Street]);
