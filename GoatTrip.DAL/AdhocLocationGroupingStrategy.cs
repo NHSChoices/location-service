@@ -4,10 +4,10 @@ namespace GoatTrip.DAL
 {
     public class AdhocLocationGroupingStrategy
         : ILocationGroupingStrategy {
-        public AdhocLocationGroupingStrategy(IEnumerable<SqLiteQueryField> fields) {
+        public AdhocLocationGroupingStrategy(IEnumerable<LocationQueryField> fields) {
             Fields = fields;
         }
 
-        public IEnumerable<SqLiteQueryField> Fields { get; private set; }
+        public IEnumerable<LocationQueryField> Fields { get; private set; }
         }
 }

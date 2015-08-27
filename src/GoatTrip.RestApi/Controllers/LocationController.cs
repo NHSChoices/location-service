@@ -45,13 +45,13 @@ using System.Web.Http;
     public class LocationsGroupedByAddressStrategy
         : ILocationGroupingStrategy {
         public LocationsGroupedByAddressStrategy(ILocationQueryFields locationQueryFields) {
-            Fields = new List<SqLiteQueryField> {
+            Fields = new List<LocationQueryField> {
                 locationQueryFields.Street,
                 locationQueryFields.Town,
                 locationQueryFields.PostCode,
             };
         }
 
-        public IEnumerable<SqLiteQueryField> Fields { get; set; }
+        public IEnumerable<LocationQueryField> Fields { get; set; }
     }
 }

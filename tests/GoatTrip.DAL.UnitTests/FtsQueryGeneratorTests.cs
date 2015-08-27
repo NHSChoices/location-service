@@ -22,7 +22,7 @@ namespace GoatTrip.DAL.Tests
 
             _mockGroupingStrategy = new Mock<ILocationGroupingStrategy>();
             _mockGroupingStrategy.Setup(g => g.Fields)
-                .Returns(new List<SqLiteQueryField>() { _locationQueryFields.Town, _locationQueryFields.PostCode });
+                .Returns(new List<LocationQueryField>() { _locationQueryFields.Town, _locationQueryFields.PostCode });
 
         }
 

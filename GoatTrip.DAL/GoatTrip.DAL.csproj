@@ -71,7 +71,7 @@
     <Compile Include="LocationGroupBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LocationQueryFields.cs" />
+    <Compile Include="SqlLiteQueryFields.cs" />
     <Compile Include="LuceneQueryFields.cs" />
     <Compile Include="Lucene\GroupCollector.cs" />
     <Compile Include="Lucene\GroupedIndexSearcher.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="Lucene\LucenceIndexManager.cs" />
     <Compile Include="Lucene\LuceneDirectoryAdapter.cs" />
     <Compile Include="Lucene\LuceneIndexModule.cs" />
-    <Compile Include="SqLiteQueryField.cs" />
+    <Compile Include="LocationQueryField.cs" />
     <Compile Include="LocationRepository.cs" />
     <Compile Include="ManagedDataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

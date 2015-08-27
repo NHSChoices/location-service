@@ -12,18 +12,18 @@ namespace GoatTrip.DAL
 {
     public  class LocationGroupBuilder : ILocationGroupBuilder
     {
-        public LocationGroup Build(System.Data.IDataRecord readerDataObject, IEnumerable<SqLiteQueryField> groupByFields)
+        public LocationGroup Build(System.Data.IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             return BuildFromReader(readerDataObject, groupByFields);
         }
 
-        public LocationGroup Build(Document document, IEnumerable<SqLiteQueryField> groupByFields)
+        public LocationGroup Build(Document document, IEnumerable<LocationQueryField> groupByFields)
         {
             return BuildFromReader(document, groupByFields);
         }
 
         private LocationGroup BuildFromReader(IDataRecord readerDataObject,
-           IEnumerable<SqLiteQueryField> groupByFields)
+           IEnumerable<LocationQueryField> groupByFields)
         {
             var locationsCount = 0;
                if (readerDataObject["Number"] != DBNull.Value)
@@ -38,7 +38,7 @@ namespace GoatTrip.DAL
         }
 
         private LocationGroup BuildFromReader(Document document,
-         IEnumerable<SqLiteQueryField> groupByFields)
+         IEnumerable<LocationQueryField> groupByFields)
         {
             return new LocationGroup()
             {
@@ -49,14 +49,14 @@ namespace GoatTrip.DAL
         }
 
         public string GenerateGroupDescription(IDataRecord readerDataObject,
-            IEnumerable<SqLiteQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
             return AddDeliminatorToGroupDescrioption(GenerateHouseDescription(readerDataObject, groupByFields))
                              + GenerateAddressDescriptionWithoutHouseDetail(readerDataObject, groupByFields);
         }
 
         public string GenerateGroupDescription(Document document,
-           IEnumerable<SqLiteQueryField> groupByFields)
+           IEnumerable<LocationQueryField> groupByFields)
         {
             return AddDeliminatorToGroupDescrioption(GenerateHouseDescription(document, groupByFields))
                              + GenerateAddressDescriptionWithoutHouseDetail(document, groupByFields);
@@ -70,7 +70,7 @@ namespace GoatTrip.DAL
         }
 
 
-        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<SqLiteQueryField> groupByFields)
+        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value
                                                 &&
@@ -81,7 +81,7 @@ namespace GoatTrip.DAL
         }
 
         private string GenerateAddressDescriptionWithoutHouseDetail(Document document,
-            IEnumerable<SqLiteQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
             return groupByFields.Where(field => document.Get(field.Name) != null
                                                &&
@@ -91,7 +91,7 @@ namespace GoatTrip.DAL
                .Aggregate((i, j) => AddDeliminatorToGroupDescrioption(i) + j);
         }
 
-        private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<SqLiteQueryField> groupByFields)
+        private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             return String.Join("", groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value
                                                                 &&
@@ -100,7 +100,7 @@ namespace GoatTrip.DAL
                 .Select(f => readerDataObject[f.Name].ToString()));
         }
 
-        private string GenerateHouseDescription(Document document, IEnumerable<SqLiteQueryField> groupByFields)
+        private string GenerateHouseDescription(Document document, IEnumerable<LocationQueryField> groupByFields)
         {
             return String.Join("", groupByFields.Where(field => document.Get(field.Name) != null
                                                                 &&
@@ -110,7 +110,7 @@ namespace GoatTrip.DAL
         }
 
         private Dictionary<LocationDataField, string> GetGroupedFields(IDataRecord readerDataObject,
-            IEnumerable<SqLiteQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
 
             return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value)
@@ -118,7 +118,7 @@ namespace GoatTrip.DAL
         }
 
         private Dictionary<LocationDataField, string> GetGroupedFields(Document document,
-            IEnumerable<SqLiteQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
 
             return groupByFields.Where(field => document.Get(field.Name) != null)

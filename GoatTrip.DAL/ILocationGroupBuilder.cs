@@ -11,9 +11,9 @@ namespace GoatTrip.DAL
 {
     public interface ILocationGroupBuilder
     {
-         LocationGroup Build(IDataRecord readerDataObject, IEnumerable<SqLiteQueryField> groupByFields);
-         LocationGroup Build(Document document, IEnumerable<SqLiteQueryField> groupByFields);
-         string GenerateGroupDescription(IDataRecord readerDataObject, IEnumerable<SqLiteQueryField> groupByFields);
-         string GenerateGroupDescription(Document document, IEnumerable<SqLiteQueryField> groupByFields);
+         LocationGroup Build(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields);
+         LocationGroup Build(Document document, IEnumerable<LocationQueryField> groupByFields);
+         string GenerateGroupDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields);
+         string GenerateGroupDescription(Document document, IEnumerable<LocationQueryField> groupByFields);
     }
 }

@@ -35,7 +35,7 @@ namespace GoatTrip.LucenceIndexer
             _analyzer = analyzer;
             var queryFields = new LuceneQueryFields();
             var collector = new GroupCollector(new LocationGroupBuilder()
-                , new List<SqLiteQueryField>()
+                , new List<LocationQueryField>()
                 {
                     queryFields.Street,
                     queryFields.Town,
@@ -161,8 +161,8 @@ namespace GoatTrip.LucenceIndexer
                     doc.Add(new Field("Street", reader.DataReader["STREET_DESCRIPTION"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("Town", reader.DataReader["TOWN_NAME"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("AdminArea", reader.DataReader["ADMINISTRATIVE_AREA"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                    doc.Add(new Field("Postcode", reader.DataReader["POSTCODE_LOCATOR"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                    doc.Add(new Field("PostcodeText", reader.DataReader["POSTCODE"].ToString(), Field.Store.YES, Field.Index.NO));
+                    doc.Add(new Field("PostcodeLocator", reader.DataReader["POSTCODE_LOCATOR"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
+                    doc.Add(new Field("Postcode", reader.DataReader["POSTCODE"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     writer.AddDocument(doc);
                     importCount++;
                     if (importCount % 1000 == 0) Console.WriteLine(importCount.ToString() + " records added.");

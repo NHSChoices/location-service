@@ -15,11 +15,11 @@ namespace GoatTrip.DAL.Lucene
         private List<Document> _docs;
         private IndexReader _reader;
         private Scorer _scorer;
-        private IEnumerable<SqLiteQueryField> _groupByFields;
+        private IEnumerable<LocationQueryField> _groupByFields;
         private ILocationGroupBuilder _groupBuilder;
         private List<LocationGroup> _groups;
 
-        public GroupCollector(ILocationGroupBuilder groupBuilder, IEnumerable<SqLiteQueryField> groupByFields)
+        public GroupCollector(ILocationGroupBuilder groupBuilder, IEnumerable<LocationQueryField> groupByFields)
         {
             _groupBuilder = groupBuilder;
             _groupByFields = groupByFields;

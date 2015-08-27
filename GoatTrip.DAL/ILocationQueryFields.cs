@@ -7,11 +7,11 @@ namespace GoatTrip.DAL
 {
     public interface ILocationQueryFields
     {
-         SqLiteQueryField HouseNumber { get; }
-         SqLiteQueryField HouseSuffix { get; }
-         SqLiteQueryField Town { get; }
-         SqLiteQueryField Street { get; }
-         SqLiteQueryField AdministrativeArea { get; }
-         SqLiteQueryField PostCode { get; }
+         LocationQueryField HouseNumber { get; }
+         LocationQueryField HouseSuffix { get; }
+         LocationQueryField Town { get; }
+         LocationQueryField Street { get; }
+         LocationQueryField AdministrativeArea { get; }
+         LocationQueryField PostCode { get; }
     }
 }

@@ -68,6 +68,7 @@
     <Compile Include="fTSQueryTokenizerTests.cs" />
     <Compile Include="LocationGroupByTests.cs" />
     <Compile Include="LocationRepositoryTests.cs" />
+    <Compile Include="Lucene\GroupCollectorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

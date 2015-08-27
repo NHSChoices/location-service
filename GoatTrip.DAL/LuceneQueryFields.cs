@@ -8,12 +8,12 @@ namespace GoatTrip.DAL
 {
     public class LuceneQueryFields : ILocationQueryFields
     {
-        public SqLiteQueryField HouseNumber { get { return new SqLiteQueryField("StartNumber", LocationDataField.HouseNumber); } }
-        public SqLiteQueryField HouseSuffix { get { return new SqLiteQueryField("StartSuffix", LocationDataField.HouseSuffix); } }
-        public SqLiteQueryField Town { get { return new SqLiteQueryField("Town", LocationDataField.Town); } }
-        public SqLiteQueryField Street { get { return new SqLiteQueryField("Street", LocationDataField.Street); } }
-        public SqLiteQueryField AdministrativeArea { get { return new SqLiteQueryField("AdminArea", LocationDataField.AdministrativeArea); } }
-        public SqLiteQueryField PostCode { get { return new SqLiteQueryField("Postcode", LocationDataField.PostCode); } }
+        public LocationQueryField HouseNumber { get { return new LocationQueryField("StartNumber", LocationDataField.HouseNumber); } }
+        public LocationQueryField HouseSuffix { get { return new LocationQueryField("StartSuffix", LocationDataField.HouseSuffix); } }
+        public LocationQueryField Town { get { return new LocationQueryField("Town", LocationDataField.Town); } }
+        public LocationQueryField Street { get { return new LocationQueryField("Street", LocationDataField.Street); } }
+        public LocationQueryField AdministrativeArea { get { return new LocationQueryField("AdminArea", LocationDataField.AdministrativeArea); } }
+        public LocationQueryField PostCode { get { return new LocationQueryField("Postcode", LocationDataField.PostCode); } }
     }
 }
 
