@@ -68,7 +68,6 @@
     <Compile Include="fTSQueryTokenizerTests.cs" />
     <Compile Include="LocationGroupByTests.cs" />
     <Compile Include="LocationRepositoryTests.cs" />
-    <Compile Include="Lucene\GroupCollectorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +78,9 @@
       <Project>{598E9A7D-1432-4AA4-A643-846E7BC06277}</Project>
       <Name>GoatTrip.DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lucene\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
