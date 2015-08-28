@@ -49,10 +49,13 @@ namespace GoatTrip.DAL.Lucene
                     return;
                 }
                 _groups.Add(_groupBuilder.Build(_reader[doc], _groupByFields));
-               
+
             }
             else
-                group.LocationsCount ++;
+            {
+                group.LocationsCount++;
+                group.LocationId = 0;
+            }
         }
 
         public override void SetNextReader(global::Lucene.Net.Index.IndexReader reader, int docBase)
