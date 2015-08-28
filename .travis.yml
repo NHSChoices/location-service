@@ -7,7 +7,6 @@ script:
   - xbuild /p:Configuration=Release LocationService.sln
   - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./tests/GoatTrip.RestApi.UnitTests/bin/Release/GoatTrip.RestApi.UnitTests.dll
 notifications:
-  webhooks:
-    - https://api.runscope.com/radar/bucket/5389b98b-6985-424a-87bf-e60f409e79eb/trigger
+  webhooks: https://api.runscope.com/radar/bucket/5389b98b-6985-424a-87bf-e60f409e79eb/trigger
     on_success: always
     on_failure: never
