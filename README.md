@@ -47,7 +47,6 @@ https://locationservices.portal.azure-api.net/docs/services/55b8d653aa93b505cc13
 #### /info [GET]
 
 ##### Description
-Returns a
 
 ##### Documentation
 https://locationservices.portal.azure-api.net/docs/services/55b8d653aa93b505cc139726/operations/55c9ff00aa93b50c8c6c728f
