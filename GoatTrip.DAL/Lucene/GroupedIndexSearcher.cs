@@ -14,10 +14,14 @@ namespace GoatTrip.DAL.Lucene
         private IndexReader[] subReaders;
         private int[] docStarts;
 
+
         public GroupedIndexSearcher(Directory path)
-            : base(path)
+            : this(path, true) {}
+
+        public GroupedIndexSearcher(Directory path, bool readOnly)
+            : base(path, readOnly)
         {
-            subReaders = new[] {base.IndexReader};
+            subReaders = new[] { base.IndexReader };
             docStarts = new int[this.subReaders.Length];
         }
 
