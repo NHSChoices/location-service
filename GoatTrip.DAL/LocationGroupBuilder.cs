@@ -40,10 +40,12 @@ namespace GoatTrip.DAL
         private LocationGroup BuildFromReader(Document document,
          IEnumerable<LocationQueryField> groupByFields)
         {
+            var locationId = document.Get("id");
             return new LocationGroup()
             {
                 GroupFields = GetGroupedFields(document, groupByFields),
                 GroupDescription = GenerateGroupDescription(document, groupByFields),
+                LocationId = Convert.ToInt32(locationId),
                 LocationsCount = 1
             };
         }
