@@ -43,6 +43,7 @@ namespace GoatTrip.DAL
              groupingStrategy.Fields.Select(f => f.Name).ToArray(),
              _analyzer);
             parser.DefaultOperator = QueryParser.Operator.AND;
+            parser.FuzzyPrefixLength = 3;
             Query luceneQuery = parser.Parse(query);
             return luceneQuery;
         }

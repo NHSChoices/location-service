@@ -68,6 +68,7 @@
     <Compile Include="FtsQueryGenerator.cs" />
     <Compile Include="fTSQueryTokenizer.cs" />
     <Compile Include="ILocationQueryFields.cs" />
+    <Compile Include="LocationDescriptonQueryField.cs" />
     <Compile Include="LocationGroupBuilder.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -11,6 +11,7 @@ namespace GoatTrip.DAL
         Town,
         Street,
         PostCode,
+        PostCodeLocator,
         HouseNumber,
         HouseSuffix,
         AdministrativeArea

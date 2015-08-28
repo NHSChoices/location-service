@@ -64,6 +64,7 @@ using System.Web.Http;
                 locationQueryFields.Street,
                 locationQueryFields.Town,
                 locationQueryFields.PostCode,
+                locationQueryFields.PostCodeLocator
                 
             };
         }
