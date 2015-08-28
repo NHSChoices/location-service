@@ -8,12 +8,13 @@ namespace GoatTrip.DAL
 {
     public class LuceneQueryFields : ILocationQueryFields
     {
-        public LocationQueryField HouseNumber { get { return new LocationQueryField("StartNumber", LocationDataField.HouseNumber); } }
-        public LocationQueryField HouseSuffix { get { return new LocationQueryField("StartSuffix", LocationDataField.HouseSuffix); } }
-        public LocationQueryField Town { get { return new LocationQueryField("Town", LocationDataField.Town); } }
-        public LocationQueryField Street { get { return new LocationQueryField("Street", LocationDataField.Street); } }
-        public LocationQueryField AdministrativeArea { get { return new LocationQueryField("AdminArea", LocationDataField.AdministrativeArea); } }
-        public LocationQueryField PostCode { get { return new LocationQueryField("Postcode", LocationDataField.PostCode); } }
+        public LocationDescriptonQueryField HouseNumber { get { return new LocationDescriptonQueryField("StartNumber", LocationDataField.HouseNumber); } }
+        public LocationDescriptonQueryField HouseSuffix { get { return new LocationDescriptonQueryField("StartSuffix", LocationDataField.HouseSuffix); } }
+        public LocationDescriptonQueryField Town { get { return new LocationDescriptonQueryField("Town", LocationDataField.Town); } }
+        public LocationDescriptonQueryField Street { get { return new LocationDescriptonQueryField("Street", LocationDataField.Street); } }
+        public LocationDescriptonQueryField AdministrativeArea { get { return new LocationDescriptonQueryField("AdminArea", LocationDataField.AdministrativeArea); } }
+        public LocationDescriptonQueryField PostCode { get { return new LocationDescriptonQueryField("Postcode", LocationDataField.PostCode); } }
+        public LocationQueryField PostCodeLocator { get { return new LocationQueryField("PostcodeLocator", LocationDataField.PostCodeLocator); } }
     }
 }
 

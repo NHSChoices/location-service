@@ -74,7 +74,8 @@ namespace GoatTrip.DAL
 
         private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
-            return groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value
+            return groupByFields.Where(field => IsDescriptionField(field) && 
+                                                readerDataObject[field.Name] != DBNull.Value
                                                 &&
                                                 (field.Key != LocationDataField.HouseNumber &&
                                                  field.Key != LocationDataField.HouseSuffix))
@@ -85,8 +86,8 @@ namespace GoatTrip.DAL
         private string GenerateAddressDescriptionWithoutHouseDetail(Document document,
             IEnumerable<LocationQueryField> groupByFields)
         {
-            return groupByFields.Where(field => document.Get(field.Name) != null
-                                               &&
+            return groupByFields.Where(field => IsDescriptionField(field) && 
+                                                 document.Get(field.Name) != null &&
                                                (field.Key != LocationDataField.HouseNumber &&
                                                 field.Key != LocationDataField.HouseSuffix))
                .Select(f => document.Get(f.Name).ToString())
@@ -95,7 +96,8 @@ namespace GoatTrip.DAL
 
         private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
-            return String.Join("", groupByFields.Where(field => readerDataObject[field.Name] != DBNull.Value
+            return String.Join("", groupByFields.Where(field => IsDescriptionField(field) && 
+                                                                readerDataObject[field.Name] != DBNull.Value
                                                                 &&
                                                                 (field.Key == LocationDataField.HouseNumber ||
                                                                  field.Key == LocationDataField.HouseSuffix))
@@ -104,11 +106,17 @@ namespace GoatTrip.DAL
 
         private string GenerateHouseDescription(Document document, IEnumerable<LocationQueryField> groupByFields)
         {
-            return String.Join("", groupByFields.Where(field => document.Get(field.Name) != null
+            return String.Join("", groupByFields.Where(field => IsDescriptionField(field) && 
+                                                                document.Get(field.Name) != null
                                                                 &&
                                                                 (field.Key == LocationDataField.HouseNumber ||
                                                                  field.Key == LocationDataField.HouseSuffix))
                 .Select(f => document.Get(f.Name)));
+        }
+
+        private bool IsDescriptionField(LocationQueryField field)
+        {
+            return field.GetType() == typeof (LocationDescriptonQueryField);
         }
 
         private Dictionary<LocationDataField, string> GetGroupedFields(IDataRecord readerDataObject,
