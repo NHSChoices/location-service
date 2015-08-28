@@ -1,0 +1,51 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+<form>
+    <input id="address" type="text"/>
+</form>
+<script type="text/javascript">
+    function setHeader(xhr) {
+        xhr.setRequestHeader('Ocp-Apim-Subscription-Key', '08320b6ebc6843d8acef4ce8d74bdd37');
+    }
+
+    function query() {
+        var q = $("#address").val();
+        if (q.length < 3)
+            return;
+        $.ajax({
+            url: "/location/search/" + $("#address").val(),
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $("ul").empty();
+                var items = [];
+                $.each(data, function (key, val) {
+                    items.push("<li id='" + val.Description + "' data-next='" + val.Next + "'>" + val.Description + "</li>");
+                });
+                $("<ul />", {
+                    "class": "my-new-list",
+                    html: items.join("")
+                }).appendTo("body");
+
+                $("li").click(function() {
+                    $("#address").val($(this).attr("id"));
+                    //if ($(this).data("next").indexOf("") === 0;)
+                    query();
+                });
+            },
+            beforeSend: setHeader
+        });
+
+    }
+
+    $(document).ready(function () {
+        $("#address").keypress(function () {
+            query();
+        });
+    });
+</script>
+</body>
+</html>

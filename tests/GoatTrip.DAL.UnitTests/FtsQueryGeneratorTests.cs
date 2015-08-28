@@ -34,7 +34,7 @@ namespace GoatTrip.DAL.Tests
 
             var queryGenerator = new FtsQueryGenerator(_mockGroupingStrategy.Object, _mockTokenizer.Object);
             var expected =
-                "SELECT locations.TOWN_NAME,locations.POSTCODE, COUNT(*) as Number " +
+                "SELECT MAX(LocationId) as LocationId, locations.TOWN_NAME,locations.POSTCODE, COUNT(*) as Number " +
                 "from locations JOIN locations_srch ON locations.locationId = locations_srch.docid " +
                 "WHERE locations_srch MATCH 'SingleToken*' GROUP BY locations.TOWN_NAME,locations.POSTCODE " +
                 "ORDER by Number desc LIMIT 100;";
@@ -51,7 +51,7 @@ namespace GoatTrip.DAL.Tests
 
             var queryGenerator = new FtsQueryGenerator(_mockGroupingStrategy.Object, _mockTokenizer.Object);
             var expected =
-                "SELECT matchResults.* FROM (SELECT locations.TOWN_NAME,locations.POSTCODE, COUNT(*) as Number " +
+                "SELECT matchResults.* FROM (SELECT MAX(LocationId) as LocationId, locations.TOWN_NAME,locations.POSTCODE, COUNT(*) as Number " +
                 "from locations JOIN locations_srch ON locations.locationId = locations_srch.docid " +
                 "WHERE locations_srch MATCH 'multiple Tokens' " +
                 "GROUP BY locations.TOWN_NAME,locations.POSTCODE ORDER by Number desc ) as matchResults " +

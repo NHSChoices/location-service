@@ -36,6 +36,10 @@ namespace GoatTrip.DAL.DTOs.Tests
         [Fact()]
         public void LocationGroup_With_Reader_Returns_Count_Test()
         {
+            _mockDataRecord.Setup(r => r.FieldCount).Returns(1);
+            _mockDataRecord.Setup(r => r["Number"]).Returns(32);
+            _mockDataRecord.Setup(r => r.GetName(0)).Returns("Number");
+
             var result = _builder.Build(_mockDataRecord.Object, _queryFields);
             Assert.Equal(32,result.LocationsCount);
            

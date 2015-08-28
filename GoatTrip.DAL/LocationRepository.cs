@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
 {
+    using System.Runtime.Serialization;
+
     public class LocationRepository
         : ILocationRepository
     {
@@ -70,5 +73,28 @@ namespace GoatTrip.DAL
 
         }
 
+        public Location Get(string id) {
+            var statement = "SELECT * FROM locations WHERE locationId = @locationId";
+
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters { { "@locationId", id } })) {
+                while (reader.Read()) {
+                    return new Location(reader.DataReader);
+                }
+            }
+
+            throw new LocationNotFoundException(id);
+        }
+    }
+
+    [Serializable]
+    public class LocationNotFoundException : Exception {
+
+        public LocationNotFoundException(string id)
+            : base(string.Format("Location with id '{0}' could not be found.", id)) { }
+
+        protected LocationNotFoundException(SerializationInfo info,
+                                            StreamingContext context)
+            : base(info, context) {
+        }
     }
 }

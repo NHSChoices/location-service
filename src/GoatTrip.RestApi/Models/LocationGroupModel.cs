@@ -1,20 +1,24 @@
 ﻿
-using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.RestApi.Models {
+    using DAL.DTOs;
+
     public class LocationGroupModel {
 
-        public LocationGroupModel(LocationGroup group)
-        {
-            Count = group.LocationsCount;
-            Description = group.GroupDescription;
-        }
+        public string Description { get; set; }
+
+        public int Count { get; set; }
+  
+        public string Next { get; set; }
 
         public LocationGroupModel()
-        {
-        }
+        { }
 
-        public string Description { get; set; }
-        public int Count { get; set; }
+
+        public LocationGroupModel(string description, int count, string next) {
+            Description = description;
+            Count = count;
+            Next = next;
+        }
     }
 }

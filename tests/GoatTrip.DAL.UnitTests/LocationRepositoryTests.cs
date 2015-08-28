@@ -89,6 +89,13 @@ namespace GoatTrip.DAL.UnitTests {
                 .And.ContainSingle(l => l.AdministrativeArea == "3");
         }
 
+        [Fact]
+        public void Get_WithNonExistantId_ThrowsLocationNotFoundException() {
+            _mockReader.Setup(r => r.Read()).Returns(false);
+
+            Assert.Throws<LocationNotFoundException>(() => _sut.Get("anything"));
+        }
+
         private readonly LocationRepository _sut;
         private readonly Mock<IManagedDataReader> _mockReader;
         private readonly Mock<IConnectionManager> _mockConnectionManager;

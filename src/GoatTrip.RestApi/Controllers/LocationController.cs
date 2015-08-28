@@ -21,7 +21,18 @@ using System.Web.Http;
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.Get(query, new LocationsGroupedByAddressStrategy(_locationQueryFields));
+            var result = _service.Search(query, new LocationsGroupedByAddressStrategy(_locationQueryFields));
+
+            return Ok(result);
+        }
+
+        [Route("postcode/{query?}")]
+        public IHttpActionResult GetByPostcode(string query = "") {
+
+            if (!_queryValidator.IsValid(query))
+                return new BadRequestResult(Request, query);
+
+            var result = _service.SearchByPostcode(query);
 
             return Ok(result);
         }
@@ -32,9 +43,13 @@ using System.Web.Http;
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.Get(query);
+            try {
+                var result = _service.Get(query);
 
-            return Ok(result);
+                return Ok(result);
+            } catch (LocationNotFoundException) {
+                return NotFound();
+            }
         }
 
         private readonly ILocationQueryValidator _queryValidator;
@@ -49,6 +64,7 @@ using System.Web.Http;
                 locationQueryFields.Street,
                 locationQueryFields.Town,
                 locationQueryFields.PostCode,
+                
             };
         }
 
