@@ -80,7 +80,7 @@ namespace GoatTrip.LucenceIndexer
             var parser = new MultiFieldQueryParser(Version.LUCENE_29, new string[] { "StartNumber", "Street", "Town", "Postcode" }, _analyzer);
             parser.DefaultOperator = QueryParser.Operator.AND;
             Query query = parser.Parse(_query);
-           
+
             _searcher.Search(query, _collector);
 
             //TopDocs hits = _searcher.Search(query, null, 100);
@@ -90,7 +90,7 @@ namespace GoatTrip.LucenceIndexer
                 var doc = _collector.Groups[i];
                 string contentValue = doc.GroupDescription + " " + doc.LocationsCount;
                 //ring contentValue = hits.HitsPerFacet[i].Name + hits.HitsPerFacet[i].HitCount.ToString();
-               // Console.WriteLine(contentValue);
+                Console.WriteLine(contentValue);
 
             }
             t.Stop();
@@ -105,13 +105,13 @@ namespace GoatTrip.LucenceIndexer
     class Program
     {
 
-        private static FSDirectory directory = FSDirectory.Open(@"C:\DASProjects\Development\location-service\GoatTrip.LucenceIndexer\Index-Test\");
+        private static FSDirectory directory = FSDirectory.Open(@"C:\DASProjects\Development\location-service\GoatTrip.LucenceIndexer\Index\");
         private static StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_29);
         Lucene.Net.Search.IndexSearcher searcher = new Lucene.Net.Search.IndexSearcher(directory);
      
         static void Main(string[] args)
         {
-           
+
             ExecApp();
            
         }
@@ -130,7 +130,7 @@ namespace GoatTrip.LucenceIndexer
           
 
             var queryText = Console.ReadLine().Trim() + "*";
-            for (int i = 0; i < 51; i++)
+            for (int i = 0; i < 1; i++)
             {
 
                 var queryThread = new QueryThread(queryText, searcher, i, analyzer);
@@ -148,21 +148,26 @@ namespace GoatTrip.LucenceIndexer
             ConnectionManager connMamager = new ConnectionManager(@"C:\DASProjects\Development\location-service\src\GoatTrip.RestApi\bin\App_Data\locationsimported.db", true);
             IndexWriter writer = new IndexWriter(directory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
             int importCount = 0;
-            var sqlStatement = "SELECT LocationId,BUILDING_NAME,PAO_START_NUMBER,PAO_START_SUFFIX,STREET_DESCRIPTION,TOWN_NAME,ADMINISTRATIVE_AREA,POSTCODE_LOCATOR,POSTCODE FROM locations LIMIT 100";
+            var sqlStatement = "SELECT LocationId,BUILDING_NAME,PAO_START_NUMBER,PAO_START_SUFFIX,STREET_DESCRIPTION,TOWN_NAME,ADMINISTRATIVE_AREA,POSTCODE_LOCATOR,POSTCODE,PAO_TEXT,SAO_TEXT FROM locations";
             using (var reader = connMamager.GetReader(sqlStatement, new StatementParamaters() { }))
             {
                 while (reader.Read())
                 {
+                    var houseNumber = reader.DataReader["PAO_START_NUMBER"].ToString();
+                    var suffix = reader.DataReader["PAO_START_SUFFIX"].ToString();
+                    if (!String.IsNullOrWhiteSpace(suffix)) houseNumber += suffix.Trim();
                     Document doc = new Document();
                     doc.Add(new Field("id", reader.DataReader["LocationId"].ToString(), Field.Store.YES, Field.Index.NO));
                     doc.Add(new Field("BuildingName", reader.DataReader["BUILDING_NAME"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                    doc.Add(new Field("StartNumber", reader.DataReader["PAO_START_NUMBER"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
+                    doc.Add(new Field("StartNumber", houseNumber, Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("StartSuffix", reader.DataReader["PAO_START_SUFFIX"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("Street", reader.DataReader["STREET_DESCRIPTION"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("Town", reader.DataReader["TOWN_NAME"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("AdminArea", reader.DataReader["ADMINISTRATIVE_AREA"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("PostcodeLocator", reader.DataReader["POSTCODE_LOCATOR"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     doc.Add(new Field("Postcode", reader.DataReader["POSTCODE"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
+                    doc.Add(new Field("PrimaryText", reader.DataReader["PAO_TEXT"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
+                    doc.Add(new Field("SecondaryText", reader.DataReader["SAO_TEXT"].ToString(), Field.Store.YES, Field.Index.ANALYZED));
                     writer.AddDocument(doc);
                     importCount++;
                     if (importCount % 1000 == 0) Console.WriteLine(importCount.ToString() + " records added.");

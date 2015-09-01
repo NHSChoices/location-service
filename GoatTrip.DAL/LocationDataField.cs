@@ -14,6 +14,8 @@ namespace GoatTrip.DAL
         PostCodeLocator,
         HouseNumber,
         HouseSuffix,
-        AdministrativeArea
+        AdministrativeArea,
+        PrimaryText,
+        SecondaryText
     }
 }

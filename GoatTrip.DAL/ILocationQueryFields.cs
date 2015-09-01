@@ -13,6 +13,8 @@ namespace GoatTrip.DAL
         LocationDescriptonQueryField Street { get; }
         LocationDescriptonQueryField AdministrativeArea { get; }
         LocationDescriptonQueryField PostCode { get; }
+        LocationDescriptonQueryField PrimaryText { get; }
+        LocationDescriptonQueryField SecondaryText { get; }
         LocationQueryField PostCodeLocator { get; }
     }
 }
