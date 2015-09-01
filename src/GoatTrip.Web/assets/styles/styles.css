@@ -1,0 +1,87 @@
+﻿body {
+    font-family: "Helvetica", Times, serif;
+    margin: 25px 25px 25px 25px;
+    text-align: center;
+    background:#EBFFFF;
+}
+hr {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+ul {
+    list-style: none;
+    margin: 0 0;
+    padding: 0;
+    width: 50%;
+    font-family: sans-serif;
+    
+    position: relative;
+    top: -15px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+ul li {
+    color: #666;
+    position: relative;
+    left: 50%;
+    padding: 5px;
+    background: rgba(255,255,255,1);
+    margin: 0 0 0 0;
+    border: 5px solid white; 
+}
+
+ul li:hover {
+   color: #000;
+   background-color: #ddd; 
+   cursor: pointer;
+}
+
+input[type=text] {
+    border: 5px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    padding: 15px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;
+    width: 50%;
+}
+
+.letter {
+     border: 5px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    padding: 15px;
+    background: rgba(255,255,255,1);
+
+    width: 50%;
+    margin: auto;
+}
+div.letter-text {
+    text-align: left;
+    width: 75%;
+    margin: auto;
+    padding-top: 15%;
+    padding-bottom: 15%;
+}
+.letter-image img{
+    float:right;
+    clear:right;
+    width: 65px;
+}

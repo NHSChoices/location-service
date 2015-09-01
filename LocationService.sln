@@ -22,7 +22,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.DAL.UnitTests", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.DataImport", "build\GoatTrip.DataImport\GoatTrip.DataImport.csproj", "{DA37174D-FE1A-4B1E-98A7-B8738D83A3E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LucenceIndexer", "GoatTrip.LucenceIndexer\GoatTrip.LucenceIndexer.csproj", "{6113AB9C-EF04-4368-879A-50278F17DDA8}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GoatTrip.Web", "http://localhost:54887", "{595135F7-14B1-43B1-B048-208FA7938AE9}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54887"
+		Debug.AspNetCompiler.PhysicalPath = "src\GoatTrip.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54887\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54887"
+		Release.AspNetCompiler.PhysicalPath = "src\GoatTrip.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54887\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "src\GoatTrip.Web\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +114,16 @@ Global
 		{DA37174D-FE1A-4B1E-98A7-B8738D83A3E4}.Release|Mixed Platforms.Build.0 = Debug|x86
 		{DA37174D-FE1A-4B1E-98A7-B8738D83A3E4}.Release|x86.ActiveCfg = Debug|x86
 		{DA37174D-FE1A-4B1E-98A7-B8738D83A3E4}.Release|x86.Build.0 = Debug|x86
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|x86.ActiveCfg = Debug|Any CPU
 		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

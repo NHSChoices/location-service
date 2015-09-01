@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Address Input</title>
+    <link rel="stylesheet" type="text/css" href="assets/styles/styles.css" />
+    <script src="assets/scripts/knockout-3.3.0.js"></script>
+    <script src="assets/scripts/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <div id="addressEntry">
+        <h1>Example of Address Search</h1>
+        <br />
+        <h3>Subscription Key for Azure</h3>
+        <input id="tbSubscriptionKey" type="text" data-bind="value: subscriptionKey" />
+        <hr />
+        <h3>Search for address</h3>
+        <input id="tbAddressSearch" class="autoCompleteTextBox" type="text" data-bind="textInput: inputValue" />
+    </div>
+    <div id="addressOptions">
+        <ul class="optionList" data-bind="foreach: addresses, visible: addresses().length > 0">
+            <li data-bind="click: $parent.addressSelect">
+                <span data-bind="text: description, id: id"></span>
+            </li>
+        </ul>
+    </div>
+
+    <div id="addressSelected" class="letter" data-bind="visible: singleAddress">
+        <div class="letter-image">
+            <img src="assets/images/stamp.png"/>
+        </div>
+        <div class="letter-text">
+            <div data-bind="visible: singleAddress().organisationName, text: singleAddress().organisationName"></div>
+            <div data-bind="visible: singleAddress().buildingName,text: singleAddress().buildingName"></div>
+            <div data-bind="visible: singleAddress().houseNumber,text: singleAddress().houseNumber"></div>
+            <div data-bind="visible: singleAddress().streetDescription,text: singleAddress().streetDescription"></div>
+            <div data-bind="visible: singleAddress().locality,text: singleAddress().locality"></div>
+            <div data-bind="visible: singleAddress().townName,text: singleAddress().townName"></div>
+            <div data-bind="visible: singleAddress().administrativeArea,text: singleAddress().administrativeArea"></div>
+            <div data-bind="visible: singleAddress().postcode,text: singleAddress().postcode"></div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+    var baseUrl = "https://locationservicesstaging.azure-api.net";
+    var contentType = "application/json; charset=utf-8";
+    var errorMessage = "The request to the server has failed: ";
+
+    function Address(data) {
+        this.description = ko.observable(data.Description);
+        this.count = ko.observable(data.Count);
+        this.next = ko.observable(data.Next);
+    }
+
+    function FullAddress(data) {
+        this.administrativeArea = ko.observable(data.AdministrativeArea);
+        this.buildingName = ko.observable(data.BuildingName);
+        this.coordinate = ko.observable("");//data.Coordinate;
+        this.groupDescription = ko.observable(data.GroupDescription);
+        this.houseNumber = ko.observable(data.HouseNumber);
+        this.locality = ko.observable(data.Locality);
+        this.organisationName = ko.observable(data.OrganisationName);
+        this.postTown = ko.observable(data.PostTown);
+        this.postcode = ko.observable(data.Postcode);
+        this.postcodeLocator = ko.observable(data.PostcodeLocator);
+        this.streetDescription = ko.observable(data.StreetDescription);
+        this.townName = ko.observable(data.TownName);
+    }
+
+    var AddressViewModel = function () {
+        var self = this;
+        self.addresses = ko.observableArray([]);
+        self.singleAddress = ko.observable("");
+        self.addressSelect = function (addressSelected) {
+            var path = addressSelected.next();
+            GetNext(path, self.addresses, self.singleAddress, self.subscriptionKey());
+        }
+
+        self.inputValue = ko.observable("ct1").extend({ throttle: 250 });
+        self.inputValue.subscribe(function (changedValue) {
+            GetAddresses(changedValue, self.addresses, self.singleAddress, self.subscriptionKey());
+        });
+
+        self.subscriptionKey = ko.observable("");
+    }
+
+    function GetAddresses(searchCriteria, listToUpdate, singleAddress, subscriptionKey) {
+        if (searchCriteria === "" || searchCriteria === null ||
+            subscriptionKey === "" || subscriptionKey === null) {
+            return;
+        }
+
+        $.ajax({
+            contentType: contentType,
+            dataType: "json",
+            type: "GET",
+            url: baseUrl + "/location/search/" + searchCriteria,
+            headers: {
+                "Ocp-Apim-Subscription-Key": subscriptionKey
+            },
+            success: function (data) {
+                var mappedAddresses = $.map(data, function (item) { return new Address(item) });
+                UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(errorMessage + errorThrown);
+                return;
+            }
+        });
+    }
+
+    function GetNext(path, listToUpdate, singleAddress, subscriptionKey) {
+        if (path === "" || path === null ||
+            subscriptionKey === "" || subscriptionKey === null) {
+            return;
+        }
+
+        $.ajax({
+            contentType: contentType,
+            dataType: "json",
+            type: "GET",
+            url: baseUrl + path,
+            headers: {
+                "Ocp-Apim-Subscription-Key": subscriptionKey
+            },
+            success: function (data) {
+                if (path.substring(0, 16) === "/location/search") {
+                    var mappedAddresses = $.map(data, function (item) { return new Address(item) });
+                    UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
+                } else {
+                    var mappedAddress = new FullAddress(data);
+                    UpdateAddress(mappedAddress, listToUpdate, singleAddress);
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(errorMessage + errorThrown);
+                return;
+            }
+        });
+    }
+
+    function UpdateAddresses(data, listToUpdate, singleAddress) {
+        singleAddress("");
+        listToUpdate(data);
+    }
+
+    function UpdateAddress(data, listToHide, singleAddress) {
+        listToHide.removeAll();
+        singleAddress(data);
+    }
+
+    ko.applyBindings(new AddressViewModel());
+</script>
