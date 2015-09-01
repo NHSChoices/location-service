@@ -6,6 +6,8 @@ namespace GoatTrip.DAL.DTOs
 {
     public class Location
     {
+        public int Id { get; set; }
+
         public string PostCode { get; private set; }
         public string PostalTown { get; private set; }
         public string OrganisationName { get; private set; }

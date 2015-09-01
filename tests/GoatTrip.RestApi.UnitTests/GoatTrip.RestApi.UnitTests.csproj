@@ -44,6 +44,14 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -87,13 +95,16 @@
     <Compile Include="Controllers\BadRequestResultTests.cs" />
     <Compile Include="Controllers\InfoControllerTests.cs" />
     <Compile Include="Controllers\LocationControllerBaseTests.cs" />
+    <Compile Include="Controllers\LocationControllerGetByPostcodeTests.cs" />
     <Compile Include="Controllers\LocationControllerGetTests.cs" />
     <Compile Include="Controllers\LocationControllerSearchTests.cs" />
     <Compile Include="Models\LocationModelTests.cs" />
+    <Compile Include="Services\LocationServiceGetTests.cs" />
+    <Compile Include="Services\LocationServiceSearchByAddressTests.cs" />
+    <Compile Include="Services\LocationServiceSearchByPostcodeTests.cs" />
+    <Compile Include="Services\LocationServiceSearchTests.cs" />
     <Compile Include="Services\PostcodeQuerySanitiserTests.cs" />
     <Compile Include="Services\LocationQueryValidatorTests.cs" />
-    <Compile Include="Services\LocationServiceAddressTests.cs" />
-    <Compile Include="Services\LocationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LocationServiceTestsBase.cs" />
     <Compile Include="Services\SearchQuerySanitiserTests.cs" />

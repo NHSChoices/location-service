@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.RestApi.UnitTests", "tests\GoatTrip.RestApi.UnitTests\GoatTrip.RestApi.UnitTests.csproj", "{0682A5C6-ABB2-45A6-9E45-A9BC01D6C723}"
 EndProject
@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C92BF2
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.RestApi.FunctionalTests", "tests\GoatTrip.RestApi.FunctionalTets\GoatTrip.RestApi.FunctionalTests.csproj", "{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.DAL", "GoatTrip.DAL\GoatTrip.DAL.csproj", "{598E9A7D-1432-4AA4-A643-846E7BC06277}"
 EndProject
@@ -76,16 +74,6 @@ Global
 		{AF82D362-E392-4B5A-9B09-C8AF97D53C0B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AF82D362-E392-4B5A-9B09-C8AF97D53C0B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AF82D362-E392-4B5A-9B09-C8AF97D53C0B}.Release|x86.ActiveCfg = Release|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2E43A4F0-4E8F-4FFB-AB3B-CD35DB91C5A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{598E9A7D-1432-4AA4-A643-846E7BC06277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{598E9A7D-1432-4AA4-A643-846E7BC06277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{598E9A7D-1432-4AA4-A643-846E7BC06277}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -136,6 +124,16 @@ Global
 		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{595135F7-14B1-43B1-B048-208FA7938AE9}.Release|x86.ActiveCfg = Debug|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

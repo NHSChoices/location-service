@@ -185,6 +185,8 @@
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
     <Compile Include="Models\LocationGroupModel.cs" />
+    <Compile Include="Services\Base64LocationIdEncoder.cs" />
+    <Compile Include="Services\ILocationIdEncoder.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />
     <Compile Include="Services\ILocationQueryValidator.cs" />
     <Compile Include="Services\ILocationService.cs" />
@@ -208,6 +210,18 @@
     <Content Include="newrelic\newrelic.config" />
     <Content Include="newrelic\Extensions\extension.xsd">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Index-test\segments.gen">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Index-test\segments_2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Index-test\_0.cfs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Index-test\_0.cfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="newrelic\newrelic.xsd">
       <SubType>Designer</SubType>

@@ -1,16 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
 {
+    using System.Runtime.Serialization;
+
     public class LocationRepository
         : ILocationRepository
     {
         private IConnectionManager _connectionManager;
+        private ILocationGroupBuilder _locationGroupBuilder;
 
-        public LocationRepository(IConnectionManager connectionManager)
+        public LocationRepository(IConnectionManager connectionManager, ILocationGroupBuilder locationGroupBuilder)
         {
             _connectionManager = connectionManager;
+            _locationGroupBuilder = locationGroupBuilder;
         }
 
         public IEnumerable<Location> FindLocations(string postCode)
@@ -61,12 +66,35 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new LocationGroup(reader.DataReader, groupingStrategy.Fields));
+                    locations.Add(_locationGroupBuilder.Build(reader.DataReader, groupingStrategy.Fields));
                 }
             }
             return locations;
 
         }
 
+        public Location Get(string id) {
+            var statement = "SELECT * FROM locations WHERE locationId = @locationId";
+
+            using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters { { "@locationId", id } })) {
+                while (reader.Read()) {
+                    return new Location(reader.DataReader);
+                }
+            }
+
+            throw new LocationNotFoundException(id);
+        }
+    }
+
+    [Serializable]
+    public class LocationNotFoundException : Exception {
+
+        public LocationNotFoundException(string id)
+            : base(string.Format("Location with id '{0}' could not be found.", id)) { }
+
+        protected LocationNotFoundException(SerializationInfo info,
+                                            StreamingContext context)
+            : base(info, context) {
+        }
     }
 }
