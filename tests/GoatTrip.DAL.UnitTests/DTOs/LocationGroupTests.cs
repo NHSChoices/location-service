@@ -60,13 +60,32 @@ namespace GoatTrip.DAL.DTOs.Tests
             Assert.Equal("22, Test Road, TestTown", result.GroupDescription);
         }
 
-          [Fact()]
+        [Fact()]
         public void LocationGroup_With_Reader_AND_Suffix_Returns_Description_Test()
         {
             _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_START_SUFFIX")]).Returns("A");
             var queryFields = new List<LocationQueryField> { _locationQueryFields.HouseNumber, _locationQueryFields.HouseSuffix, _locationQueryFields.Street, _locationQueryFields.Town };
             var result = _builder.Build(_mockDataRecord.Object, queryFields);
             Assert.Equal("22A, Test Road, TestTown",result.GroupDescription);
+        }
+
+        [Fact()]
+        public void LocationGroup_With_Reader_AND_SAOText_Returns_Description_Test()
+        {
+            _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_START_SUFFIX")]).Returns("A");
+            var queryFields = new List<LocationQueryField> { _locationQueryFields.HouseNumber, _locationQueryFields.HouseSuffix, _locationQueryFields.Street, _locationQueryFields.Town };
+            var result = _builder.Build(_mockDataRecord.Object, queryFields);
+            Assert.Equal("22A, Test Road, TestTown", result.GroupDescription);
+        }
+
+        [Fact()]
+        public void LocationGroup_With_Reader_AND_PAOText_Returns_Description_Test()
+        {
+            _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "PAO_TEXT")]).Returns("Some address detail");
+            _mockDataRecord.Setup(r => r[It.Is<string>(x => x == "SAO_TEXT")]).Returns("Sub detail");
+            var queryFields = new List<LocationQueryField> { _locationQueryFields.PrimaryText, _locationQueryFields.SecondaryText, _locationQueryFields.HouseNumber, _locationQueryFields.HouseSuffix, _locationQueryFields.Street, _locationQueryFields.Town };
+            var result = _builder.Build(_mockDataRecord.Object, queryFields);
+            Assert.Equal("Some address detail, Sub detail, 22, Test Road, TestTown", result.GroupDescription);
         }
 
 

@@ -33,7 +33,6 @@ namespace GoatTrip.DAL
             var luceneQuery = GenerateLuceneQuery(wildcardQuery, groupingStrategy);
             var collector = new GroupCollector(_locationGroupBuilder, groupingStrategy.Fields);
             _searcher.Search(luceneQuery, collector);
-
             return collector.Groups;
         }
 

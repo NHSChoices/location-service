@@ -75,8 +75,9 @@ namespace GoatTrip.RestApi.Services {
                 return results;
 
             if (results.HasSingleGroup() || locationsSum < GROUPING_THRESHOLD) {
-                var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(_locationQueryFields.HouseNumber)
-                    .ThenBy(_locationQueryFields.HouseSuffix)
+                var groupingStrategyBuilder = new LocationGroupingStrategyBuilder(_locationQueryFields.PrimaryText)
+                    .ThenBy(_locationQueryFields.SecondaryText)
+                    .ThenBy(_locationQueryFields.HouseNumber)
                     .ThenBy(groupingStrategy);
 
                 return _groupRepository.FindGroupedLocations(addressQuery, groupingStrategyBuilder.Build());

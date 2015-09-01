@@ -23,6 +23,7 @@ namespace GoatTrip.DAL.Lucene
         {
             subReaders = new[] { base.IndexReader };
             docStarts = new int[this.subReaders.Length];
+
         }
 
         public override void Search(Weight weight, Filter filter, Collector collector)

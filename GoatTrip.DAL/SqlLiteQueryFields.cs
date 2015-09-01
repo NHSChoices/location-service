@@ -15,7 +15,8 @@ namespace GoatTrip.DAL
         public LocationDescriptonQueryField AdministrativeArea { get { return new LocationDescriptonQueryField("ADMINISTRATIVE_AREA", LocationDataField.AdministrativeArea); } }
         public LocationDescriptonQueryField PostCode { get { return new LocationDescriptonQueryField("POSTCODE", LocationDataField.PostCode); } }
         public LocationQueryField PostCodeLocator { get { return new LocationQueryField("POSTCODE_Locator", LocationDataField.PostCodeLocator); } }
+        public LocationDescriptonQueryField PrimaryText { get { return new LocationDescriptonQueryField("PAO_TEXT", LocationDataField.PrimaryText); } }
+        public LocationDescriptonQueryField SecondaryText { get { return new LocationDescriptonQueryField("SAO_TEXT", LocationDataField.SecondaryText); } }
 
-      
     }
 }
