@@ -34,7 +34,6 @@
             <div data-bind="visible: singleAddress().houseNumber,text: singleAddress().houseNumber"></div>
             <div data-bind="visible: singleAddress().streetDescription,text: singleAddress().streetDescription"></div>
             <div data-bind="visible: singleAddress().locality,text: singleAddress().locality"></div>
-            <!--<div data-bind="visible: singleAddress().postTown,text: singleAddress().postTown"></div>-->
             <div data-bind="visible: singleAddress().townName,text: singleAddress().townName"></div>
             <div data-bind="visible: singleAddress().administrativeArea,text: singleAddress().administrativeArea"></div>
             <div data-bind="visible: singleAddress().postcode,text: singleAddress().postcode"></div>
@@ -58,7 +57,7 @@
     function FullAddress(data) {
         this.administrativeArea = ko.observable(data.AdministrativeArea);
         this.buildingName = ko.observable(data.BuildingName);
-        //this.coordinate = ko.observable(data.Coordinate);
+        this.coordinate = ko.observable("");//data.Coordinate;
         this.groupDescription = ko.observable(data.GroupDescription);
         this.houseNumber = ko.observable(data.HouseNumber);
         this.locality = ko.observable(data.Locality);
@@ -87,6 +86,31 @@
         self.subscriptionKey = ko.observable("");
     }
 
+    function GetAddresses(searchCriteria, listToUpdate, singleAddress, subscriptionKey) {
+        if (searchCriteria === "" || searchCriteria === null ||
+            subscriptionKey === "" || subscriptionKey === null) {
+            return;
+        }
+
+        $.ajax({
+            contentType: contentType,
+            dataType: "json",
+            type: "GET",
+            url: baseUrl + "/location/search/" + searchCriteria,
+            headers: {
+                "Ocp-Apim-Subscription-Key": subscriptionKey
+            },
+            success: function (data) {
+                var mappedAddresses = $.map(data, function (item) { return new Address(item) });
+                UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(errorMessage + errorThrown);
+                return;
+            }
+        });
+    }
+
     function GetNext(path, listToUpdate, singleAddress, subscriptionKey) {
         if (path === "" || path === null ||
             subscriptionKey === "" || subscriptionKey === null) {
@@ -109,31 +133,6 @@
                     var mappedAddress = new FullAddress(data);
                     UpdateAddress(mappedAddress, listToUpdate, singleAddress);
                 }
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                alert(errorMessage + errorThrown);
-                return;
-            }
-        });
-    }
-
-    function GetAddresses(searchCriteria, listToUpdate, singleAddress, subscriptionKey) {
-        if (searchCriteria === "" || searchCriteria === null ||
-            subscriptionKey === "" || subscriptionKey === null) {
-            return;
-        }
-
-        $.ajax({
-            contentType: contentType,
-            dataType: "json",
-            type: "GET",
-            url: baseUrl + "/location/search/" + searchCriteria,
-            headers: {
-                "Ocp-Apim-Subscription-Key": subscriptionKey
-            },
-            success: function (data) {
-                var mappedAddresses = $.map(data, function (item) { return new Address(item) });
-                UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 alert(errorMessage + errorThrown);
