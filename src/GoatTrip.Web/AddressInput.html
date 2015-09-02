@@ -20,13 +20,14 @@
         <ul class="optionList" data-bind="foreach: addresses, visible: addresses().length > 0">
             <li data-bind="click: $parent.addressSelect">
                 <span data-bind="text: description, id: id"></span>
+                <span class="count" data-bind="text: count"></span>
             </li>
         </ul>
     </div>
 
     <div id="addressSelected" class="letter" data-bind="visible: singleAddress">
         <div class="letter-image">
-            <img src="assets/images/stamp.png"/>
+            <img alt="stamp" src="assets/images/stamp.png"/>
         </div>
         <div class="letter-text">
             <div data-bind="visible: singleAddress().organisationName, text: singleAddress().organisationName"></div>
@@ -44,20 +45,22 @@
 
 
 <script type="text/javascript">
-    var baseUrl = "https://locationservicesstaging.azure-api.net";
+    var baseUrl = "https://locationservices.azure-api.net";
     var contentType = "application/json; charset=utf-8";
     var errorMessage = "The request to the server has failed: ";
 
+    ko.applyBindings(new AddressViewModel());
+
     function Address(data) {
         this.description = ko.observable(data.Description);
-        this.count = ko.observable(data.Count);
+        this.count = ko.observable("(" + data.Count + " in group)");
         this.next = ko.observable(data.Next);
     }
 
     function FullAddress(data) {
         this.administrativeArea = ko.observable(data.AdministrativeArea);
         this.buildingName = ko.observable(data.BuildingName);
-        this.coordinate = ko.observable("");//data.Coordinate;
+        this.coordinate = new Coordinate(data.Coordinate);
         this.groupDescription = ko.observable(data.GroupDescription);
         this.houseNumber = ko.observable(data.HouseNumber);
         this.locality = ko.observable(data.Locality);
@@ -69,16 +72,23 @@
         this.townName = ko.observable(data.TownName);
     }
 
-    var AddressViewModel = function () {
+    function Coordinate(coordinateObject) {
+        this.x = ko.observable(coordinateObject.X);
+        this.y = ko.observable(coordinateObject.Y);
+    }
+
+    function AddressViewModel () {
         var self = this;
         self.addresses = ko.observableArray([]);
         self.singleAddress = ko.observable("");
-        self.addressSelect = function (addressSelected) {
+
+        self.addressSelect = function(addressSelected) {
             var path = addressSelected.next();
             GetNext(path, self.addresses, self.singleAddress, self.subscriptionKey());
-        }
+        };
 
-        self.inputValue = ko.observable("ct1").extend({ throttle: 250 });
+        self.inputValue = ko.observable("ct1").extend({ rateLimit: 250 });
+
         self.inputValue.subscribe(function (changedValue) {
             GetAddresses(changedValue, self.addresses, self.singleAddress, self.subscriptionKey());
         });
@@ -126,7 +136,7 @@
                 "Ocp-Apim-Subscription-Key": subscriptionKey
             },
             success: function (data) {
-                if (path.substring(0, 16) === "/location/search") {
+                if (IsSearch(path)) {
                     var mappedAddresses = $.map(data, function (item) { return new Address(item) });
                     UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
                 } else {
@@ -141,6 +151,10 @@
         });
     }
 
+    function IsSearch(path) {
+        return (path.substring(0, 16) === "/location/search");
+    }
+
     function UpdateAddresses(data, listToUpdate, singleAddress) {
         singleAddress("");
         listToUpdate(data);
@@ -151,5 +165,4 @@
         singleAddress(data);
     }
 
-    ko.applyBindings(new AddressViewModel());
 </script>
