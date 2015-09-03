@@ -16,10 +16,11 @@ namespace GoatTrip.DAL
 {
     public class LocationGroupRepository : ILocationGroupRepository
     {
-        public LocationGroupRepository(IGroupIndexSearcher searcher, ILocationGroupBuilder locationGroupBuilder)
+        public LocationGroupRepository(IGroupIndexSearcher searcher, ILocationGroupBuilder locationGroupBuilder, ILocationQueryFields locationQueryFields)
         {
             _searcher = searcher;
             _locationGroupBuilder = locationGroupBuilder;
+            _queryFields = locationQueryFields;
         }
 
         private ILocationGroupBuilder _locationGroupBuilder;
@@ -29,24 +30,29 @@ namespace GoatTrip.DAL
         {
 
             var wildcardQuery = query.Trim() + "*";
-
-            var luceneQuery = GenerateLuceneQuery(wildcardQuery, groupingStrategy);
+            var queryFields = groupingStrategy.Fields;
+            if (query.Any(c => Char.IsDigit(c)))
+               queryFields = queryFields.Concat(new List<LocationQueryField>() {_queryFields.HouseNumber});
+            var luceneQuery = GenerateLuceneQuery(wildcardQuery, queryFields);
             var collector = new GroupCollector(_locationGroupBuilder, groupingStrategy.Fields);
             _searcher.Search(luceneQuery, collector);
             return collector.Groups;
         }
 
-        private Query GenerateLuceneQuery(string query, ILocationGroupingStrategy groupingStrategy)
+        private Query GenerateLuceneQuery(string query, IEnumerable<LocationQueryField> fieldsToQuery)
         {
             var parser = new MultiFieldQueryParser(Version.LUCENE_29,
-             groupingStrategy.Fields.Select(f => f.Name).ToArray(),
+             fieldsToQuery.Select(f => f.Name).Distinct().ToArray(),
              _analyzer);
             parser.DefaultOperator = QueryParser.Operator.AND;
             parser.FuzzyPrefixLength = 3;
             Query luceneQuery = parser.Parse(query);
             return luceneQuery;
         }
+
+
         private Analyzer  _analyzer = new StandardAnalyzer(Version.LUCENE_29);
         private readonly IGroupIndexSearcher _searcher;
+        private readonly ILocationQueryFields _queryFields;
     }
 }
