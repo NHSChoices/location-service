@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.RestApi.UnitTests", "tests\GoatTrip.RestApi.UnitTests\GoatTrip.RestApi.UnitTests.csproj", "{0682A5C6-ABB2-45A6-9E45-A9BC01D6C723}"
 EndProject
@@ -43,6 +43,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GoatTrip.Web", "http://loca
 		SlnRelativePath = "src\GoatTrip.Web\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LucenceIndexer", "GoatTrip.LucenceIndexer\GoatTrip.LucenceIndexer.csproj", "{6113AB9C-EF04-4368-879A-50278F17DDA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
