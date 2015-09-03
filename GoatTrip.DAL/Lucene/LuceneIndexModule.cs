@@ -21,7 +21,7 @@ namespace GoatTrip.DAL.Lucene
             builder.Register(c => new GroupedIndexSearcher(directory)).As<IGroupIndexSearcher>().SingleInstance();
 
             builder.Register(
-                c => new LocationGroupRepository(c.Resolve<IGroupIndexSearcher>(), c.Resolve<ILocationGroupBuilder>())).As<ILocationGroupRepository>();
+                c => new LocationGroupRepository(c.Resolve<IGroupIndexSearcher>(), c.Resolve<ILocationGroupBuilder>(), c.Resolve<ILocationQueryFields>())).As<ILocationGroupRepository>();
         }
         private readonly string _lucenceIndexDirectory;
     }
