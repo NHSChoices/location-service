@@ -72,7 +72,7 @@
     <Compile Include="LocationGroupBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Lucene\AddressQueryParser.cs" />
+    <Compile Include="Lucene\LuceneIndexModule.cs" />
     <Compile Include="SqlLiteQueryFields.cs" />
     <Compile Include="LuceneQueryFields.cs" />
     <Compile Include="Lucene\GroupCollector.cs" />
