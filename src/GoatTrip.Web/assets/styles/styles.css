@@ -85,3 +85,7 @@ div.letter-text {
     clear:right;
     width: 65px;
 }
+
+.optionList .count {
+    float: right;
+}
