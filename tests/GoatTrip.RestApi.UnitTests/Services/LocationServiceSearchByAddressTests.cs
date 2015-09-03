@@ -43,7 +43,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         [Fact]
         public void SearchByAddress_WithExistingAddress_ReturnsThatLocation() {
 
-            _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns("SO99 9XX");
+            _mockDataReader.Setup(r => r[POSTCODE_FIELD]).Returns("SO99 9XX");
 
             _mockLocationRepository.Setup(r => r.FindLocationsbyAddress(It.Is<string>(s => s == "coronation street")))
                 .Returns(() => new List<Location> {

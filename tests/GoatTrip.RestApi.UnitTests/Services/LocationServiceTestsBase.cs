@@ -44,7 +44,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         }
 
         protected void CreateMockResults(string postcode, int count = 1) {
-            _mockDataReader.Setup(r => r[It.Is<string>(p => p == POSTCODE_LOCATOR_FIELD)]).Returns(postcode.ToUpper());
+            _mockDataReader.Setup(r => r[POSTCODE_FIELD]).Returns(postcode.ToUpper());
 
             _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == postcode.ToLower())))
                 .Returns(() =>
@@ -70,5 +70,6 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         protected readonly ILocationQueryFields _locationQueryFields;
 
         protected const string POSTCODE_LOCATOR_FIELD = "POSTCODE_LOCATOR";
+        protected const string POSTCODE_FIELD = "POSTCODE";
     }
 }
