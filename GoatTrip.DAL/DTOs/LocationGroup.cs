@@ -9,7 +9,7 @@ namespace GoatTrip.DAL.DTOs {
 
     public class LocationGroup
     {
-        public int LocationId { get; set; }
+        public int UPRN { get; set; }
         public int LocationsCount { get; set; }
         public string GroupDescription { get;  set; }
         public Dictionary<LocationDataField, string> GroupFields { get;  set; }

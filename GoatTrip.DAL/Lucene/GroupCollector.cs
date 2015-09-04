@@ -54,7 +54,7 @@ namespace GoatTrip.DAL.Lucene
             else
             {
                 group.LocationsCount++;
-                group.LocationId = 0;
+                group.UPRN = 0;
             }
         }
 

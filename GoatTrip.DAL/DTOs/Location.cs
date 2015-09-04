@@ -8,6 +8,7 @@ namespace GoatTrip.DAL.DTOs
     {
         public int Id { get; set; }
 
+        public int UPRN { get; private set; }
         public string PostCode { get; private set; }
         public string PostalTown { get; private set; }
         public string OrganisationName { get; private set; }
@@ -28,7 +29,9 @@ namespace GoatTrip.DAL.DTOs
 
         private void BuildFromReader(IDataRecord readerDataObject)
         {
-            if (readerDataObject["ADMINISTRATIVE_AREA"] != DBNull.Value) 
+            if (readerDataObject["UPRN"] != DBNull.Value)
+                this.XCoordinate = int.Parse(readerDataObject["UPRN"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+            if (readerDataObject["ADMINISTRATIVE_AREA"] != DBNull.Value)
                 this.AdministrativeArea = readerDataObject["ADMINISTRATIVE_AREA"].ToString();
             if (readerDataObject["BUILDING_NAME"] != DBNull.Value) 
                 this.BuildingName = readerDataObject["BUILDING_NAME"].ToString();

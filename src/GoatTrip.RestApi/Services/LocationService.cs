@@ -62,7 +62,7 @@ namespace GoatTrip.RestApi.Services {
 
         private string BuildNextUri(LocationGroup lg) {
             if (lg.LocationsCount == 1)
-                return "/location/" + _encoder.Encode(lg.LocationId.ToString());
+                return "/location/" + _encoder.Encode(lg.UPRN.ToString());
 
             return "/location/search/" + lg.GroupDescription;
         }
