@@ -1,4 +1,6 @@
 
+    //Search by address has been removed as not currently required 08/09/2015.
+    /*
 
 namespace GoatTrip.RestApi.UnitTests.Services {
     using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void SearchByAddress_Always_CallsIsValid() {
-            _sut.SearchByAddress("ANY");
+            _sutSearch.SearchByAddress("ANY");
 
             _mockQueryValidator.Verify(v => v.IsValid(It.Is<string>(q => q == "ANY")));
         }
@@ -58,6 +60,6 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
 
 
-
     }
 }
+*/

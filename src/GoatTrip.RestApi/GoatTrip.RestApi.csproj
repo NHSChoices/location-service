@@ -189,12 +189,17 @@
     <Compile Include="Services\ILocationIdEncoder.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />
     <Compile Include="Services\ILocationQueryValidator.cs" />
-    <Compile Include="Services\ILocationService.cs" />
+    <Compile Include="Services\ILocationRetrievalService.cs" />
+    <Compile Include="Services\ILocationSearchPostcodeService.cs" />
+    <Compile Include="Services\ILocationSearchService.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Services\InvalidLocationQueryException.cs" />
     <Compile Include="Services\LocationQuerySanitiser.cs" />
     <Compile Include="Services\LocationQueryValidator.cs" />
-    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Services\LocationSearchBaseService.cs" />
+    <Compile Include="Services\LocationSearchPostcodeService.cs" />
+    <Compile Include="Services\LocationSearchService.cs" />
+    <Compile Include="Services\LocationRetrievalService.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

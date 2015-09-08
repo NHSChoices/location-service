@@ -33,7 +33,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         public void GetByPostcode_WithValidQuery_CallsService() {
 
             _sut.GetByPostcode("x");
-            _mockLocationService.Verify(s => s.SearchByPostcode(It.Is<string>(q => q == "x")));
+            _mockLocationSearchPostcodeService.Verify(s => s.SearchByPostcode(It.Is<string>(q => q == "x")));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace GoatTrip.RestApi.Controllers {
+
     using System.Collections.Generic;
-using System.Web.Http;
+    using System.Web.Http;
     using DAL;
     using Services;
 
@@ -8,9 +9,11 @@ using System.Web.Http;
     public class LocationController
         : ApiController {
 
-        public LocationController(ILocationQueryValidator queryValidator, ILocationService service, ILocationQueryFields locationQueryFields) {
+        public LocationController(ILocationQueryValidator queryValidator, ILocationRetrievalService retrievalService, ILocationSearchService searchService, ILocationSearchPostcodeService searchPostcodeService, ILocationQueryFields locationQueryFields) {
             _queryValidator = queryValidator;
-            _service = service;
+            _retrievalService = retrievalService;
+            _searchService = searchService;
+            _searchPostcodeService = searchPostcodeService;
             _locationQueryFields = locationQueryFields;
         }
 
@@ -21,7 +24,7 @@ using System.Web.Http;
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.Search(query, new LocationsGroupedByAddressStrategy(_locationQueryFields));
+            var result = _searchService.Search(query, new LocationsGroupedByAddressStrategy(_locationQueryFields));
 
             return Ok(result);
         }
@@ -32,7 +35,7 @@ using System.Web.Http;
             if (!_queryValidator.IsValid(query))
                 return new BadRequestResult(Request, query);
 
-            var result = _service.SearchByPostcode(query);
+            var result = _searchPostcodeService.SearchByPostcode(query);
 
             return Ok(result);
         }
@@ -44,7 +47,7 @@ using System.Web.Http;
                 return new BadRequestResult(Request, query);
 
             try {
-                var result = _service.Get(query);
+                var result = _retrievalService.Get(query);
 
                 return Ok(result);
             } catch (LocationNotFoundException) {
@@ -53,9 +56,11 @@ using System.Web.Http;
         }
 
         private readonly ILocationQueryValidator _queryValidator;
-        private readonly ILocationService _service;
+        private readonly ILocationRetrievalService _retrievalService;
+        private readonly ILocationSearchService _searchService;
+        private readonly ILocationSearchPostcodeService _searchPostcodeService;
         private readonly ILocationQueryFields _locationQueryFields;
-        }
+    }
 
     public class LocationsGroupedByAddressStrategy
         : ILocationGroupingStrategy {

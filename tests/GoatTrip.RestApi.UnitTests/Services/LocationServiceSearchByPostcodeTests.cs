@@ -10,7 +10,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
         [Fact]
         public void SearchByPostcode_Always_CallsIsValid() {
-            _sut.SearchByPostcode("ANY");
+            _sutPostcode.SearchByPostcode("ANY");
 
             _mockQueryValidator.Verify(v => v.IsValid(It.Is<string>(q => q == "ANY")));
         }
@@ -19,21 +19,21 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         public void SearchByPostcode_WithInvalidQuery_ThrowsInvalidLocationQueryException() {
             _mockQueryValidator.Setup(v => v.IsValid(It.IsAny<string>())).Returns(false);
 
-            Assert.Throws<InvalidLocationQueryException>(() => _sut.SearchByPostcode(""));
+            Assert.Throws<InvalidLocationQueryException>(() => _sutPostcode.SearchByPostcode(""));
         }
 
         [Fact]
         public void SearchByPostcode_WithExistingPostcode_ReturnsThatLocation() {
             CreateMockResults("SO11 1XX");
 
-            var result = _sut.SearchByPostcode("SO11 1XX").ToList();
+            var result = _sutPostcode.SearchByPostcode("SO11 1XX").ToList();
 
             AssertIsValidResult(result, 1, "SO11 1XX");
         }
 
         [Fact]
         public void SearchByPostcode_Always_CallsSanitise() {
-            _sut.SearchByPostcode("SO22 2XX");
+            _sutPostcode.SearchByPostcode("SO22 2XX");
 
             _mockQuerySanitiser.Verify(s => s.Sanitise(It.Is<string>(q => q == "SO22 2XX")));
         }
@@ -43,11 +43,11 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             CreateMockResults("SO11 1XX");
 
-            var result = _sut.SearchByPostcode("SO11 1XX").ToList();
+            var result = _sutPostcode.SearchByPostcode("SO11 1XX").ToList();
 
             AssertIsValidResult(result, 1, "SO11 1XX");
 
-            result = _sut.SearchByPostcode("so11 1xx").ToList();
+            result = _sutPostcode.SearchByPostcode("so11 1xx").ToList();
 
             AssertIsValidResult(result, 1, "SO11 1XX");
         }
@@ -57,7 +57,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         {
             CreateMockResults("SO22 2XX", 3);
 
-            var result = _sut.SearchByPostcode("SO22 2XX").ToList();
+            var result = _sutPostcode.SearchByPostcode("SO22 2XX").ToList();
 
             AssertIsValidResult(result, 3, "SO22 2XX");
         }
