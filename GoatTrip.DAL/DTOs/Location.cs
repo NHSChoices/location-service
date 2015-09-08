@@ -28,26 +28,26 @@ namespace GoatTrip.DAL.DTOs
 
         private void BuildFromReader(IDataRecord readerDataObject)
         {
-            if (readerDataObject["ADMINISTRATIVE_AREA"] != DBNull.Value) 
-                this.AdministrativeArea = readerDataObject["ADMINISTRATIVE_AREA"].ToString();
-            if (readerDataObject["BUILDING_NAME"] != DBNull.Value) 
-                this.BuildingName = readerDataObject["BUILDING_NAME"].ToString();
-            if (readerDataObject["BLPU_ORGANISATION"] != DBNull.Value) 
-                this.OrganisationName = readerDataObject["BLPU_ORGANISATION"].ToString();
+            if (readerDataObject["ADMINISTRATIVE_AREA"] != DBNull.Value)
+                this.AdministrativeArea = readerDataObject["ADMINISTRATIVE_AREA"].ToString().ToTitleCase();
+            if (readerDataObject["BUILDING_NAME"] != DBNull.Value)
+                this.BuildingName = readerDataObject["BUILDING_NAME"].ToString().ToTitleCase();
+            if (readerDataObject["BLPU_ORGANISATION"] != DBNull.Value)
+                this.OrganisationName = readerDataObject["BLPU_ORGANISATION"].ToString().ToTitleCase();
             if (readerDataObject["STREET_DESCRIPTION"] != DBNull.Value)
-                this.StreetDescription = readerDataObject["STREET_DESCRIPTION"].ToString();
+                this.StreetDescription = readerDataObject["STREET_DESCRIPTION"].ToString().ToTitleCase();
             if (readerDataObject["PAO_START_NUMBER"] != DBNull.Value)
                 this.HouseNumber = readerDataObject["PAO_START_NUMBER"].ToString();
-            if (readerDataObject["LOCALITY"] != DBNull.Value) 
-                this.Localiry = readerDataObject["LOCALITY"].ToString();
-            if (readerDataObject["TOWN_NAME"] != DBNull.Value) 
-                this.TownName = readerDataObject["TOWN_NAME"].ToString();
-            if (readerDataObject["POST_TOWN"] != DBNull.Value) 
-                this.PostalTown = readerDataObject["POST_TOWN"].ToString();
+            if (readerDataObject["LOCALITY"] != DBNull.Value)
+                this.Localiry = readerDataObject["LOCALITY"].ToString().ToTitleCase();
+            if (readerDataObject["TOWN_NAME"] != DBNull.Value)
+                this.TownName = readerDataObject["TOWN_NAME"].ToString().ToTitleCase();
+            if (readerDataObject["POST_TOWN"] != DBNull.Value)
+                this.PostalTown = readerDataObject["POST_TOWN"].ToString().ToTitleCase();
             if (readerDataObject["POSTCODE"] != DBNull.Value)
                 this.PostCode = readerDataObject["POSTCODE"].ToString();
             if (readerDataObject["POSTCODE_LOCATOR"] != DBNull.Value)
-                this.PostcodeLocator = readerDataObject["POSTCODE_LOCATOR"].ToString().Replace(" ", "").ToLower();
+                this.PostcodeLocator = readerDataObject["POSTCODE_LOCATOR"].ToString();
             if (readerDataObject["X_COORDINATE"] != DBNull.Value) 
                 this.XCoordinate = float.Parse(readerDataObject["X_COORDINATE"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
             if (readerDataObject["Y_COORDINATE"] != DBNull.Value) 

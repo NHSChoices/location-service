@@ -65,6 +65,7 @@
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="DTOs\Location.cs" />
     <Compile Include="DTOs\LocationGroup.cs" />
+    <Compile Include="DTOs\StringFormatters.cs" />
     <Compile Include="FtsQueryGenerator.cs" />
     <Compile Include="fTSQueryTokenizer.cs" />
     <Compile Include="ILocationQueryFields.cs" />
