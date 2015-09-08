@@ -7,7 +7,7 @@ using Lucene.Net.Documents;
 
 namespace GoatTrip.DAL
 {
-    public  class LocationGroupBuilder : ILocationGroupBuilder
+    public class LocationGroupBuilder : ILocationGroupBuilder
     {
         public LocationGroup Build(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
@@ -20,10 +20,10 @@ namespace GoatTrip.DAL
         }
 
         private LocationGroup BuildFromReader(IDataRecord readerDataObject,
-           IEnumerable<LocationQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
             var locationsCount = 0;
-               if (readerDataObject["Number"] != DBNull.Value)
+            if (readerDataObject["Number"] != DBNull.Value)
                 locationsCount = Convert.ToInt32(readerDataObject["Number"].ToString());
 
             return new LocationGroup()
@@ -35,7 +35,7 @@ namespace GoatTrip.DAL
         }
 
         private LocationGroup BuildFromReader(Document document,
-         IEnumerable<LocationQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
             var locationId = document.Get("id");
             return new LocationGroup()
@@ -51,14 +51,14 @@ namespace GoatTrip.DAL
             IEnumerable<LocationQueryField> groupByFields)
         {
             return AddDeliminatorToGroupDescription(GenerateHouseDescription(readerDataObject, groupByFields))
-                             + GenerateAddressDescriptionWithoutHouseDetail(readerDataObject, groupByFields);
+                   + GenerateAddressDescriptionWithoutHouseDetail(readerDataObject, groupByFields);
         }
 
         public string GenerateGroupDescription(Document document,
-           IEnumerable<LocationQueryField> groupByFields)
+            IEnumerable<LocationQueryField> groupByFields)
         {
             return AddDeliminatorToGroupDescription(GenerateHouseDescription(document, groupByFields))
-                             + GenerateAddressDescriptionWithoutHouseDetail(document, groupByFields);
+                   + GenerateAddressDescriptionWithoutHouseDetail(document, groupByFields);
         }
 
         private string AddDeliminatorToGroupDescription(string description)
@@ -69,39 +69,48 @@ namespace GoatTrip.DAL
         }
 
 
-        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
+        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject,
+            IEnumerable<LocationQueryField> groupByFields)
         {
-            return groupByFields.Where(field => IsDescriptionField(field) && 
+            return groupByFields.Where(field => IsDescriptionField(field) &&
                                                 readerDataObject[field.Name] != DBNull.Value
                                                 &&
                                                 (field.Key != LocationDataField.PrimaryText &&
-                                                field.Key != LocationDataField.SecondaryText &&
-                                                field.Key != LocationDataField.HouseNumber &&
+                                                 field.Key != LocationDataField.SecondaryText &&
+                                                 field.Key != LocationDataField.HouseNumber &&
                                                  field.Key != LocationDataField.HouseSuffix))
-                .Select(f => readerDataObject[f.Name].ToString())
+                .Select(f => EnsureFieldHadCorrectCase(readerDataObject[f.Name].ToString(),f.Key))
                 .Aggregate((i, j) => AddDeliminatorToGroupDescription(i) + j);
         }
 
         private string GenerateAddressDescriptionWithoutHouseDetail(Document document,
             IEnumerable<LocationQueryField> groupByFields)
         {
-            return groupByFields.Where(field => IsDescriptionField(field) && 
-                                                 document.Get(field.Name) != null &&
-                                               (field.Key != LocationDataField.PrimaryText &&
-                                                field.Key != LocationDataField.SecondaryText &&
-                                               field.Key != LocationDataField.HouseNumber &&
-                                                field.Key != LocationDataField.HouseSuffix))
-               .Select(f => document.Get(f.Name).ToString())
-               .Aggregate((i, j) => AddDeliminatorToGroupDescription(i) + j);
+            return groupByFields.Where(field => IsDescriptionField(field) &&
+                                                document.Get(field.Name) != null &&
+                                                (field.Key != LocationDataField.PrimaryText &&
+                                                 field.Key != LocationDataField.SecondaryText &&
+                                                 field.Key != LocationDataField.HouseNumber &&
+                                                 field.Key != LocationDataField.HouseSuffix))
+                .Select(f => EnsureFieldHadCorrectCase(document.Get(f.Name).ToString(), f.Key))
+                .Aggregate((i, j) => AddDeliminatorToGroupDescription(i) + j);
+        }
+
+        private string EnsureFieldHadCorrectCase(string fieldContents, LocationDataField fieldKey)
+        {
+            if (fieldKey == LocationDataField.PostCode)
+                return fieldContents;
+            
+                return fieldContents.ToTitleCase();
         }
 
         private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             var buildingText = AddDeliminatorToGroupDescription(RetriveValue(groupByFields, readerDataObject, LocationDataField.PrimaryText));
-                buildingText +=  AddDeliminatorToGroupDescription(RetriveValue(groupByFields, readerDataObject, LocationDataField.SecondaryText));
-                buildingText += AddDeliminatorToGroupDescription(RetrieveHouseNumber(readerDataObject, groupByFields) +
-                                RetriveValue(groupByFields, readerDataObject, LocationDataField.HouseSuffix));
-            
+            buildingText += AddDeliminatorToGroupDescription(RetriveValue(groupByFields, readerDataObject, LocationDataField.SecondaryText));
+            buildingText += AddDeliminatorToGroupDescription(RetrieveHouseNumber(readerDataObject, groupByFields) +
+                            RetriveValue(groupByFields, readerDataObject, LocationDataField.HouseSuffix));
+
             return buildingText;
         }
 
@@ -148,7 +157,7 @@ namespace GoatTrip.DAL
 
         private bool IsDescriptionField(LocationQueryField field)
         {
-            return field.GetType() == typeof (LocationDescriptonQueryField);
+            return field.GetType() == typeof(LocationDescriptonQueryField);
         }
 
         private Dictionary<LocationDataField, string> GetGroupedFields(IDataRecord readerDataObject,
@@ -168,6 +177,6 @@ namespace GoatTrip.DAL
         }
 
 
-       
+
     }
 }
