@@ -7,18 +7,13 @@ namespace GoatTrip.RestApi.Services {
     using DAL;
     using Models;
 
-    public class LocationService
-        : ILocationService {
+    public class LocationRetrievalService
+        : ILocationRetrievalService {
+        private ILocationIdEncoder _encoder;
+        private ILocationRepository _repository;
 
-        public const int GROUPING_THRESHOLD = 100; //if the total number of returned locations is lower than this figure the results will be de-grouped by requerying the dataset.
-
-        public LocationService(ILocationRepository repository, ILocationGroupRepository groupRepository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationQuerySanitiser searchSanitiser, ILocationIdEncoder encoder, ILocationQueryFields locationQueryFields) {
+        public LocationRetrievalService(ILocationRepository repository, ILocationIdEncoder encoder) {
             _repository = repository;
-            _queryValidator = queryValidator;
-            _postCodeSanitiser = postCodeSanitiser;
-            _searchSanitiser = searchSanitiser;
-            _locationQueryFields = locationQueryFields;
-            _groupRepository = groupRepository;
             _encoder = encoder;
         }
 
@@ -28,25 +23,32 @@ namespace GoatTrip.RestApi.Services {
             return new LocationModel(location);
         }
 
-        public IEnumerable<LocationGroupModel> SearchByAddress(string addressQuery) {
-            ValidateAndThrow(addressQuery);
-            var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
+    }
 
-            var results = _repository.FindLocationsbyAddress(sanitisedQuery);
+    public abstract class LocationSearchBaseService {
 
-            var groupedResult = Group(results);
-
-            return groupedResult;
+        protected LocationSearchBaseService(ILocationQueryValidator queryValidator) {
+            _queryValidator = queryValidator;
         }
 
-        public IEnumerable<LocationGroupModel> Search(string addressQuery, ILocationGroupingStrategy groupingStrategy) {
-            ValidateAndThrow(addressQuery);
-            var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
+        protected void ValidateAndThrow(string query) {
+            if (!_queryValidator.IsValid(query))
+                throw new InvalidLocationQueryException();
+        }
 
-            var results = _groupRepository.FindGroupedLocations(sanitisedQuery, groupingStrategy);
+        private readonly ILocationQueryValidator _queryValidator;
+    }
 
-            var refinedResults = RequeryIfRequired(results.ToList(), sanitisedQuery, groupingStrategy);
-            return refinedResults.Select(lg => new LocationGroupModel(lg.GroupDescription, lg.LocationsCount, BuildNextUri(lg)));
+    public class LocationSearchPostcodeService
+        : LocationSearchBaseService, ILocationSearchPostcodeService {
+        private readonly ILocationRepository _repository;
+        private readonly ILocationQuerySanitiser _postCodeSanitiser;
+
+        public LocationSearchPostcodeService(ILocationRepository repository,
+            ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser)
+            : base(queryValidator) {
+            _repository = repository;
+            _postCodeSanitiser = postCodeSanitiser;
         }
 
         public IEnumerable<LocationGroupModel> SearchByPostcode(string postcodeQuery) {
@@ -58,6 +60,36 @@ namespace GoatTrip.RestApi.Services {
             var groupedResult = Group(results);
 
             return groupedResult;
+        }
+
+        private IEnumerable<LocationGroupModel> Group(IEnumerable<Location> results) {
+            var locations = results.Select(l => new LocationModel(l));
+            return locations.GroupBy(l => l.Postcode)
+                .Select(g => new LocationGroupModel(g.First().GroupDescription, g.Count(), "/locations/search/" + g.First().GroupDescription));
+        }
+    }
+
+    public class LocationSearchService
+        : LocationSearchBaseService, ILocationSearchService {
+
+        public const int GROUPING_THRESHOLD = 100; //if the total number of returned locations is lower than this figure the results will be de-grouped by requerying the dataset.
+
+        public LocationSearchService(ILocationGroupRepository groupRepository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser searchSanitiser, ILocationQueryFields locationQueryFields, ILocationIdEncoder encoder)
+            : base(queryValidator) {
+            _searchSanitiser = searchSanitiser;
+            _locationQueryFields = locationQueryFields;
+            _encoder = encoder;
+            _groupRepository = groupRepository;
+        }
+
+        public IEnumerable<LocationGroupModel> Search(string addressQuery, ILocationGroupingStrategy groupingStrategy) {
+            ValidateAndThrow(addressQuery);
+            var sanitisedQuery = _searchSanitiser.Sanitise(addressQuery);
+
+            var results = _groupRepository.FindGroupedLocations(sanitisedQuery, groupingStrategy);
+
+            var refinedResults = RequeryIfRequired(results.ToList(), sanitisedQuery, groupingStrategy);
+            return refinedResults.Select(lg => new LocationGroupModel(lg.GroupDescription, lg.LocationsCount, BuildNextUri(lg)));
         }
 
         private string BuildNextUri(LocationGroup lg) {
@@ -86,20 +118,6 @@ namespace GoatTrip.RestApi.Services {
             return results;
         }
 
-        private IEnumerable<LocationGroupModel> Group(IEnumerable<Location> results) {
-            var locations = results.Select(l => new LocationModel(l));
-            return locations.GroupBy(l => l.Postcode)
-                .Select(g => new LocationGroupModel(g.First().GroupDescription, g.Count(), "/locations/search/" + g.First().GroupDescription));
-        }
-
-        private void ValidateAndThrow(string query) {
-            if (!_queryValidator.IsValid(query))
-                throw new InvalidLocationQueryException();
-        }
-
-        private readonly ILocationRepository _repository;
-        private readonly ILocationQueryValidator _queryValidator;
-        private readonly ILocationQuerySanitiser _postCodeSanitiser;
         private readonly ILocationQuerySanitiser _searchSanitiser;
         private readonly ILocationIdEncoder _encoder;
         private readonly ILocationQueryFields _locationQueryFields;

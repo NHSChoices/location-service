@@ -3,11 +3,15 @@ using GoatTrip.DAL;
 using GoatTrip.RestApi.Models;
 
 namespace GoatTrip.RestApi.Services {
-    public interface ILocationService {
-
-        LocationModel Get(string id);
+    public interface ILocationSearchService {
         IEnumerable<LocationGroupModel> Search(string query, ILocationGroupingStrategy groupingStrategy);
-        IEnumerable<LocationGroupModel> SearchByAddress(string addressQuery);
+
+    }
+    public interface ILocationSearchPostcodeService {
         IEnumerable<LocationGroupModel> SearchByPostcode(string postcodeQuery);
+    }
+
+    public interface ILocationRetrievalService {
+        LocationModel Get(string id);
     }
 }

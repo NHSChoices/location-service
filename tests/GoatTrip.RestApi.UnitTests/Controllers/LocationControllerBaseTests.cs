@@ -11,7 +11,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
             var httpRequestMessage = new HttpRequestMessage();
             httpRequestMessage.SetConfiguration(new HttpConfiguration());
 
-            _sut = new LocationController(_mockQueryValidator.Object, _mockLocationService.Object, _mockLocationQueryFields.Object)
+            _sut = new LocationController(_mockQueryValidator.Object, _mockLocationRetrievalService.Object, _mockLocationSearchService.Object, _mockLocationSearchPostcodeService.Object, _mockLocationQueryFields.Object)
             {
                 Request = httpRequestMessage
             };
@@ -23,7 +23,9 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
 
         protected readonly LocationController _sut;
         protected readonly Mock<ILocationQueryValidator> _mockQueryValidator = new Mock<ILocationQueryValidator>();
-        protected readonly Mock<ILocationService> _mockLocationService = new Mock<ILocationService>();
+        protected readonly Mock<ILocationRetrievalService> _mockLocationRetrievalService = new Mock<ILocationRetrievalService>();
+        protected readonly Mock<ILocationSearchService> _mockLocationSearchService = new Mock<ILocationSearchService>();
+        protected readonly Mock<ILocationSearchPostcodeService> _mockLocationSearchPostcodeService = new Mock<ILocationSearchPostcodeService>();
         protected readonly Mock<ILocationQueryFields> _mockLocationQueryFields = new Mock<ILocationQueryFields>();
     }
 }
