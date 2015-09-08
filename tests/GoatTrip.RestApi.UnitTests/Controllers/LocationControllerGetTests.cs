@@ -30,7 +30,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         public void Get_WithValidId_CallsService() {
             _sut.Get("anything");
 
-            _mockLocationService.Verify(s => s.Get("anything"), Times.Once);
+            _mockLocationRetrievalService.Verify(s => s.Get("anything"), Times.Once);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
             var location = new LocationModel {
                 Postcode = "somewhere"
             };
-            _mockLocationService.Setup(s => s.Get("anything")).Returns(location);
+            _mockLocationRetrievalService.Setup(s => s.Get("anything")).Returns(location);
 
             _sut.Get("anything");
 
@@ -47,7 +47,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
 
         [Fact]
         public void Get_WithNonExistantId_Returns404() {
-            _mockLocationService.Setup(s => s.Get("missing")).Throws(new LocationNotFoundException("missing"));
+            _mockLocationRetrievalService.Setup(s => s.Get("missing")).Throws(new LocationNotFoundException("missing"));
 
             var result = _sut.Get("missing");
             Assert.IsAssignableFrom<NotFoundResult>(result);

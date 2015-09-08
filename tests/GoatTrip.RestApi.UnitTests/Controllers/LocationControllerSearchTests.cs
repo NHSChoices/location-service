@@ -37,7 +37,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
         public void Search_WithValidQuery_CallsService() {
 
             _sut.Search("x");
-            _mockLocationService.Verify(s => s.Search(It.Is<string>(q => q == "x"), It.IsAny<ILocationGroupingStrategy>()));
+            _mockLocationSearchService.Verify(s => s.Search(It.Is<string>(q => q == "x"), It.IsAny<ILocationGroupingStrategy>()));
         }
 
     }

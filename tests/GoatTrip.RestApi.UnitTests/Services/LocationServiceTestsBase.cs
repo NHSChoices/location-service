@@ -26,7 +26,9 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockQuerySanitiser = new Mock<ILocationQuerySanitiser>();
             _mockQuerySanitiser.Setup(s => s.Sanitise(It.IsAny<string>())).Returns<string>(q => q.ToLower());
 
-            _sut = new LocationService(_mockLocationRepository.Object, _mockLocationGroupRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, _mockQuerySanitiser.Object, _mockIdEncoder.Object, _mockLocationQueryFields.Object);
+            _sutSearch = new LocationSearchService(_mockLocationGroupRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, _mockLocationQueryFields.Object, _mockIdEncoder.Object);
+            _sutPostcode = new LocationSearchPostcodeService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
+            _sutGet = new LocationRetrievalService(_mockLocationRepository.Object, _mockIdEncoder.Object);
 
             _mockDataReader = new Mock<IDataRecord>();
             _mockDataReader.Setup(r => r[It.IsAny<string>()]).Returns("");
@@ -44,6 +46,8 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         }
 
         protected void CreateMockResults(string postcode, int count = 1) {
+            _mockIdEncoder.Setup(e => e.Decode(postcode)).Returns(postcode);
+
             _mockDataReader.Setup(r => r[POSTCODE_FIELD]).Returns(postcode.ToUpper());
 
             _mockLocationRepository.Setup(r => r.FindLocations(It.Is<string>(s => s == postcode.ToLower())))
@@ -58,7 +62,9 @@ namespace GoatTrip.RestApi.UnitTests.Services {
                 });
         }
 
-        protected readonly LocationService _sut;
+        protected readonly LocationSearchService _sutSearch;
+        protected readonly LocationSearchPostcodeService _sutPostcode;
+        protected readonly LocationRetrievalService _sutGet;
         protected readonly Mock<ILocationRepository> _mockLocationRepository;
         protected readonly Mock<ILocationQueryValidator> _mockQueryValidator;
         protected readonly Mock<ILocationQuerySanitiser> _mockQuerySanitiser;

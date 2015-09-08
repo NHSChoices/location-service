@@ -16,9 +16,11 @@ namespace GoatTrip.RestApi {
             builder.Register(c => new Base64LocationIdEncoder()).As<ILocationIdEncoder>();
 
             builder.Register(c => new LuceneQueryFields()).As<ILocationQueryFields>();
-            builder.Register(c => new LocationService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationGroupRepository>(), c.Resolve<ILocationQueryValidator>(), new PostcodeQuerySanitiser(), new SearchQuerySanitiser(), c.Resolve<ILocationIdEncoder>(), c.Resolve<ILocationQueryFields>())).As<ILocationService>();
+            builder.Register(c => new LocationRetrievalService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationIdEncoder>())).As<ILocationRetrievalService>();
+            builder.Register(c => new LocationSearchPostcodeService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationQueryValidator>(), new PostcodeQuerySanitiser())).As<ILocationSearchPostcodeService>();
+            builder.Register(c => new LocationSearchService(c.Resolve<ILocationGroupRepository>(), c.Resolve<ILocationQueryValidator>(), new SearchQuerySanitiser(), c.Resolve<ILocationQueryFields>(), c.Resolve<ILocationIdEncoder>())).As<ILocationSearchService>();
 
-            builder.Register(c => new LocationController(c.Resolve<ILocationQueryValidator>(), c.Resolve<ILocationService>(), c.Resolve<ILocationQueryFields>()));
+            builder.Register(c => new LocationController(c.Resolve<ILocationQueryValidator>(), c.Resolve<ILocationRetrievalService>(), c.Resolve<ILocationSearchService>(), c.Resolve<ILocationSearchPostcodeService>(), c.Resolve<ILocationQueryFields>()));
             builder.Register(c => new InfoController(c.Resolve<IConnectionManager>()));
         }
 
