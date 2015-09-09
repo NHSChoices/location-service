@@ -5,9 +5,13 @@
     using DAL;
     using Services;
 
-    [RoutePrefix("location")]
+    [RoutePrefix(RoutePrefix)]
     public class LocationController
         : ApiController {
+
+        public const string RoutePrefix = "location";
+        public const string SearchRoute = "search";
+        public const string GetByPostcodeRoute = "postcode";
 
         public LocationController(ILocationQueryValidator queryValidator, ILocationRetrievalService retrievalService, ILocationSearchService searchService, ILocationSearchPostcodeService searchPostcodeService, ILocationQueryFields locationQueryFields) {
             _queryValidator = queryValidator;
@@ -17,7 +21,7 @@
             _locationQueryFields = locationQueryFields;
         }
 
-        [Route("search/{query?}")]
+        [Route(SearchRoute + "/{query?}")]
         [HttpGet]
         public IHttpActionResult Search(string query = "") {
 
@@ -29,7 +33,7 @@
             return Ok(result);
         }
 
-        [Route("postcode/{query?}")]
+        [Route(GetByPostcodeRoute + "/{query?}")]
         public IHttpActionResult GetByPostcode(string query = "") {
 
             if (!_queryValidator.IsValid(query))
