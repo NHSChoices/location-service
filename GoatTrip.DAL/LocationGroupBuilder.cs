@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using GoatTrip.Common.Formatters;
 using GoatTrip.DAL.DTOs;
 using Lucene.Net.Documents;
 
@@ -9,6 +10,14 @@ namespace GoatTrip.DAL
 {
     public class LocationGroupBuilder : ILocationGroupBuilder
     {
+        private readonly IConditionalFormatter<string, LocationDataField> _formatter;
+
+        public LocationGroupBuilder(IConditionalFormatter<string, LocationDataField> formatter)
+        {
+            _formatter = formatter;
+        }
+
+
         public LocationGroup Build(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             return BuildFromReader(readerDataObject, groupByFields);
@@ -69,8 +78,7 @@ namespace GoatTrip.DAL
         }
 
 
-        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject,
-            IEnumerable<LocationQueryField> groupByFields)
+        private string GenerateAddressDescriptionWithoutHouseDetail(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             return groupByFields.Where(field => IsDescriptionField(field) &&
                                                 readerDataObject[field.Name] != DBNull.Value
@@ -79,12 +87,11 @@ namespace GoatTrip.DAL
                                                  field.Key != LocationDataField.SecondaryText &&
                                                  field.Key != LocationDataField.HouseNumber &&
                                                  field.Key != LocationDataField.HouseSuffix))
-                .Select(f => EnsureFieldHadCorrectCase(readerDataObject[f.Name].ToString(),f.Key))
+                .Select(f => _formatter.DetermineConditionsAndFormat(readerDataObject[f.Name].ToString(), f.Key))
                 .Aggregate((i, j) => AddDeliminatorToGroupDescription(i) + j);
         }
 
-        private string GenerateAddressDescriptionWithoutHouseDetail(Document document,
-            IEnumerable<LocationQueryField> groupByFields)
+        private string GenerateAddressDescriptionWithoutHouseDetail(Document document, IEnumerable<LocationQueryField> groupByFields)
         {
             return groupByFields.Where(field => IsDescriptionField(field) &&
                                                 document.Get(field.Name) != null &&
@@ -92,16 +99,8 @@ namespace GoatTrip.DAL
                                                  field.Key != LocationDataField.SecondaryText &&
                                                  field.Key != LocationDataField.HouseNumber &&
                                                  field.Key != LocationDataField.HouseSuffix))
-                .Select(f => EnsureFieldHadCorrectCase(document.Get(f.Name).ToString(), f.Key))
+                .Select(f => _formatter.DetermineConditionsAndFormat(document.Get(f.Name).ToString(), f.Key))
                 .Aggregate((i, j) => AddDeliminatorToGroupDescription(i) + j);
-        }
-
-        private string EnsureFieldHadCorrectCase(string fieldContents, LocationDataField fieldKey)
-        {
-            if (fieldKey == LocationDataField.PostCode)
-                return fieldContents;
-            
-                return fieldContents.ToTitleCase();
         }
 
         private string GenerateHouseDescription(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)

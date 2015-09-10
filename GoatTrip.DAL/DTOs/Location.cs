@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Globalization;
+using GoatTrip.Common.Formatters;
 
 namespace GoatTrip.DAL.DTOs
 {
@@ -21,37 +22,38 @@ namespace GoatTrip.DAL.DTOs
         public float XCoordinate { get; private set; }
         public float YCoordinate { get; private set; }
 
-        public Location(IDataRecord readerDataObject)
+        public Location(IDataRecord readerDataObject, IConditionalFormatter<string, string> formatter)
         {
-            BuildFromReader(readerDataObject);
+            BuildFromReader(readerDataObject, formatter);
         }
 
-        private void BuildFromReader(IDataRecord readerDataObject)
+        private void BuildFromReader(IDataRecord readerDataObject, IConditionalFormatter<string, string> formatter)
         {
-            if (readerDataObject["ADMINISTRATIVE_AREA"] != DBNull.Value)
-                this.AdministrativeArea = readerDataObject["ADMINISTRATIVE_AREA"].ToString().ToTitleCase();
-            if (readerDataObject["BUILDING_NAME"] != DBNull.Value)
-                this.BuildingName = readerDataObject["BUILDING_NAME"].ToString().ToTitleCase();
-            if (readerDataObject["BLPU_ORGANISATION"] != DBNull.Value)
-                this.OrganisationName = readerDataObject["BLPU_ORGANISATION"].ToString().ToTitleCase();
-            if (readerDataObject["STREET_DESCRIPTION"] != DBNull.Value)
-                this.StreetDescription = readerDataObject["STREET_DESCRIPTION"].ToString().ToTitleCase();
-            if (readerDataObject["PAO_START_NUMBER"] != DBNull.Value)
-                this.HouseNumber = readerDataObject["PAO_START_NUMBER"].ToString();
-            if (readerDataObject["LOCALITY"] != DBNull.Value)
-                this.Localiry = readerDataObject["LOCALITY"].ToString().ToTitleCase();
-            if (readerDataObject["TOWN_NAME"] != DBNull.Value)
-                this.TownName = readerDataObject["TOWN_NAME"].ToString().ToTitleCase();
-            if (readerDataObject["POST_TOWN"] != DBNull.Value)
-                this.PostalTown = readerDataObject["POST_TOWN"].ToString().ToTitleCase();
-            if (readerDataObject["POSTCODE"] != DBNull.Value)
-                this.PostCode = readerDataObject["POSTCODE"].ToString();
-            if (readerDataObject["POSTCODE_LOCATOR"] != DBNull.Value)
-                this.PostcodeLocator = readerDataObject["POSTCODE_LOCATOR"].ToString();
-            if (readerDataObject["X_COORDINATE"] != DBNull.Value) 
-                this.XCoordinate = float.Parse(readerDataObject["X_COORDINATE"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-            if (readerDataObject["Y_COORDINATE"] != DBNull.Value) 
-                this.YCoordinate = float.Parse(readerDataObject["Y_COORDINATE"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+            if (readerDataObject[LocationFields.AdministrativeArea] != DBNull.Value)
+                this.AdministrativeArea = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.AdministrativeArea].ToString(),LocationFields.AdministrativeArea);
+            if (readerDataObject[LocationFields.BuildingName] != DBNull.Value)
+                this.BuildingName = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.BuildingName].ToString(),LocationFields.BuildingName);
+            if (readerDataObject[LocationFields.BlpuOrganisation] != DBNull.Value)
+                this.OrganisationName = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.BlpuOrganisation].ToString(),LocationFields.BlpuOrganisation);
+            if (readerDataObject[LocationFields.StreetDescription] != DBNull.Value)
+                this.StreetDescription = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.StreetDescription].ToString(),LocationFields.StreetDescription);
+            if (readerDataObject[LocationFields.PaoStartNumber] != DBNull.Value)
+                this.HouseNumber = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.PaoStartNumber].ToString(),LocationFields.PaoStartNumber);
+            if (readerDataObject[LocationFields.Locality] != DBNull.Value)
+                this.Localiry = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.Locality].ToString(),LocationFields.Locality);
+            if (readerDataObject[LocationFields.TownName] != DBNull.Value)
+                this.TownName = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.TownName].ToString(),LocationFields.TownName);
+            if (readerDataObject[LocationFields.PostTown] != DBNull.Value)
+                this.PostalTown = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.PostTown].ToString(),LocationFields.PostTown);
+            if (readerDataObject[LocationFields.Postcode] != DBNull.Value)
+                this.PostCode = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.Postcode].ToString(),LocationFields.Postcode);
+            if (readerDataObject[LocationFields.PostcodeLocator] != DBNull.Value)
+                this.PostcodeLocator = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.PostcodeLocator].ToString(), LocationFields.PostcodeLocator);
+            //TODO: Add formatter for int's below.
+            if (readerDataObject[LocationFields.XCoordinate] != DBNull.Value)
+                this.XCoordinate = float.Parse(readerDataObject[LocationFields.XCoordinate].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+            if (readerDataObject[LocationFields.YCoordinate] != DBNull.Value)
+                this.YCoordinate = float.Parse(readerDataObject[LocationFields.YCoordinate].ToString(), CultureInfo.InvariantCulture.NumberFormat);
         }
     }
 }

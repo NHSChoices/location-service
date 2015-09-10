@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GoatTrip.Common.Formatters;
 using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.DAL
@@ -11,11 +12,13 @@ namespace GoatTrip.DAL
     {
         private IConnectionManager _connectionManager;
         private ILocationGroupBuilder _locationGroupBuilder;
+        private IConditionalFormatter<string, string> _formatter; 
 
-        public LocationRepository(IConnectionManager connectionManager, ILocationGroupBuilder locationGroupBuilder)
+        public LocationRepository(IConnectionManager connectionManager, ILocationGroupBuilder locationGroupBuilder, IConditionalFormatter<string, string> formatter)
         {
             _connectionManager = connectionManager;
             _locationGroupBuilder = locationGroupBuilder;
+            _formatter = formatter;
         }
 
         public IEnumerable<Location> FindLocations(string postCode)
@@ -28,7 +31,7 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new Location(reader.DataReader));
+                    locations.Add(new Location(reader.DataReader, _formatter));
                 }
             }
             return locations;
@@ -48,7 +51,7 @@ namespace GoatTrip.DAL
             {
                 while (reader.Read())
                 {
-                    locations.Add(new Location(reader.DataReader));
+                    locations.Add(new Location(reader.DataReader, _formatter));
                 }
             }
             return locations;
@@ -78,7 +81,7 @@ namespace GoatTrip.DAL
 
             using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters { { "@locationId", id } })) {
                 while (reader.Read()) {
-                    return new Location(reader.DataReader);
+                    return new Location(reader.DataReader, _formatter);
                 }
             }
 
