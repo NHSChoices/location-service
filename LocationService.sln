@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LucenceIndexer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.Common", "GoatTrip.Common\GoatTrip.Common.csproj", "{C987A2F0-7DA3-468F-B750-74E058B0C1A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LuceneIndexer.UnitTests", "GoatTrip.LuceneIndexer.UnitTests\GoatTrip.LuceneIndexer.UnitTests.csproj", "{557DB793-E66D-455F-B931-518A000FEA57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +150,16 @@ Global
 		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{557DB793-E66D-455F-B931-518A000FEA57}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

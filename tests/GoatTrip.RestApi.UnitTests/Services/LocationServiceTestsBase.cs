@@ -17,6 +17,8 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         protected LocationServiceTestsBase() {
 
             _mockIdEncoder = new Mock<ILocationIdEncoder>();
+            _mockIdEncoder.Setup(e => e.Decode(It.IsAny<string>())).Returns<string>(x => x);
+            _mockIdEncoder.Setup(e => e.Encode(It.IsAny<string>())).Returns<string>(x => x);
 
             _mockLocationQueryFields = new Mock<ILocationQueryFields>();
 
@@ -56,7 +58,6 @@ namespace GoatTrip.RestApi.UnitTests.Services {
         }
 
         protected void CreateMockResults(string postcode, int count = 1) {
-            _mockIdEncoder.Setup(e => e.Decode(postcode)).Returns(postcode);
 
             _mockDataReader.Setup(r => r[POSTCODE_FIELD]).Returns(postcode.ToUpper());
 
