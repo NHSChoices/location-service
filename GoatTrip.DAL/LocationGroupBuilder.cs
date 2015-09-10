@@ -16,8 +16,7 @@ namespace GoatTrip.DAL
         {
             _formatter = formatter;
         }
-
-
+        
         public LocationGroup Build(IDataRecord readerDataObject, IEnumerable<LocationQueryField> groupByFields)
         {
             return BuildFromReader(readerDataObject, groupByFields);

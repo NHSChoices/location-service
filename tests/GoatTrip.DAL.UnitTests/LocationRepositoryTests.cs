@@ -17,7 +17,7 @@ namespace GoatTrip.DAL.UnitTests {
                 .Returns(_mockReader.Object);
 
             _mockLocationFormatter.Setup(c => c.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns<string>(a => a);
+                .Returns((string value, string type) => value);
 
             _sut = new LocationRepository(_mockConnectionManager.Object, _mockLocationGroupBuilder.Object, _mockLocationFormatter.Object);
             _mockDataReader = new Mock<IDataReader>();

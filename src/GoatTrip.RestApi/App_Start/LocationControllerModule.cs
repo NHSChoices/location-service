@@ -1,6 +1,7 @@
 using Autofac;
 using GoatTrip.Common.Formatters;
 using GoatTrip.DAL;
+using GoatTrip.DAL.DTOs;
 using GoatTrip.DAL.Formatters;
 using GoatTrip.RestApi.Controllers;
 using GoatTrip.RestApi.Services;
@@ -40,8 +41,8 @@ namespace GoatTrip.RestApi {
             builder.Register(c => new TitleCaseFormatter()).As<IFormatter<string>>();
             builder.Register(c => new LocationFormatConditions()).As<IFormatConditions<string>>();
             builder.Register(c => new LocationDataFieldFormatConditions()).As<IFormatConditions<LocationDataField>>();
-            builder.Register(c => new ConditionalFormatter<string, string>(c.Resolve<IFormatter<string>>(), c.Resolve<IFormatConditions<string>>()));
-            builder.Register(c => new ConditionalFormatter<string, LocationDataField>(c.Resolve<IFormatter<string>>(), c.Resolve<IFormatConditions<LocationDataField>>()));
+            builder.Register(c => new ConditionalFormatter<string, string>(c.Resolve<IFormatter<string>>(), c.Resolve<IFormatConditions<string>>())).As<IConditionalFormatter<string, string>>();
+            builder.Register(c => new ConditionalFormatter<string, LocationDataField>(c.Resolve<IFormatter<string>>(), c.Resolve<IFormatConditions<LocationDataField>>())).As<IConditionalFormatter<string, LocationDataField>>();
 
 
             builder.Register(c => new LocationGroupBuilder(c.Resolve<IConditionalFormatter<string, LocationDataField>>())).As<ILocationGroupBuilder>();

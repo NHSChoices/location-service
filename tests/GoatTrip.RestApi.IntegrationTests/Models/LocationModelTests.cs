@@ -27,7 +27,7 @@ namespace GoatTrip.RestApi.IntegrationTests.Models {
             _mockDataReader.Setup(r => r[It.Is<string>(y => y == "Y_COORDINATE")]).Returns<string>(a => "2.0");
 
             _mockLocationFormatter.Setup(r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns<string>(a => a);
+                .Returns((string value, string type) => value);
         }
 
         [Fact]

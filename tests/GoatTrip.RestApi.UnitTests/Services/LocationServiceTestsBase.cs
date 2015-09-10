@@ -32,11 +32,11 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             _mockLocationGroupFormatter = new Mock<IConditionalFormatter<string, LocationDataField>>();
             _mockLocationGroupFormatter.Setup(
-                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<LocationDataField>())).Returns<string>(a => a);
+                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<LocationDataField>())).Returns((string value, LocationDataField type) => value);
 
             _mockLocationFormatter = new Mock<IConditionalFormatter<string, string>>();
             _mockLocationFormatter.Setup(
-                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>())).Returns<string>(a=> a);
+                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>())).Returns((string value, string type) => value);
 
             _sutSearch = new LocationSearchService(_mockLocationGroupRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, _mockLocationQueryFields.Object, _mockIdEncoder.Object);
             _sutPostcode = new LocationSearchPostcodeService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
