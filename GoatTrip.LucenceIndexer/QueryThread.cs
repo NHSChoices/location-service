@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GoatTrip.Common.Formatters;
 using GoatTrip.DAL;
+using GoatTrip.DAL.Formatters;
 using GoatTrip.DAL.Lucene;
 using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
@@ -22,6 +24,10 @@ namespace GoatTrip.LucenceIndexer
         private Analyzer _analyzer;
         private GroupCollector _collector;
         private Action<string> _callback;
+
+        private IFormatter<string> _formatter;
+        private IFormatConditions<LocationDataField> _formatConditions; 
+
         public QueryThread(string query, IndexSearcher searcher, int threadno, Analyzer analyzer, Action<string> callback)
         {
             _query = query;
@@ -29,8 +35,12 @@ namespace GoatTrip.LucenceIndexer
             _threadno = threadno;
             _analyzer = analyzer;
             _callback = callback;
+
+            _formatter = new TitleCaseFormatter();
+            _formatConditions = new LocationDataFieldFormatConditions();
+
             var queryFields = new LuceneQueryFields();
-            var collector = new GroupCollector(new LocationGroupBuilder()
+            var collector = new GroupCollector(new LocationGroupBuilder(new ConditionalFormatter<string,LocationDataField>(_formatter,_formatConditions))
                 , new List<LocationQueryField>()
                 {
                     queryFields.Street,

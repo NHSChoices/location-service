@@ -1,7 +1,6 @@
-﻿
-using System.Data;
-using System.Runtime.InteropServices;
+﻿using System.Data;
 using FluentAssertions;
+using GoatTrip.Common.Formatters;
 using Moq;
 using Xunit;
 
@@ -11,12 +10,16 @@ namespace GoatTrip.DAL.UnitTests {
         public LocationRepositoryTests() {
             _mockReader = new Mock<IManagedDataReader>();
             _mockLocationGroupBuilder = new Mock<ILocationGroupBuilder>();
+            _mockLocationFormatter = new Mock<IConditionalFormatter<string, string>>();
 
             _mockConnectionManager = new Mock<IConnectionManager>();
             _mockConnectionManager.Setup(c => c.GetReader(It.IsAny<string>(), It.IsAny<StatementParamaters>()))
                 .Returns(_mockReader.Object);
 
-            _sut = new LocationRepository(_mockConnectionManager.Object, _mockLocationGroupBuilder.Object);
+            _mockLocationFormatter.Setup(c => c.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((string value, string type) => value);
+
+            _sut = new LocationRepository(_mockConnectionManager.Object, _mockLocationGroupBuilder.Object, _mockLocationFormatter.Object);
             _mockDataReader = new Mock<IDataReader>();
             _mockDataReader.Setup(r => r["ADMINISTRATIVE_AREA"]).Returns("");
             _mockDataReader.Setup(r => r["BUILDING_NAME"]).Returns("");
@@ -101,6 +104,8 @@ namespace GoatTrip.DAL.UnitTests {
         private readonly Mock<IConnectionManager> _mockConnectionManager;
         private readonly Mock<IDataReader> _mockDataReader;
         private readonly Mock<ILocationGroupBuilder> _mockLocationGroupBuilder;
+        private readonly Mock<IConditionalFormatter<string, string>> _mockLocationFormatter;
+
 
     }
 }

@@ -1,4 +1,6 @@
 
+using GoatTrip.Common.Formatters;
+
 namespace GoatTrip.RestApi.UnitTests.Services {
     using System.Collections.Generic;
     using System.Data;
@@ -28,6 +30,14 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockQuerySanitiser = new Mock<ILocationQuerySanitiser>();
             _mockQuerySanitiser.Setup(s => s.Sanitise(It.IsAny<string>())).Returns<string>(q => q.ToLower());
 
+            _mockLocationGroupFormatter = new Mock<IConditionalFormatter<string, LocationDataField>>();
+            _mockLocationGroupFormatter.Setup(
+                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<LocationDataField>())).Returns((string value, LocationDataField type) => value);
+
+            _mockLocationFormatter = new Mock<IConditionalFormatter<string, string>>();
+            _mockLocationFormatter.Setup(
+                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>())).Returns((string value, string type) => value);
+
             _sutSearch = new LocationSearchService(_mockLocationGroupRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, _mockLocationQueryFields.Object, _mockIdEncoder.Object);
             _sutPostcode = new LocationSearchPostcodeService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
             _sutGet = new LocationRetrievalService(_mockLocationRepository.Object, _mockIdEncoder.Object);
@@ -37,7 +47,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "X_COORDINATE")]).Returns("1.0");
             _mockDataReader.Setup(r => r[It.Is<string>(y => y == "Y_COORDINATE")]).Returns("2.0");
 
-            _builder = new LocationGroupBuilder();
+            _builder = new LocationGroupBuilder(_mockLocationGroupFormatter.Object);
             _locationQueryFields = new SqlIteLocationQueryFields();
         }
 
@@ -57,15 +67,21 @@ namespace GoatTrip.RestApi.UnitTests.Services {
                     var result = new List<Location>(count);
                     for (int i = 0; i < count; ++i)
                     {
-                        result.Add(new Location(_mockDataReader.Object));
+                        result.Add(new Location(_mockDataReader.Object, _mockLocationFormatter.Object));
                     }
                     return result;
                 });
+
         }
 
         protected readonly LocationSearchService _sutSearch;
         protected readonly LocationSearchPostcodeService _sutPostcode;
         protected readonly LocationRetrievalService _sutGet;
+
+        protected readonly Mock<IConditionalFormatter<string, LocationDataField>> _mockLocationGroupFormatter;
+        protected readonly Mock<IConditionalFormatter<string, string>> _mockLocationFormatter;
+
+        
         protected readonly Mock<ILocationRepository> _mockLocationRepository;
         protected readonly Mock<ILocationQueryValidator> _mockQueryValidator;
         protected readonly Mock<ILocationQuerySanitiser> _mockQuerySanitiser;

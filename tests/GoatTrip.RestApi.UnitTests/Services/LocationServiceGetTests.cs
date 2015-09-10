@@ -21,7 +21,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockDataReader.Setup(r => r[POSTCODE_FIELD]).Returns("anything");
 
             _mockLocationRepository.Setup(r => r.Get("anything"))
-                .Returns(new Location(_mockDataReader.Object));
+                .Returns(new Location(_mockDataReader.Object, _mockLocationFormatter.Object));
 
             var result = _sutGet.Get("anything");
 

@@ -239,6 +239,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GoatTrip.Common\GoatTrip.Common.csproj">
+      <Project>{c987a2f0-7da3-468f-b750-74e058b0c1a5}</Project>
+      <Name>GoatTrip.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GoatTrip.DAL\GoatTrip.DAL.csproj">
       <Project>{598E9A7D-1432-4AA4-A643-846E7BC06277}</Project>
       <Name>GoatTrip.DAL</Name>
