@@ -7,14 +7,12 @@ namespace GoatTrip.RestApi.Services {
 
     public class LocationSearchPostcodeService
         : LocationSearchBaseService, ILocationSearchPostcodeService {
-        private readonly ILocationRepository _repository;
-        private readonly ILocationQuerySanitiser _postCodeSanitiser;
 
-        public LocationSearchPostcodeService(ILocationRepository repository,
-            ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser)
+        public LocationSearchPostcodeService(ILocationRepository repository, ILocationQueryValidator queryValidator, ILocationQuerySanitiser postCodeSanitiser, ILocationModelMapper locationModelMapper)
             : base(queryValidator) {
             _repository = repository;
             _postCodeSanitiser = postCodeSanitiser;
+            _locationModelMapper = locationModelMapper;
         }
 
         public IEnumerable<LocationGroupModel> SearchByPostcode(string postcodeQuery) {
@@ -29,9 +27,13 @@ namespace GoatTrip.RestApi.Services {
         }
 
         private IEnumerable<LocationGroupModel> Group(IEnumerable<Location> results) {
-            var locations = results.Select(l => new LocationModel(l));
+            var locations = results.Select(l => _locationModelMapper.Map(l));
             return locations.GroupBy(l => l.Postcode)
                 .Select(g => new LocationGroupModel(g.First().GroupDescription, g.Count(), "/locations/search/" + g.First().GroupDescription));
         }
+
+        private readonly ILocationRepository _repository;
+        private readonly ILocationQuerySanitiser _postCodeSanitiser;
+        private readonly ILocationModelMapper _locationModelMapper;
     }
 }
