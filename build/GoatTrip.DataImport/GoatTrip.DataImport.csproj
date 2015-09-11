@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="CreateLocationsDb.txt" />
+    <Content Include="GoatTrip.LucenceIndexer.exe" />
     <Content Include="sqlite3.exe" />
   </ItemGroup>
   <ItemGroup>
