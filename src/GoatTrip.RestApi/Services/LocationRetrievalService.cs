@@ -2,8 +2,6 @@
 namespace GoatTrip.RestApi.Services {
 
     using DAL.DTOs;
-    using System.Collections.Generic;
-    using System.Linq;
     using DAL;
     using Models;
 
@@ -23,11 +21,5 @@ namespace GoatTrip.RestApi.Services {
             return new LocationModel(location);
         }
 
-    }
-
-    public static class IEnumerableOfLocationGroupExtensions {
-        public static bool HasSingleGroup(this IEnumerable<LocationGroup> operand) {
-            return operand.Count() == 1;
-        }
     }
 }
