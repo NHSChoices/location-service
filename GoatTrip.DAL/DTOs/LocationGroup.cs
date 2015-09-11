@@ -3,7 +3,7 @@
 
     public class LocationGroup
     {
-        public int LocationId { get; set; }
+        public long LocationId { get; set; }
         public int LocationsCount { get; set; }
         public string GroupDescription { get; set; }
 

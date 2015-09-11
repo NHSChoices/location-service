@@ -206,6 +206,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SearchQuerySanitiser.cs" />
+    <Compile Include="Services\UPRNEncoder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

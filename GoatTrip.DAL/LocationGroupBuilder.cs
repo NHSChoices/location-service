@@ -50,7 +50,7 @@ namespace GoatTrip.DAL
             {
                 GroupFields = GetGroupedFields(document, groupByFields),
                 GroupDescription = GenerateGroupDescription(document, groupByFields),
-                LocationId = Convert.ToInt32(locationId),
+                LocationId = Convert.ToInt64(locationId),
                 LocationsCount = 1
             };
         }
