@@ -141,7 +141,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
                 r => r.FindGroupedLocations(It.Is<string>(s => s == "so22 2xx"), It.IsAny<ILocationGroupingStrategy>()))
                 .Returns(new List<LocationGroup> {
                     new LocationGroup { GroupDescription = "someplace", LocationsCount = 2},
-                    new LocationGroup { LocationId = 123, LocationsCount = 1}
+                    new LocationGroup { UPRN = 123, LocationsCount = 1}
                 });
 
             var results = _sutSearch.Search("SO22 2XX", _mockGroupStrat.Object);
