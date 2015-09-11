@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\LocationGroupTests.cs" />
+    <Compile Include="Formatters\LocationFormatterUnitTests.cs" />
     <Compile Include="FtsQueryGeneratorTests.cs" />
     <Compile Include="fTSQueryTokenizerTests.cs" />
     <Compile Include="LocationGroupByTests.cs" />
