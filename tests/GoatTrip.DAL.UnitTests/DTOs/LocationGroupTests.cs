@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using GoatTrip.DAL.DTOs;
+using GoatTrip.Common.Formatters;
 using Moq;
 using Xunit;
+
 namespace GoatTrip.DAL.DTOs.Tests
 {
     public class LocationGroupBuilderTests
@@ -16,10 +13,23 @@ namespace GoatTrip.DAL.DTOs.Tests
         private IEnumerable<LocationQueryField> _queryFields;
         private LocationGroupBuilder _builder;
         private ILocationQueryFields _locationQueryFields;
+        private Mock<IConditionalFormatter<string, LocationDataField>> _mockLocationFormatter;
+
+        private const string PaoStartNumber = "22";
+        private const string PaoStartSuffix = "";
+        private const string StreetDescription = "Test Road";
+        private const string TownName = "TestTown";
+        private const string Postcode = "TS17 TTT";
+        private const string Number = "32";
 
         public LocationGroupBuilderTests()
         {
-            _builder = new LocationGroupBuilder();
+            _mockLocationFormatter = new Mock<IConditionalFormatter<string, LocationDataField>>();
+            _mockLocationFormatter.Setup(
+                r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<LocationDataField>()))
+                .Returns((string value,LocationDataField type) => value);
+
+            _builder = new LocationGroupBuilder(_mockLocationFormatter.Object);
             _locationQueryFields = new SqlIteLocationQueryFields();
             _queryFields = new List<LocationQueryField> { _locationQueryFields.HouseNumber, _locationQueryFields.Street, _locationQueryFields.Town };
 

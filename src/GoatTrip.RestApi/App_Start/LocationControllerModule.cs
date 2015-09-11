@@ -1,6 +1,8 @@
 using Autofac;
+using GoatTrip.Common.Formatters;
 using GoatTrip.DAL;
-using GoatTrip.DAL.Lucene;
+using GoatTrip.DAL.DTOs;
+using GoatTrip.DAL.Formatters;
 using GoatTrip.RestApi.Controllers;
 using GoatTrip.RestApi.Services;
 
@@ -36,9 +38,16 @@ namespace GoatTrip.RestApi {
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new LocationGroupBuilder()).As<ILocationGroupBuilder>();
+            builder.Register(c => new TitleCaseFormatter()).As<IFormatter<string>>();
+            builder.Register(c => new LocationFormatConditions()).As<IFormatConditions<string>>();
+            builder.Register(c => new LocationDataFieldFormatConditions()).As<IFormatConditions<LocationDataField>>();
+            builder.Register(c => new ConditionalFormatter<string, string>(c.Resolve<IFormatter<string>>(), c.Resolve<IFormatConditions<string>>())).As<IConditionalFormatter<string, string>>();
+            builder.Register(c => new ConditionalFormatter<string, LocationDataField>(c.Resolve<IFormatter<string>>(), c.Resolve<IFormatConditions<LocationDataField>>())).As<IConditionalFormatter<string, LocationDataField>>();
+
+
+            builder.Register(c => new LocationGroupBuilder(c.Resolve<IConditionalFormatter<string, LocationDataField>>())).As<ILocationGroupBuilder>();
             builder.Register(c => new ConnectionManager(_databasePath, _discConnectionOnly)).As<IConnectionManager>().SingleInstance();
-            builder.Register(c => new LocationRepository(c.Resolve<IConnectionManager>(), c.Resolve<ILocationGroupBuilder>())).As<ILocationRepository>();
+            builder.Register(c => new LocationRepository(c.Resolve<IConnectionManager>(), c.Resolve<ILocationGroupBuilder>(),c.Resolve<IConditionalFormatter<string,string>>())).As<ILocationRepository>();
         }
 
         private readonly string _databasePath;

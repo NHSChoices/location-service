@@ -46,6 +46,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GoatTrip.Web", "http://loca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LucenceIndexer", "GoatTrip.LucenceIndexer\GoatTrip.LucenceIndexer.csproj", "{6113AB9C-EF04-4368-879A-50278F17DDA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.Common", "GoatTrip.Common\GoatTrip.Common.csproj", "{C987A2F0-7DA3-468F-B750-74E058B0C1A5}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LuceneIndexer.UnitTests", "GoatTrip.LuceneIndexer.UnitTests\GoatTrip.LuceneIndexer.UnitTests.csproj", "{557DB793-E66D-455F-B931-518A000FEA57}"
 EndProject
 Global
@@ -179,6 +181,19 @@ Global
 		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6113AB9C-EF04-4368-879A-50278F17DDA8}.Release|x86.ActiveCfg = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.CIRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.CIRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.CIRelease|x86.ActiveCfg = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C987A2F0-7DA3-468F-B750-74E058B0C1A5}.Release|x86.ActiveCfg = Release|Any CPU
 		{557DB793-E66D-455F-B931-518A000FEA57}.CIRelease|Any CPU.ActiveCfg = Release|Any CPU
 		{557DB793-E66D-455F-B931-518A000FEA57}.CIRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{557DB793-E66D-455F-B931-518A000FEA57}.CIRelease|x86.ActiveCfg = Release|Any CPU

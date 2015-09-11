@@ -110,6 +110,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GoatTrip.Common\GoatTrip.Common.csproj">
+      <Project>{c987a2f0-7da3-468f-b750-74e058b0c1a5}</Project>
+      <Name>GoatTrip.Common</Name>
+    </ProjectReference>
     <EmbeddedResource Include="costura32\SQLite.Interop.dll" />
     <EmbeddedResource Include="costura64\SQLite.Interop.dll" />
     <Content Include="FodyWeavers.xml" />

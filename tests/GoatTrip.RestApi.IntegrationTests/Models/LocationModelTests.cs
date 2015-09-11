@@ -2,6 +2,8 @@
 using System;
 using System.Data;
 using System.Linq;
+using GoatTrip.Common.Formatters;
+using GoatTrip.DAL;
 using GoatTrip.DAL.DTOs;
 using GoatTrip.RestApi.Models;
 using Moq;
@@ -11,22 +13,27 @@ namespace GoatTrip.RestApi.IntegrationTests.Models {
     [Trait("Category", "integration")]
     public class LocationModelTests {
         private readonly Mock<IDataRecord> _mockDataReader;
+        private readonly Mock<IConditionalFormatter<string, string>> _mockLocationFormatter;
 
         //private readonly IEnumerable<string> _dtoPropertiesBlackList;
         //private readonly IEnumerable<string> _modelPropertiesBlackList;
 
         public LocationModelTests() {
             _mockDataReader = new Mock<IDataRecord>();
+            _mockLocationFormatter = new Mock<IConditionalFormatter<string, string>>();
 
             _mockDataReader.Setup(r => r[It.IsAny<string>()]).Returns<string>(a => a);
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "X_COORDINATE")]).Returns<string>(a => "1.0");
             _mockDataReader.Setup(r => r[It.Is<string>(y => y == "Y_COORDINATE")]).Returns<string>(a => "2.0");
+
+            _mockLocationFormatter.Setup(r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((string value, string type) => value);
         }
 
         [Fact]
         public void Ctor_WithLocation_MapsAllFields() {
-            
-            var model = new Location(_mockDataReader.Object);
+
+            var model = new Location(_mockDataReader.Object, _mockLocationFormatter.Object);
 
             var sut = new LocationModel(model);
 
