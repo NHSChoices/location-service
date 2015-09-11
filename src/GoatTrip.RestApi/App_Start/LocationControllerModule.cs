@@ -16,9 +16,10 @@ namespace GoatTrip.RestApi {
             builder.Register(c => new LocationQueryValidator()).As<ILocationQueryValidator>();
             builder.Register(c => new PostcodeQuerySanitiser()).As<ILocationQuerySanitiser>();
             builder.Register(c => new Base64LocationIdEncoder()).As<ILocationIdEncoder>();
+            builder.Register(c => new LocationModelMapper()).As<ILocationModelMapper>();
 
             builder.Register(c => new LuceneQueryFields()).As<ILocationQueryFields>();
-            builder.Register(c => new LocationRetrievalService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationIdEncoder>())).As<ILocationRetrievalService>();
+            builder.Register(c => new LocationRetrievalService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationIdEncoder>(), c.Resolve<ILocationModelMapper>())).As<ILocationRetrievalService>();
             builder.Register(c => new LocationSearchPostcodeService(c.Resolve<ILocationRepository>(), c.Resolve<ILocationQueryValidator>(), new PostcodeQuerySanitiser())).As<ILocationSearchPostcodeService>();
             builder.Register(c => new LocationSearchService(c.Resolve<ILocationGroupRepository>(), c.Resolve<ILocationQueryValidator>(), new SearchQuerySanitiser(), c.Resolve<ILocationQueryFields>(), c.Resolve<ILocationIdEncoder>())).As<ILocationSearchService>();
 

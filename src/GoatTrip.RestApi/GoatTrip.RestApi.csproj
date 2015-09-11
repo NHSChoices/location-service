@@ -185,6 +185,7 @@
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
     <Compile Include="Models\LocationGroupModel.cs" />
+    <Compile Include="Services\AddressFormatter.cs" />
     <Compile Include="Services\Base64LocationIdEncoder.cs" />
     <Compile Include="Services\ILocationIdEncoder.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />

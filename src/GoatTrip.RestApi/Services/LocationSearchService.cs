@@ -1,6 +1,7 @@
 namespace GoatTrip.RestApi.Services {
     using System.Collections.Generic;
     using System.Linq;
+    using Common.System.Collections.Generic;
     using Controllers;
     using DAL;
     using DAL.DTOs;
