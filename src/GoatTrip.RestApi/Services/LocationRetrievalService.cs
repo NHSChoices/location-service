@@ -1,8 +1,5 @@
 ﻿
 namespace GoatTrip.RestApi.Services {
-    using System.Collections.Generic;
-    using System.Linq;
-    using DAL.DTOs;
     using DAL;
     using Models;
 
@@ -24,35 +21,4 @@ namespace GoatTrip.RestApi.Services {
             return _locationModelMapper.Map(location);
         }
     }
-
-    public interface ILocationModelMapper {
-        LocationModel Map(Location location);
-    }
-
-    public class LocationModelMapper : ILocationModelMapper {
-        public LocationModel Map(Location location) {
-            return new LocationModel {
-                OrganisationName = location.OrganisationName,
-                BuildingName = location.BuildingName,
-                HouseNumber = location.HouseNumber,
-                StreetDescription = location.StreetDescription,
-                Locality = location.Localiry,
-                TownName = location.TownName,
-                AdministrativeArea = location.AdministrativeArea,
-                PostTown = location.PostalTown,
-                Postcode = location.PostCode,
-                PostcodeLocator = location.PostcodeLocator,
-                Coordinate = new CoordinateModel(location.XCoordinate, location.YCoordinate)
-            };
-        }
-    }
-
-    public static class IEnumerableOfLocationGroupExtensions
-    {
-        public static bool HasSingleGroup(this IEnumerable<LocationGroup> operand)
-        {
-            return operand.Count() == 1;
-        }
-    }
-
 }

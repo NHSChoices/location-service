@@ -1,7 +1,11 @@
 ﻿using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.RestApi.Models {
+    using System.Collections.Generic;
+
     public class LocationModel {
+
+        public IEnumerable<string> AddressLines { get; set; }
 
         public string OrganisationName { get; set; }
 

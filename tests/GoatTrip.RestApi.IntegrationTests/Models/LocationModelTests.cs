@@ -49,7 +49,7 @@ namespace GoatTrip.RestApi.IntegrationTests.Models {
                 Assert.Equal(model.BuildingName, result.BuildingName);
                 Assert.Equal(model.StreetDescription, result.StreetDescription);
                 Assert.Equal(model.HouseNumber, result.HouseNumber);
-                Assert.Equal(model.Localiry, result.Locality);
+                Assert.Equal(model.Locality, result.Locality);
                 Assert.Equal(model.TownName, result.TownName);
                 Assert.Equal(model.AdministrativeArea, result.AdministrativeArea);
                 Assert.Equal(model.PostalTown, result.PostTown);

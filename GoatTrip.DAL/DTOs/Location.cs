@@ -18,7 +18,7 @@ namespace GoatTrip.DAL.DTOs
         public string TownName { get; private set; }
         public string StreetDescription { get; private set; }
         public string AdministrativeArea { get; private set; }
-        public string Localiry { get; private set; }
+        public string Locality { get; private set; }
         public float XCoordinate { get; private set; }
         public float YCoordinate { get; private set; }
 
@@ -40,7 +40,7 @@ namespace GoatTrip.DAL.DTOs
             if (readerDataObject[LocationFields.PaoStartNumber] != DBNull.Value)
                 this.HouseNumber = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.PaoStartNumber].ToString(),LocationFields.PaoStartNumber);
             if (readerDataObject[LocationFields.Locality] != DBNull.Value)
-                this.Localiry = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.Locality].ToString(),LocationFields.Locality);
+                this.Locality = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.Locality].ToString(),LocationFields.Locality);
             if (readerDataObject[LocationFields.TownName] != DBNull.Value)
                 this.TownName = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.TownName].ToString(),LocationFields.TownName);
             if (readerDataObject[LocationFields.PostTown] != DBNull.Value)
