@@ -24,5 +24,10 @@ echo copying data to correct structure
 
 %~dp0sqlite3 %~dp0locationsimported.db < %~dp0CreateLocationsDb.txt
 
+echo creating lucene index and importing data
+GoatTrip.LucenceIndexer.exe s %~dp0locationsimported.db i %~dp0index
+
+
+
 
 
