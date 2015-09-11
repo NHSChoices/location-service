@@ -18,6 +18,7 @@ namespace GoatTrip.DAL.UnitTests {
 
             _sut = new LocationRepository(_mockConnectionManager.Object, _mockLocationGroupBuilder.Object);
             _mockDataReader = new Mock<IDataReader>();
+            _mockDataReader.Setup(r => r["UPRN"]).Returns("1");
             _mockDataReader.Setup(r => r["ADMINISTRATIVE_AREA"]).Returns("");
             _mockDataReader.Setup(r => r["BUILDING_NAME"]).Returns("");
             _mockDataReader.Setup(r => r["BLPU_ORGANISATION"]).Returns("");
