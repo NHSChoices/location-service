@@ -7,8 +7,7 @@ namespace GoatTrip.DAL.DTOs
 {
     public class Location
     {
-        public long Id { get; set; }
-
+        public long UPRN { get; private set; }
         public string PostCode { get; private set; }
         public string PostalTown { get; private set; }
         public string OrganisationName { get; private set; }
@@ -29,6 +28,8 @@ namespace GoatTrip.DAL.DTOs
 
         private void BuildFromReader(IDataRecord readerDataObject, IConditionalFormatter<string, string> formatter)
         {
+            if (readerDataObject["UPRN"] != DBNull.Value)
+                this.UPRN = long.Parse(readerDataObject["UPRN"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
             if (readerDataObject[LocationFields.AdministrativeArea] != DBNull.Value)
                 this.AdministrativeArea = formatter.DetermineConditionsAndFormat(readerDataObject[LocationFields.AdministrativeArea].ToString(),LocationFields.AdministrativeArea);
             if (readerDataObject[LocationFields.BuildingName] != DBNull.Value)

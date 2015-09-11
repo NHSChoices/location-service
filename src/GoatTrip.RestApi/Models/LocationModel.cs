@@ -17,12 +17,14 @@ namespace GoatTrip.RestApi.Models {
             Postcode = location.PostCode;
             PostcodeLocator = location.PostcodeLocator;
             Coordinate = new CoordinateModel(location.XCoordinate, location.YCoordinate);
+            UPRN = location.UPRN.ToString();
         }
 
         public string OrganisationName { get; set; }
 
         public string BuildingName { get; set; }
 
+        public string UPRN { get; set; }
         public string StreetDescription { get; set; }
         public string Locality { get; set; }
         public string TownName { get; set; }
