@@ -13,7 +13,10 @@
 
         public TF DetermineConditionsAndFormat(TF field, TC fieldType)
         {
-            return _conditions.ShouldFormat(fieldType) ? _formatter.Format(field) : field;
+            if (field == null || fieldType == null || !_conditions.ShouldFormat(fieldType))
+                return field;
+
+            return _formatter.Format(field);
         }
     }
 }

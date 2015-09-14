@@ -20,6 +20,10 @@ namespace GoatTrip.Common.UnitTests
             
             Assert.Equal("FRED", sut.DetermineConditionsAndFormat("fred", "yes"));
             Assert.Equal("dave", sut.DetermineConditionsAndFormat("dave", "no"));
+            Assert.Equal(null, sut.DetermineConditionsAndFormat(null, "no"));
+            Assert.Equal(null, sut.DetermineConditionsAndFormat(null, "yes"));
+            Assert.Equal("", sut.DetermineConditionsAndFormat("", "yes"));
+            Assert.Equal("stefan", sut.DetermineConditionsAndFormat("stefan", null));
         }
 
         [Fact()]
@@ -30,6 +34,8 @@ namespace GoatTrip.Common.UnitTests
             Assert.Equal("Lower",sut.Format("lower"));
             Assert.Equal("Mixed", sut.Format("mIxEd"));
             Assert.Equal("Numb3rs", sut.Format("numb3rs"));
+            Assert.Equal("", sut.Format(""));
+            Assert.Equal(null, sut.Format(null));
         }
     }
 }
