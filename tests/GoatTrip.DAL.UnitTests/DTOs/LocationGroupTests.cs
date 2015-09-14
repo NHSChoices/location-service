@@ -15,13 +15,6 @@ namespace GoatTrip.DAL.DTOs.Tests
         private ILocationQueryFields _locationQueryFields;
         private Mock<IConditionalFormatter<string, LocationDataField>> _mockLocationFormatter;
 
-        private const string PaoStartNumber = "22";
-        private const string PaoStartSuffix = "";
-        private const string StreetDescription = "Test Road";
-        private const string TownName = "TestTown";
-        private const string Postcode = "TS17 TTT";
-        private const string Number = "32";
-
         public LocationGroupBuilderTests()
         {
             _mockLocationFormatter = new Mock<IConditionalFormatter<string, LocationDataField>>();
