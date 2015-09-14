@@ -7,11 +7,6 @@ namespace GoatTrip.DAL.UnitTests.Formatters
 {
     public class LocationFormatterUnitTests
     {
-        public LocationFormatterUnitTests()
-        {
-            
-        }
-
         [Fact()]
         public void LocationDataFieldFormatConditions()
         {
