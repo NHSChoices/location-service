@@ -1,6 +1,7 @@
 namespace GoatTrip.RestApi.Services {
     using System.Collections.Generic;
     using System.Linq;
+    using Common.Collections.Generic;
     using Controllers;
     using DAL;
     using DAL.DTOs;
@@ -31,7 +32,7 @@ namespace GoatTrip.RestApi.Services {
 
         private string BuildNextUri(LocationGroup lg) {
             if (lg.LocationsCount == 1)
-                return string.Format("/{0}/{1}", LocationController.RoutePrefix, _encoder.Encode(lg.LocationId.ToString()));
+                return string.Format("/{0}/{1}", LocationController.RoutePrefix, _encoder.Encode(lg.UPRN.ToString()));
 
             return string.Format("/{0}/{1}/{2}", LocationController.RoutePrefix, LocationController.SearchRoute, lg.GroupDescription);
         }

@@ -10,6 +10,7 @@
             var address = BuildAddress(location);
 
             return new LocationModel {
+                UPRN = location.UPRN.ToString(),
                 AddressLines = address,
                 OrganisationName = location.OrganisationName,
                 BuildingName = location.BuildingName,

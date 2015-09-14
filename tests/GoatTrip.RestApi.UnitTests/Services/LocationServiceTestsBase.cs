@@ -46,6 +46,7 @@ namespace GoatTrip.RestApi.UnitTests.Services {
 
             _mockDataReader = new Mock<IDataRecord>();
             _mockDataReader.Setup(r => r[It.IsAny<string>()]).Returns("");
+            _mockDataReader.Setup(r => r["UPRN"]).Returns("1");
             _mockDataReader.Setup(r => r[It.Is<string>(x => x == "X_COORDINATE")]).Returns("1.0");
             _mockDataReader.Setup(r => r[It.Is<string>(y => y == "Y_COORDINATE")]).Returns("2.0");
 

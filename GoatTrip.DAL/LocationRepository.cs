@@ -41,7 +41,7 @@ namespace GoatTrip.DAL
 
         public IEnumerable<Location> FindLocationsbyAddress(string addressLookup) {
             string statement = "SELECT * FROM locations WHERE " +
-                               "locationId IN(" +
+                               "UPRN IN(" +
                                "SELECT docid FROM locations_srch WHERE locations_srch MATCH @addressSearch" +
                                " ORDER BY PAO_START_NUMBER, STREET_DESCRIPTION, TOWN_NAME LIMIT 100)";
 
@@ -77,7 +77,7 @@ namespace GoatTrip.DAL
         }
 
         public Location Get(string id) {
-            var statement = "SELECT * FROM locations WHERE locationId = @locationId";
+            var statement = "SELECT * FROM locations WHERE UPRN = @locationId";
 
             using (IManagedDataReader reader = _connectionManager.GetReader(statement, new StatementParamaters { { "@locationId", id } })) {
                 while (reader.Read()) {

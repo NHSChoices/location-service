@@ -11,6 +11,7 @@ namespace GoatTrip.RestApi.Models {
 
         public string BuildingName { get; set; }
 
+        public string UPRN { get; set; }
         public string StreetDescription { get; set; }
         public string Locality { get; set; }
         public string TownName { get; set; }
