@@ -39,7 +39,7 @@
 
             var street = "";
 
-            if (!string.IsNullOrEmpty(location.HouseNumber)) {
+            if (!string.IsNullOrEmpty(location.HouseNumber) && location.HouseNumber != "0") {
                 if (location.HouseNumber != location.BuildingName &&
                     location.HouseNumber != location.OrganisationName)
                     street += location.HouseNumber;

@@ -38,7 +38,7 @@
 
 
 <script type="text/javascript">
-    var baseUrl = "https://locationservices.azure-api.net";
+    var baseUrl = "http://localhost:55359/";
     var contentType = "application/json; charset=utf-8";
     var errorMessage = "The request to the server has failed: ";
 
@@ -51,6 +51,7 @@
     }
 
     function FullAddress(data) {
+        this.addressLines = ko.observableArray(data.AddressLines);
         this.administrativeArea = ko.observable(data.AdministrativeArea);
         this.buildingName = ko.observable(data.BuildingName);
         this.coordinate = new Coordinate(data.Coordinate);
@@ -108,7 +109,7 @@
                 UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                alert(errorMessage + errorThrown);
+                console.error(errorMessage + errorThrown);
                 return;
             }
         });
@@ -138,7 +139,7 @@
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                alert(errorMessage + errorThrown);
+                console.error(errorMessage + errorThrown);
                 return;
             }
         });
