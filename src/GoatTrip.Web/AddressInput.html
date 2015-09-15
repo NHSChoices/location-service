@@ -29,15 +29,8 @@
         <div class="letter-image">
             <img alt="stamp" src="assets/images/stamp.png"/>
         </div>
-        <div class="letter-text">
-            <div data-bind="visible: singleAddress().organisationName, text: singleAddress().organisationName"></div>
-            <div data-bind="visible: singleAddress().buildingName,text: singleAddress().buildingName"></div>
-            <div data-bind="visible: singleAddress().houseNumber,text: singleAddress().houseNumber"></div>
-            <div data-bind="visible: singleAddress().streetDescription,text: singleAddress().streetDescription"></div>
-            <div data-bind="visible: singleAddress().locality,text: singleAddress().locality"></div>
-            <div data-bind="visible: singleAddress().townName,text: singleAddress().townName"></div>
-            <div data-bind="visible: singleAddress().administrativeArea,text: singleAddress().administrativeArea"></div>
-            <div data-bind="visible: singleAddress().postcode,text: singleAddress().postcode"></div>
+        <div class="letter-text" data-bind="foreach: singleAddress().addressLines">
+            <div data-bind="text: $data"></div>
         </div>
     </div>
 </body>
@@ -58,6 +51,7 @@
     }
 
     function FullAddress(data) {
+        this.addressLines = ko.observableArray(data.AddressLines);
         this.administrativeArea = ko.observable(data.AdministrativeArea);
         this.buildingName = ko.observable(data.BuildingName);
         this.coordinate = new Coordinate(data.Coordinate);
@@ -115,7 +109,7 @@
                 UpdateAddresses(mappedAddresses, listToUpdate, singleAddress);
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                alert(errorMessage + errorThrown);
+                console.error(errorMessage + errorThrown);
                 return;
             }
         });
@@ -145,7 +139,7 @@
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                alert(errorMessage + errorThrown);
+                console.error(errorMessage + errorThrown);
                 return;
             }
         });

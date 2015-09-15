@@ -1,24 +1,11 @@
 ﻿using GoatTrip.DAL.DTOs;
 
 namespace GoatTrip.RestApi.Models {
+    using System.Collections.Generic;
+
     public class LocationModel {
 
-        public LocationModel() { }
-
-        public LocationModel(Location location) {
-            OrganisationName = location.OrganisationName;
-            BuildingName = location.BuildingName;
-            HouseNumber = location.HouseNumber;
-            StreetDescription = location.StreetDescription;
-            Locality = location.Localiry;
-            TownName = location.TownName;
-            AdministrativeArea = location.AdministrativeArea;
-            PostTown = location.PostalTown;
-            Postcode = location.PostCode;
-            PostcodeLocator = location.PostcodeLocator;
-            Coordinate = new CoordinateModel(location.XCoordinate, location.YCoordinate);
-            UPRN = location.UPRN.ToString();
-        }
+        public IEnumerable<string> AddressLines { get; set; }
 
         public string OrganisationName { get; set; }
 

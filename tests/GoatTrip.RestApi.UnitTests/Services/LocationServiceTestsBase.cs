@@ -20,6 +20,8 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _mockIdEncoder.Setup(e => e.Decode(It.IsAny<string>())).Returns<string>(x => x);
             _mockIdEncoder.Setup(e => e.Encode(It.IsAny<string>())).Returns<string>(x => x);
 
+            var mockMapper = new LocationModelMapper();
+
             _mockLocationQueryFields = new Mock<ILocationQueryFields>();
 
             _mockQueryValidator = new Mock<ILocationQueryValidator>();
@@ -39,8 +41,8 @@ namespace GoatTrip.RestApi.UnitTests.Services {
                 r => r.DetermineConditionsAndFormat(It.IsAny<string>(), It.IsAny<string>())).Returns((string value, string type) => value);
 
             _sutSearch = new LocationSearchService(_mockLocationGroupRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, _mockLocationQueryFields.Object, _mockIdEncoder.Object);
-            _sutPostcode = new LocationSearchPostcodeService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object);
-            _sutGet = new LocationRetrievalService(_mockLocationRepository.Object, _mockIdEncoder.Object);
+            _sutPostcode = new LocationSearchPostcodeService(_mockLocationRepository.Object, _mockQueryValidator.Object, _mockQuerySanitiser.Object, mockMapper);
+            _sutGet = new LocationRetrievalService(_mockLocationRepository.Object, _mockIdEncoder.Object, mockMapper);
 
             _mockDataReader = new Mock<IDataRecord>();
             _mockDataReader.Setup(r => r[It.IsAny<string>()]).Returns("");

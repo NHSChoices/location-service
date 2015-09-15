@@ -170,7 +170,9 @@
     <Content Include="newrelic\NewRelic.Agent.Core.dll" />
     <Content Include="newrelic\NewRelic.Agent.Extensions.dll" />
     <Content Include="newrelic\NewRelic.Profiler.dll" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BrowserJsonFormatter.cs" />
@@ -184,9 +186,12 @@
     <Compile Include="App_Start\DependancyConfig.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
+    <Compile Include="Models\InfoModel.cs" />
     <Compile Include="Models\LocationGroupModel.cs" />
     <Compile Include="Services\Base64LocationIdEncoder.cs" />
+    <Compile Include="Services\IEnumerableOfLocationGroupExtensions.cs" />
     <Compile Include="Services\ILocationIdEncoder.cs" />
+    <Compile Include="Services\ILocationModelMapper.cs" />
     <Compile Include="Services\ILocationQuerySanitiser.cs" />
     <Compile Include="Services\ILocationQueryValidator.cs" />
     <Compile Include="Services\ILocationRetrievalService.cs" />
@@ -194,6 +199,7 @@
     <Compile Include="Services\ILocationSearchService.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Services\InvalidLocationQueryException.cs" />
+    <Compile Include="Services\LocationModelMapper.cs" />
     <Compile Include="Services\LocationQuerySanitiser.cs" />
     <Compile Include="Services\LocationQueryValidator.cs" />
     <Compile Include="Services\LocationSearchBaseService.cs" />
