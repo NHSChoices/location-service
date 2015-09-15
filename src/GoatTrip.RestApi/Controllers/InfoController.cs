@@ -1,6 +1,7 @@
 ﻿namespace GoatTrip.RestApi.Controllers {
     using System.Web.Http;
     using DAL;
+    using Models;
 
     [RoutePrefix("info")]
     public class InfoController
@@ -21,9 +22,5 @@
         }
 
         private readonly IConnectionManager _connectionManager;
-    }
-
-    public class InfoModel {
-        public bool InMemoryDbInitialised { get; set; }
     }
 }

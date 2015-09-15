@@ -4,6 +4,7 @@ namespace GoatTrip.RestApi.UnitTests.Controllers {
     using DAL;
     using Moq;
     using RestApi.Controllers;
+    using RestApi.Models;
     using Xunit;
 
     public class InfoControllerTests {

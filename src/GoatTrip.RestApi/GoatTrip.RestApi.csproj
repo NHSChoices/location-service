@@ -186,6 +186,7 @@
     <Compile Include="App_Start\DependancyConfig.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Models\CoordinateModel.cs" />
+    <Compile Include="Models\InfoModel.cs" />
     <Compile Include="Models\LocationGroupModel.cs" />
     <Compile Include="Services\Base64LocationIdEncoder.cs" />
     <Compile Include="Services\IEnumerableOfLocationGroupExtensions.cs" />
