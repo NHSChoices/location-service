@@ -78,3 +78,4 @@ IIS express need the following registration key adding to run x64 targets.
 N.B. Use the Visual studio version appropriate to your installed version
 
 RESTART IIS
+
