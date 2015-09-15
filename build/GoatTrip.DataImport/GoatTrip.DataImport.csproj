@@ -4,7 +4,7 @@
     <ProjectGuid>{DA37174D-FE1A-4B1E-98A7-B8738D83A3E4}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="CreateLocationsDb.txt" />
+    <Content Include="ExcludedAddressClasses.txt" />
     <Content Include="GoatTrip.LucenceIndexer.exe" />
     <Content Include="sqlite3.exe" />
   </ItemGroup>
