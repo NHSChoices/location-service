@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.Common", "GoatTrip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.LuceneIndexer.UnitTests", "GoatTrip.LuceneIndexer.UnitTests\GoatTrip.LuceneIndexer.UnitTests.csproj", "{557DB793-E66D-455F-B931-518A000FEA57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatTrip.Common.UnitTests", "GoatTrip.Common.UnitTests\GoatTrip.Common.UnitTests.csproj", "{ED815EAE-F298-4384-A507-D47EE489C7B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CIRelease|Any CPU = CIRelease|Any CPU
@@ -207,6 +209,21 @@ Global
 		{557DB793-E66D-455F-B931-518A000FEA57}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{557DB793-E66D-455F-B931-518A000FEA57}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{557DB793-E66D-455F-B931-518A000FEA57}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.CIRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.CIRelease|Any CPU.Build.0 = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.CIRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.CIRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.CIRelease|x86.ActiveCfg = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED815EAE-F298-4384-A507-D47EE489C7B2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

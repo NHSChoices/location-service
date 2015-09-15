@@ -5,7 +5,7 @@ namespace GoatTrip.DAL.Formatters
 {
     public class LocationFormatConditions : IFormatConditions<string>
     {
-        public bool ShouldFormat(string inputType)
+        bool IFormatConditions<string>.ShouldFormat(string inputType)
         {
             return inputType == LocationFields.AdministrativeArea ||
                    inputType == LocationFields.BuildingName ||

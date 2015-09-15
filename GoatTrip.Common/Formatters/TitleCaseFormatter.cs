@@ -4,8 +4,10 @@ namespace GoatTrip.Common.Formatters
 {
     public class TitleCaseFormatter : IFormatter<string>
     {
-        public string Format(string input)
+        string IFormatter<string>.Format(string input)
         {
+            if (input == null) return null;
+
             var textInfo = CultureInfo.InvariantCulture.TextInfo;
             return textInfo.ToTitleCase(textInfo.ToLower(input));
         }
