@@ -11,6 +11,7 @@ using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Version = Lucene.Net.Util.Version;
+using GoatTrip.Common.Collections.Generic;
 
 namespace GoatTrip.DAL
 {
@@ -36,7 +37,7 @@ namespace GoatTrip.DAL
             var luceneQuery = GenerateLuceneQuery(wildcardQuery, queryFields);
             var collector = new GroupCollector(_locationGroupBuilder, groupingStrategy.Fields);
             _searcher.Search(luceneQuery, collector);
-            return collector.Groups;
+            return collector.Groups.OrderBy(g => g.GroupDescription, new AlphanumericComparerFast());
         }
 
         private Query GenerateLuceneQuery(string query, IEnumerable<LocationQueryField> fieldsToQuery)
