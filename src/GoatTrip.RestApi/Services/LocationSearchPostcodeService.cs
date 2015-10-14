@@ -15,21 +15,20 @@ namespace GoatTrip.RestApi.Services {
             _locationModelMapper = locationModelMapper;
         }
 
-        public IEnumerable<LocationGroupModel> SearchByPostcode(string postcodeQuery) {
+        public IEnumerable<LocationModel> SearchByPostcode(string postcodeQuery) {
             ValidateAndThrow(postcodeQuery);
             var sanitisedQuery = _postCodeSanitiser.Sanitise(postcodeQuery);
 
             var results = _repository.FindLocations(sanitisedQuery);
 
-            var groupedResult = Group(results);
+            var groupedResult = Map(results);
 
             return groupedResult;
         }
 
-        private IEnumerable<LocationGroupModel> Group(IEnumerable<Location> results) {
-            var locations = results.Select(l => _locationModelMapper.Map(l));
-            return locations.GroupBy(l => l.Postcode)
-                .Select(g => new LocationGroupModel(g.First().GroupDescription, g.Count(), "/locations/search/" + g.First().GroupDescription));
+        private IEnumerable<LocationModel> Map(IEnumerable<Location> results) {
+          var locations = results.Select(l => _locationModelMapper.Map(l)).Take(20);
+          return locations;
         }
 
         private readonly ILocationRepository _repository;
