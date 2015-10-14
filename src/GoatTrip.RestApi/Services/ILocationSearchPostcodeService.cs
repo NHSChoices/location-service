@@ -3,6 +3,6 @@
     using Models;
 
     public interface ILocationSearchPostcodeService {
-        IEnumerable<LocationGroupModel> SearchByPostcode(string postcodeQuery);
+        IEnumerable<LocationModel> SearchByPostcode(string postcodeQuery);
     }
 }

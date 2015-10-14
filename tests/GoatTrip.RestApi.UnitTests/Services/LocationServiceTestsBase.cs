@@ -54,10 +54,9 @@ namespace GoatTrip.RestApi.UnitTests.Services {
             _locationQueryFields = new SqlIteLocationQueryFields();
         }
 
-        protected static void AssertIsValidResult(List<LocationGroupModel> result, int count, string postcode) {
-            Assert.Equal(1, result.Count());
-            Assert.Equal(count, result.First().Count);
-            Assert.True(result.Any(l => l.Description.Contains(postcode)));
+        protected static void AssertIsValidResult(List<LocationModel> result, int count, string postcode) {
+            Assert.Equal(count, result.Count());
+            Assert.True(result.Any(l => l.Postcode.Equals(postcode)));
         }
 
         protected void CreateMockResults(string postcode, int count = 1) {
